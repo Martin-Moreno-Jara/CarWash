@@ -1,0 +1,14 @@
+.main-container {
+  height: 400px;
+  width: 250px;
+  background: #e1cbcbdb;
+  padding: 10px 250px 100px 10px;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+}
+.submit-btn {
+  border-radius: 20px;
+}

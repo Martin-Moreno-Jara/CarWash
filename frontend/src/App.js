@@ -1,19 +1,17 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import './App.css';
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
+import FormTest from "./pages/FormTest";
 function App() {
-  return(
+  return (
     <div className="App">
-        <BrowserRouter>
-            <div className="pages">
-                <Routes>
-                    <Route
-                        path="/"
-                        element={}
-                    />
-                </Routes>
-            </div>
-        </BrowserRouter>
+      <BrowserRouter>
+        <div className="pages">
+          <Routes>
+            <Route path="/" element={<h1>hello</h1>} />
+            <Route path="/test" element={<FormTest></FormTest>}></Route>
+          </Routes>
+        </div>
+      </BrowserRouter>
     </div>
   );
 }

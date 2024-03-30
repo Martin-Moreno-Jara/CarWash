@@ -1,11 +1,10 @@
 const express = require("express");
+const { login } = require("../controllers/userController");
 
 const router = express.Router();
 
 //ruta para el login
-router.post("/login", (req, res) => {
-  res.json({ msg: "ruta para el login" });
-});
+router.post("/login", login);
 
 // GET all entries
 router.get("/", (req, res) => {

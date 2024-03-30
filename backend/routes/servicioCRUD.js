@@ -1,27 +1,24 @@
 const express = require("express");
+const {
+  getServices,
+  getService,
+  createService,
+  patchService,
+  deleteService,
+} = require("../controllers/servicioCRUDController");
 
 const router = express.Router();
 
 //traer todos los empleados
-router.get("/", (req, res) => {
-  res.json({ msg: "trayendo a todos los registros" });
-});
+router.get("/", getServices);
 //traer un empleado
-router.get("/:id", (req, res) => {
-  res.json({ msg: `trayendo un registro de id: ${req.params.id}` });
-});
+router.get("/:id", getService);
 //crear empleado
-router.post("/", (req, res) => {
-  res.json({ msg: "creando registro" });
-});
+router.post("/", createService);
 
 //editar empleado
-router.patch("/:id", (req, res) => {
-  res.json({ msg: `editando un registro de id: ${req.params.id}` });
-});
+router.patch("/:id", patchService);
 //eliminar empleado
-router.delete("/:id", (req, res) => {
-  res.json({ msg: `eliminando un registro de id: ${req.params.id}` });
-});
+router.delete("/:id", deleteService);
 
 module.exports = router;

@@ -1,27 +1,24 @@
 const express = require("express");
+const {
+  getEmployees,
+  getEmployee,
+  createEmployee,
+  deleteEmployee,
+  patchEmployee,
+} = require("../controllers/empleadoCRUDController");
 
 const router = express.Router();
 
 //traer todos los empleados
-router.get("/", (req, res) => {
-  res.json({ msg: "trayendo a todos los empleados" });
-});
+router.get("/", getEmployees);
 //traer un empleado
-router.get("/:id", (req, res) => {
-  res.json({ msg: `trayendo un empleado de id: ${req.params.id}` });
-});
+router.get("/:id", getEmployee);
 //crear empleado
-router.post("/", (req, res) => {
-  res.json({ msg: "creando empleado" });
-});
+router.post("/", createEmployee);
 
 //editar empleado
-router.patch("/:id", (req, res) => {
-  res.json({ msg: `editando un empleado de id: ${req.params.id}` });
-});
+router.patch("/:id", patchEmployee);
 //eliminar empleado
-router.delete("/:id", (req, res) => {
-  res.json({ msg: `eliminando un empleado de id: ${req.params.id}` });
-});
+router.delete("/:id", deleteEmployee);
 
 module.exports = router;

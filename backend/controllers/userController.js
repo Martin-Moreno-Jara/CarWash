@@ -7,11 +7,20 @@ const createToken = (_id, rol) => {
     expiresIn: "1d",
   });
 };
+
 //controlador del inicio de sesión
-const loginUser = (req, res) => {
-  return null;
+const loginUser = async (req, res) => {
+  const { usuario, contrasena } = req.body;
+  try {
+    const usuarioLogeado = await userModel.login(usuario, contrasena);
+    const token = createToken(usuarioLogeado._id, usuarioLogeado.rol);
+    res.status(200).json({ usuario, token });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
+//controlador de creación de usuarios
 const signupUser = async (req, res) => {
   const {
     nombre,

@@ -42,6 +42,26 @@ const userSchema = new Schema({
   },
 });
 
+//hacer login
+userSchema.statics.login = async function (usuario, contrasena) {
+  if (!usuario || !contrasena) {
+    throw Error("Debe diligenciar todos los campos");
+  }
+  const existsUsuario = await this.findOne({ usuario });
+  if (!existsUsuario) {
+    throw Error("El usuario no existe");
+  }
+  const validacionPassword = await bcrypt.compare(
+    contrasena,
+    existsUsuario.contrasena
+  );
+  if (!validacionPassword) {
+    throw Error("La contraseña es incorrecta");
+  }
+  return existsUsuario;
+};
+
+//hacer signup
 userSchema.statics.signup = async function (
   nombre,
   apellido,

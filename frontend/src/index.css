@@ -1,13 +1,18 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css2?family=Francois+One&display=swap");
+:root {
+  --primary-color: #596f62;
+  --secondary-color: #2e434d;
+  --third-color: #7ea16b;
+  --fourth-color: #70161e;
+  --error: #e61c1c;
+  --accept: #2ad233;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  margin: 0;
+  font-family: "Francois One";
+}
+
+header {
+  background: var(--primary-color);
 }

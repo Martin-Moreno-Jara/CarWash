@@ -1,0 +1,11 @@
+.crudEmpleados-main {
+  display: grid;
+  grid-template-areas: "lista formulario";
+  grid-template-columns: 4fr 3fr;
+  background-image: linear-gradient(rgba(5, 7, 12, 0.6), rgba(5, 7, 12, 0.6)),
+    url(../images/crud_empleado.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 85vh;
+}

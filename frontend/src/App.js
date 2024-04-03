@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
-import FormTest from "./pages/FormTest";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import HomeGeneral from "./pages/HomeGeneral";
@@ -8,6 +7,7 @@ import Login from "./pages/Login";
 import { useAuthContext } from "./hooks/useAuthContext";
 import HomeAdmin from "./pages/HomeAdmin";
 import HomeEmpleado from "./pages/HomeEmpleado";
+import CrudEmpleados from "./pages/CrudEmpleados";
 
 function App() {
   const { usuario } = useAuthContext();
@@ -42,7 +42,7 @@ function App() {
               path="/empleado"
               element={usuario ? <HomeEmpleado /> : <Navigate to="/" />}
             />
-            <Route path="/test" element={<FormTest></FormTest>}></Route>
+            <Route path="/admin/empleadoCrud" element={<CrudEmpleados />} />
           </Routes>
         </div>
         <Footer />

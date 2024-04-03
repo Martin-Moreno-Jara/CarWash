@@ -1,0 +1,31 @@
+.empleadoLista-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  max-width: 800px;
+  height: 65vh;
+  border-radius: 10px;
+  margin-left: 25px;
+  margin-bottom: 15px;
+}
+.details-container {
+  background: #acabab;
+  width: 90%;
+  height: 60vh;
+  border-radius: 5px;
+}
+.empleados-actions {
+  display: flex;
+  flex-direction: row;
+  width: 800px;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn {
+  margin-right: 20px;
+  padding: 5px 20px;
+  background-color: var(--primary-color);
+  border: 1px solid black;
+}

@@ -34,6 +34,14 @@ header .mainHeader-container {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+}
+header a {
+  color: #000;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 footer .mainFooter-container {
@@ -43,6 +51,28 @@ footer .mainFooter-container {
   justify-content: flex-end;
   align-items: center;
   margin-right: 10px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+nav a {
+  margin-right: 20px;
+  font-size: 1.5em;
+}
+nav .inicio-sesion-div {
+  border: 2px solid var(--secondary-color);
+  background: var(--secondary-color);
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+nav .inicio-sesion-div:hover {
+  border: 2px solid var(--fourth-color);
+  padding: 8px 12px;
+  background: var(--third-color);
 }
 
 .pages {

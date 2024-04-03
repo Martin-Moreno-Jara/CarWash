@@ -7,10 +7,11 @@ import HomeGeneral from "./pages/HomeGeneral";
 import Login from "./pages/Login";
 import { useAuthContext } from "./hooks/useAuthContext";
 import HomeAdmin from "./pages/HomeAdmin";
+import HomeEmpleado from "./pages/HomeEmpleado";
 
 function App() {
   const { usuario } = useAuthContext();
-  console.log(usuario);
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -23,11 +24,23 @@ function App() {
             />
             <Route
               path="/login"
-              element={!usuario ? <Login /> : <Navigate to="/admin" />}
+              element={
+                !usuario ? (
+                  <Login />
+                ) : usuario.rol === "administrador" ? (
+                  <Navigate to="/admin" />
+                ) : (
+                  <Navigate to="/empleado" />
+                )
+              }
             ></Route>
             <Route
               path="/admin"
               element={usuario ? <HomeAdmin /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/empleado"
+              element={usuario ? <HomeEmpleado /> : <Navigate to="/" />}
             />
             <Route path="/test" element={<FormTest></FormTest>}></Route>
           </Routes>

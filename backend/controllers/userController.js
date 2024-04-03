@@ -14,7 +14,7 @@ const loginUser = async (req, res) => {
   try {
     const usuarioLogeado = await userModel.login(usuario, contrasena);
     const token = createToken(usuarioLogeado._id, usuarioLogeado.rol);
-    res.status(200).json({ usuario, token });
+    res.status(200).json({ usuario, rol: usuarioLogeado.rol, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

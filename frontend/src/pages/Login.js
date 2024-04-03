@@ -1,6 +1,9 @@
 import "../stylesheets/Login.css";
 import { useState } from "react";
+import { useLogin } from "../hooks/useLogin";
+const apiURL = process.env.REACT_APP_DEVURL;
 const Login = () => {
+  const { login } = useLogin();
   const [nombreUsuario, setNombreUsuario] = useState("");
   const [password, setPassword] = useState("");
 
@@ -11,9 +14,10 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(nombreUsuario, password);
+    await login(nombreUsuario, password);
   };
 
   return (

@@ -1,7 +1,14 @@
 import carwashlogo from "../images/carwash-logo.jpg";
 import { Link } from "react-router-dom";
+import { useLogout } from "../hooks/useLogout";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const NavBar = () => {
+  const { usuario } = useAuthContext();
+  const { logout } = useLogout();
+  const makeLogout = () => {
+    logout();
+  };
   return (
     <header>
       <div className="mainHeader-container">
@@ -12,9 +19,16 @@ const NavBar = () => {
           </Link>
         </div>
         <nav>
-          <Link to={"/login"}>
-            <div className="inicio-sesion-div">Iniciar sesión</div>
-          </Link>
+          {!usuario && (
+            <Link to={"/login"}>
+              <div className="inicio-sesion-div">Iniciar sesión</div>
+            </Link>
+          )}
+          {usuario && (
+            <div className="inicio-sesion-div" onClick={makeLogout}>
+              Cerrar sesión
+            </div>
+          )}
         </nav>
       </div>
     </header>

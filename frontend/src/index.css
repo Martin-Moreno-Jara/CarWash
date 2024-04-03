@@ -1,13 +1,80 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css2?family=Francois+One&display=swap");
+:root {
+  --primary-color: #596f62;
+  --secondary-color: #2e434d;
+  --third-color: #7ea16b;
+  --fourth-color: #70161e;
+  --error: #e61c1c;
+  --accept: #2ad233;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  margin: 0;
+  font-family: "Francois One";
+  position: relative;
+  min-height: 100vh;
+}
+
+header {
+  background: var(--primary-color);
+}
+
+footer {
+  background: var(--primary-color);
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  height: 40px;
+}
+header img {
+  width: 100px;
+  margin: 10px 20px 10px 5px;
+}
+header .mainHeader-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+header a {
+  color: #000;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+footer .mainFooter-container {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 10px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+nav a {
+  margin-right: 20px;
+  font-size: 1.5em;
+}
+nav .inicio-sesion-div {
+  border: 2px solid var(--secondary-color);
+  background: var(--secondary-color);
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+nav .inicio-sesion-div:hover {
+  border: 2px solid var(--fourth-color);
+  padding: 8px 12px;
+  background: var(--third-color);
+}
+
+.pages {
+  margin: 0 auto;
 }

@@ -54,3 +54,12 @@ input {
 .login-btn:hover {
   font-weight: bold;
 }
+
+.error {
+  color: var(--error);
+  background-color: #f59792;
+  padding: 15px 10px;
+  margin: 20px;
+  border: 2px solid var(--error);
+  border-radius: 5px;
+}

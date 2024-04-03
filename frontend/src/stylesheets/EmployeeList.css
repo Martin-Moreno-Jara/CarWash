@@ -8,6 +8,10 @@
   border-radius: 10px;
   margin-left: 25px;
   margin-bottom: 15px;
+  box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.5);
+}
+.empleadoLista-main input[type="checkbox"] {
+  display: none;
 }
 .details-container {
   background: #acabab;

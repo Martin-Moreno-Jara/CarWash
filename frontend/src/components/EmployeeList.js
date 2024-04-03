@@ -1,15 +1,27 @@
 import EmployeeInfo from "../components/EmployeeInfo";
+import { useEmployeeContext } from "../hooks/useEmployeeReducer";
+import { useSelectEmployee } from "../hooks/useSelectEmployee";
 import "../stylesheets/EmployeeList.css";
 const EmployeeList = () => {
+  const { selected } = useEmployeeContext();
+
+  const { selectEmployee } = useSelectEmployee();
+  const handleClick = () => {
+    selectEmployee();
+  };
   return (
     <>
       <div className="empleadoLista-main">
         lista de empleados
         <div className="details-container">
-          <input type="radio" name="empleados" id="emp1"></input>
-          <label for="emp1">{<EmployeeInfo />}</label>
-          <input type="radio" name="empleados" id="emp2"></input>
-          <label for="emp2">{<EmployeeInfo />}</label>
+          <input type="checkbox" name="empleados" id="emp1"></input>
+          <label for="emp1" className={selected ? "details-label" : ""}>
+            {<EmployeeInfo selected={selected} handleClick={handleClick} />}
+          </label>
+          <input type="checkbox" name="empleados" id="emp2"></input>
+          <label for="emp2" className={selected ? "details-label" : ""}>
+            {<EmployeeInfo selected={selected} handleClick={handleClick} />}
+          </label>
         </div>
       </div>
       <div className="empleados-actions">

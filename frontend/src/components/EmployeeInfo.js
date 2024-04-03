@@ -1,14 +1,12 @@
 import "../stylesheets/EmployeeInfo.css";
 import { useState } from "react";
-const EmployeeInfo = () => {
-  const [seleccionado, setSeleccionado] = useState(false);
-  const handleClick = () => {
-    setSeleccionado(true);
-  };
+import { useSelectEmployee } from "../hooks/useSelectEmployee";
+import { useEmployeeContext } from "../hooks/useEmployeeReducer";
+const EmployeeInfo = ({ selected, handleClick }) => {
   return (
     <div
       onClick={handleClick}
-      className={seleccionado ? "seleccionado" : "empleadoInfo-main"}
+      className={selected ? "seleccionado" : "empleadoInfo-main"}
     >
       Info del empleado
     </div>

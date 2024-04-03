@@ -1,8 +1,13 @@
+import carwashlogo from "../images/carwash-logo.jpg";
+
 const NavBar = () => {
   return (
     <header>
-      <div className="logo-container">Aqui va el logo</div>
-      <h2>Carwash</h2>
+      <div className="mainHeader-container">
+        <img src={carwashlogo} alt="Logo de la aplicacion" />
+
+        <h2>Carwash</h2>
+      </div>
     </header>
   );
 };

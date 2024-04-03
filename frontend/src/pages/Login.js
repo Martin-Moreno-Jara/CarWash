@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
 const apiURL = process.env.REACT_APP_DEVURL;
 const Login = () => {
-  const { login } = useLogin();
+  const { login, error, isLoading } = useLogin();
   const [nombreUsuario, setNombreUsuario] = useState("");
   const [password, setPassword] = useState("");
 
@@ -33,7 +33,10 @@ const Login = () => {
           <label>Contraseña</label>
           <input type="password" onChange={handlePassword} />
         </div>
-        <button className="login-btn">Iniciar sesión</button>
+        <button className="login-btn" disabled={isLoading}>
+          Iniciar sesión
+        </button>
+        {error && <div className="error">{error}</div>}
       </form>
     </div>
   );

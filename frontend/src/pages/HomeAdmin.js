@@ -1,5 +1,6 @@
+import "../stylesheets/HomeAdmin.css";
 const HomeAdmin = () => {
-  return <div>Home del admin</div>;
+  return <div className="homeAdmin-main">Home del admin</div>;
 };
 
 export default HomeAdmin;

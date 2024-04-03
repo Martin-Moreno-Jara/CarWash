@@ -18,6 +18,11 @@ const NavBar = () => {
             <h1>Carwash</h1>
           </Link>
         </div>
+        {usuario && (
+          <div className="navbar-info">
+            {usuario.rol} {usuario.usuario}
+          </div>
+        )}
         <nav>
           {!usuario && (
             <Link to={"/login"}>

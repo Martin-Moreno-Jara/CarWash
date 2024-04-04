@@ -1,7 +1,7 @@
 import "../stylesheets/EmployeeInfo.css";
 import { useState } from "react";
 import { useSelectEmployee } from "../hooks/useSelectEmployee";
-import { useEmployeeContext } from "../hooks/useEmployeeReducer";
+import { useEmployeeContext } from "../hooks/useEmployeeContext";
 const EmployeeInfo = ({ selected, handleClick }) => {
   return (
     <div

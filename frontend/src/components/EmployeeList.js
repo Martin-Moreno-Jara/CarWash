@@ -1,18 +1,30 @@
 import { useEffect } from "react";
 import EmployeeInfo from "../components/EmployeeInfo";
-import { useEmployeeContext } from "../hooks/useEmployeeReducer";
+import { useEmployeeContext } from "../hooks/useEmployeeContext";
 import { useSelectEmployee } from "../hooks/useSelectEmployee";
 import "../stylesheets/EmployeeList.css";
 const apiURL = process.env.REACT_APP_DEVURL;
+
 const EmployeeList = () => {
+  const { empleados, dispatch } = useEmployeeContext();
+
   useEffect(() => {
     const fetchEmployees = async () => {
       const response = await fetch(`${apiURL}/api/empleadoCRUD`);
+      const json = await response.json();
+
+      if (!response.ok) {
+        throw Error("No se pudieron traer empleados");
+      }
+      if (response.ok) {
+        console.log(json);
+        dispatch({ type: "SET_EMPLEADOS", payload: json });
+      }
     };
     fetchEmployees();
   }, []);
-  const { selected } = useEmployeeContext();
 
+  const { selected } = useEmployeeContext();
   const { selectEmployee } = useSelectEmployee();
   const handleClick = () => {
     selectEmployee();
@@ -23,14 +35,20 @@ const EmployeeList = () => {
       <div className="empleadoLista-main">
         lista de empleados
         <div className="details-container">
-          <input type="checkbox" name="empleados" id="emp1"></input>
-          <label for="emp1" className={selected ? "details-label" : ""}>
-            {<EmployeeInfo selected={selected} handleClick={handleClick} />}
-          </label>
-          <input type="checkbox" name="empleados" id="emp2"></input>
-          <label for="emp2" className={selected ? "details-label" : ""}>
-            {<EmployeeInfo selected={selected} handleClick={handleClick} />}
-          </label>
+          {empleados &&
+            empleados.map((empleado) => (
+              <>
+                <input type="checkbox" name="empleados" id="emp2"></input>
+                <label for="emp2" className={selected ? "details-label" : ""}>
+                  {
+                    <EmployeeInfo
+                      selected={selected}
+                      handleClick={handleClick}
+                    />
+                  }
+                </label>
+              </>
+            ))}
         </div>
       </div>
       <div className="empleados-actions">

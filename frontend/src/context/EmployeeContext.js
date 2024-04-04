@@ -4,6 +4,8 @@ export const EmployeeContext = createContext();
 
 export const employeeReducer = (state, action) => {
   switch (action.type) {
+    case "SET_EMPLEADOS":
+      return { empleados: action.payload };
     case "SELECT":
       return { selected: action.payload };
     default:

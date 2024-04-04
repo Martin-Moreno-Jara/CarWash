@@ -42,8 +42,10 @@ const EmployeeList = () => {
                 <label for="emp2" className={selected ? "details-label" : ""}>
                   {
                     <EmployeeInfo
-                      selected={selected}
-                      handleClick={handleClick}
+                      nombre={empleado.nombre}
+                      apellido={empleado.apellido}
+                      usuario={empleado.usuario}
+                      telefono={empleado.telefono}
                     />
                   }
                 </label>

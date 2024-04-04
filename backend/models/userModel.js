@@ -60,7 +60,7 @@ userSchema.statics.login = async function (usuario, contrasena) {
   }
   return existsUsuario;
 };
-
+//TODO hacer lo de strong password con validator
 //hacer signup
 userSchema.statics.signup = async function (
   nombre,
@@ -95,6 +95,11 @@ userSchema.statics.signup = async function (
   const existsTelefono = await this.findOne({ telefono });
   if (existsTelefono) {
     throw Error("El telefono no puede estar repetido");
+  }
+  if (!validator.isStrongPassword(contrasena)) {
+    throw Error(
+      "La contraseña no es muy debil. Incluir mayúsculas,minúsculas, números y caracter especial"
+    );
   }
 
   const salt = await bcrypt.genSalt(10);

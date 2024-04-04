@@ -1,14 +1,23 @@
+import { useEffect } from "react";
 import EmployeeInfo from "../components/EmployeeInfo";
 import { useEmployeeContext } from "../hooks/useEmployeeReducer";
 import { useSelectEmployee } from "../hooks/useSelectEmployee";
 import "../stylesheets/EmployeeList.css";
+const apiURL = process.env.REACT_APP_DEVURL;
 const EmployeeList = () => {
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      const response = await fetch(`${apiURL}/api/empleadoCRUD`);
+    };
+    fetchEmployees();
+  }, []);
   const { selected } = useEmployeeContext();
 
   const { selectEmployee } = useSelectEmployee();
   const handleClick = () => {
     selectEmployee();
   };
+
   return (
     <>
       <div className="empleadoLista-main">

@@ -14,7 +14,7 @@ router.get("/", getEmployees);
 //traer un empleado
 router.get("/:id", getEmployee);
 //crear empleado
-router.post("/", createEmployee);
+router.post("/signupEmployee", createEmployee);
 
 //editar empleado
 router.patch("/:id", patchEmployee);

@@ -108,8 +108,18 @@ const patchEmployee = async (req, res) => {
 
 //controlador de eliminar empleado
 
-const deleteEmployee = (req, res) => {
-  res.json({ msg: "eliminar empleado" });
+const deleteEmployee = async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ error: "no hay valor de id" });
+  }
+  const idValidation = mongoose.Types.ObjectId.isValid(id);
+  if (!idValidation) {
+    return res.status(400).json({ error: "id de empleado invalida" });
+  }
+  const deletion = await userModel.deleteOne({ _id: id });
+  //const keyDeletion = await secureModel.deleteOne({ _id: id });
+  res.status(200).json(deletion);
 };
 
 module.exports = {

@@ -51,13 +51,21 @@ const EmployeeFormEdit = () => {
         `${apiURL}/api/empleadoCRUD/${selectedEmployee}`
       );
       const json = await response.json();
+
+      const keyPromise = await fetch(
+        `${apiURL}/api/empleadoCRUD/key/${selectedEmployee}`
+      );
+      const jsonkey = await keyPromise.json();
+      console.log(selectedEmployee, jsonkey);
+
       setNombre(json.nombre);
       setApellido(json.apellido);
       setTelefono(json.telefono);
       setCedula(json.cedula);
       setdireccion(json.direccion);
       setusuario(json.usuario);
-      setcontrasena(json.contrasena);
+      setcontrasena(jsonkey.key);
+      setPassConfirm(jsonkey.key);
     };
     fetchEmployeeData();
   }, [selectedEmployee]);

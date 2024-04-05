@@ -98,7 +98,7 @@ userSchema.statics.signup = async function (
   }
   if (!validator.isStrongPassword(contrasena)) {
     throw Error(
-      "La contraseña no es muy debil. Incluir mayúsculas,minúsculas, números y caracter especial"
+      "La contraseña es debil. Incluir mayúsculas,minúsculas, números y caracter especial"
     );
   }
 

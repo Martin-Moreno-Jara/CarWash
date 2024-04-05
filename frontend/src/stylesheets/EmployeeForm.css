@@ -1,8 +1,8 @@
 .main-container {
   height: 50vh;
-  width: auto;
+  width: 70%;
   background: #e1cbcbdb;
-  padding: 10px 200px 100px 50px;
+  padding: 10px 50px 100px 50px;
   border-radius: 5px;
   box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.5);
   overflow: hidden;
@@ -12,17 +12,33 @@
 }
 
 .form-fields {
+  width: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  flex-direction: column;
 }
 .form-fields input {
-  width: 250px;
+  width: 90%;
   margin-right: 20px;
 }
-.submit-btn {
-  border-radius: 20px;
+.form-div {
+  display: flex;
+  flex-direction: column;
 }
+.submit-btn {
+  border-radius: 5px;
+  background-color: var(--primary-color);
+  width: 120px;
+  padding: 10px;
+  text-align: center;
+  align-self: flex-end;
+  justify-content: flex-end;
+  margin-right: 50px;
+  cursor: pointer;
+}
+.submit-btn:hover {
+  background: #93cda1;
+}
+
 .closebtn {
   background-color: rgb(188, 195, 195);
   border-radius: 15px;

@@ -57,8 +57,7 @@ const createEmployee = async (req, res) => {
       usuario,
       contrasena
     );
-    const token = createToken(usuarioCreado._id, usuarioCreado.rol);
-    res.status(200).json({ usuario, token });
+    res.status(200).json(usuarioCreado);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

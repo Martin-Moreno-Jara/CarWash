@@ -18,4 +18,6 @@
   width: 95%;
   height: 65vh;
   border-radius: 5px;
+  overflow: hidden;
+  overflow-y: scroll;
 }

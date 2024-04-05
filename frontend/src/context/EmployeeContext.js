@@ -6,6 +6,8 @@ export const employeeReducer = (state, action) => {
   switch (action.type) {
     case "SET_EMPLEADOS":
       return { empleados: action.payload };
+    case "ADD_EMPLEADO":
+      return { empleados: [action.payload, ...state.empleados] };
     default:
       return { state };
   }

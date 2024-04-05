@@ -4,7 +4,10 @@ import EmployeeList from "../components/EmployeeList";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 import EmployeeFormEdit from "../components/EmployeeFormEdit";
 const CrudEmpleados = () => {
-  const { show, showEdit, dispatch } = useEmployeeCrudContext();
+  const { show, showEdit, selectedEmployee, dispatch } =
+    useEmployeeCrudContext();
+  console.log("employee", selectedEmployee);
+  console.log("show window edit", showEdit);
   return (
     <div className="crudEmpleados-main">
       <div className="empleado-options">
@@ -22,14 +25,17 @@ const CrudEmpleados = () => {
           >
             Crear empleado
           </div>
-          <div
-            className="empleado-manage-btn"
+          <button
+            className={
+              selectedEmployee ? "empleado-manage-btn" : "disabled-btn"
+            }
+            disabled={!selectedEmployee ? true : false}
             onClick={() => {
               dispatch({ type: "SHOW_EDIT_DIALOG", payload: !showEdit });
             }}
           >
             Editar empleado
-          </div>
+          </button>
         </div>
       </div>
       <div className="div-list">

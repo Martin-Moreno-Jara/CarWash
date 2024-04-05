@@ -3,8 +3,9 @@ import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 import "../stylesheets/EmployeeForm.css";
 
 const EmployeeFormEdit = () => {
-  const { showEdit, dispatch } = useEmployeeCrudContext();
+  const { showEdit, selectedEmployee, dispatch } = useEmployeeCrudContext();
 
+  console.log(selectedEmployee);
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [telefono, setTelefono] = useState("");
@@ -75,7 +76,7 @@ const EmployeeFormEdit = () => {
           dispatch({ type: "SHOW_EDIT_DIALOG", payload: !showEdit });
         }}
       >
-        <span class="material-symbols-outlined">close</span>
+        <span className="material-symbols-outlined">close</span>
       </div>
       <h1>Edición de empleado</h1>
       <h2>Ingrese la nueva información del empleado</h2>

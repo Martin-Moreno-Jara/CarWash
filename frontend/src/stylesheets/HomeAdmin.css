@@ -29,7 +29,8 @@
 .homeAdmin-options p {
   text-align: justify;
 }
-.empleado-manage-btn {
+.empleado-manage-btn,
+.disabled-btn {
   border: 1px solid var(--secondary-color);
   color: var(--secondary-color);
   background-color: var(--third-color);
@@ -41,6 +42,10 @@
   border-radius: 5px;
   cursor: pointer;
   margin-bottom: 20px;
+}
+.disabled-btn {
+  background: rgb(190, 178, 178);
+  cursor: auto;
 }
 .empleado-manage-btn:hover {
   font-weight: bold;

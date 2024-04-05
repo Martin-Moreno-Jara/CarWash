@@ -2,6 +2,7 @@ import { createContext, useEffect, useReducer } from "react";
 export const EmployeeCrudContext = createContext();
 
 export const employeeCrudReducer = (state, action) => {
+  console.log(state.selectedEmployee);
   switch (action.type) {
     case "SHOW_CREATE_DIALOG":
       return { show: action.payload };
@@ -20,9 +21,11 @@ export const EmployeeCrudContextProvider = ({ children }) => {
     dispatch({ type: "SHOW_MORE_DIALOG", payload: false });
   }, []);
   const [state, dispatch] = useReducer(employeeCrudReducer, {
-    show: null,
-    showEdit: null,
-    showMore: null,
+    state: {
+      show: null,
+      showEdit: null,
+      showMore: null,
+    },
   });
   return (
     <EmployeeCrudContext.Provider value={{ ...state, dispatch }}>

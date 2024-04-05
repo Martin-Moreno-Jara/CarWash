@@ -8,6 +8,9 @@ const EmployeeFormEdit = () => {
   const { showEdit, dispatch } = useEmployeeCrudContext();
   const { selectedEmployee } = useSelectContext();
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassConfirm, setShowPassConfirm] = useState(false);
+
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [telefono, setTelefono] = useState("");
@@ -54,9 +57,10 @@ const EmployeeFormEdit = () => {
       setCedula(json.cedula);
       setdireccion(json.direccion);
       setusuario(json.usuario);
+      setcontrasena(json.contrasena);
     };
     fetchEmployeeData();
-  }, []);
+  }, [selectedEmployee]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
@@ -112,11 +116,22 @@ const EmployeeFormEdit = () => {
             <label>dirección</label>
             <input type="text" onChange={handleDireccion} value={direccion} />
             <label>contraseña</label>
-            <input
-              type="password"
-              onChange={handlecontrasena}
-              value={contrasena}
-            />
+            <div className="password-field-div">
+              <input
+                className="password-field"
+                type={showPassword ? "text" : "password"}
+                onChange={handlecontrasena}
+                value={contrasena}
+              />
+              <span
+                className="material-symbols-outlined see"
+                onClick={() => {
+                  setShowPassword(!showPassword);
+                }}
+              >
+                visibility_off
+              </span>
+            </div>
           </div>
           <div>
             <label>apellido</label>
@@ -126,11 +141,22 @@ const EmployeeFormEdit = () => {
             <label>nombre de usuario</label>
             <input type="text" onChange={handleusuario} value={usuario} />
             <label>Confirmar contraseña</label>
-            <input
-              type="password"
-              onChange={handlePassConfirm}
-              value={passConfirm}
-            />
+            <div className="password-field-div">
+              <input
+                className="password-field"
+                type={showPassword ? "text" : "password"}
+                onChange={handlePassConfirm}
+                value={passConfirm}
+              />
+              <span
+                className="material-symbols-outlined see"
+                onClick={() => {
+                  setShowPassConfirm(!showPassConfirm);
+                }}
+              >
+                visibility_off
+              </span>
+            </div>
           </div>
         </div>
         <button className="submit-btn">Editar empleado</button>

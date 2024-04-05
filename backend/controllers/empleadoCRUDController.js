@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
+const bcrypt = require("bcrypt");
 
 const createToken = (_id, rol) => {
   return jwt.sign({ _id, rol }, process.env.SECRET_STRING, {
@@ -27,6 +28,7 @@ const getEmployee = async (req, res) => {
   }
 
   const employee = await userModel.findById(id);
+
   if (!employee) {
     return res.status(400).json({ error: "Error buscando al empleado" });
   }

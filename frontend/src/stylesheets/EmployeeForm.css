@@ -20,6 +20,7 @@
   width: 90%;
   margin-right: 20px;
 }
+
 .form-div {
   display: flex;
   flex-direction: column;
@@ -37,6 +38,18 @@
 }
 .submit-btn:hover {
   background: #93cda1;
+}
+.password-field {
+  margin-right: 0;
+}
+.password-field-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 45px;
+}
+.see {
+  cursor: pointer;
 }
 
 .closebtn {

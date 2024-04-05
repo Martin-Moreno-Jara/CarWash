@@ -1,6 +1,10 @@
 import { useState } from "react";
+import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
+
 import "../stylesheets/EmployeeForm.css";
-const EmployeeFormAdd = ({ mostrar }) => {
+const EmployeeFormAdd = () => {
+  const { show, dispatch } = useEmployeeCrudContext();
+
   const [nombre, setNombre] = useState("");
   const handleNombre = (e) => {
     setNombre(e.target.value);
@@ -10,7 +14,7 @@ const EmployeeFormAdd = ({ mostrar }) => {
       <div
         className="closebtn"
         onClick={() => {
-          return !mostrar;
+          dispatch({ type: "SHOW_CREATE_DIALOG", payload: !show });
         }}
       >
         <span class="material-symbols-outlined">close</span>

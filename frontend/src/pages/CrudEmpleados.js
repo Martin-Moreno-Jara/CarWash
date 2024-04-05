@@ -3,11 +3,10 @@ import EmployeeFormAdd from "../components/EmployeeFormAdd";
 import EmployeeList from "../components/EmployeeList";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 import EmployeeFormEdit from "../components/EmployeeFormEdit";
+import { useSelectContext } from "../hooks/useSelectContext";
 const CrudEmpleados = () => {
-  const { show, showEdit, selectedEmployee, dispatch } =
-    useEmployeeCrudContext();
-  console.log("employee", selectedEmployee);
-  console.log("show window edit", showEdit);
+  const { show, showEdit, dispatch } = useEmployeeCrudContext();
+  const { selectedEmployee } = useSelectContext();
   return (
     <div className="crudEmpleados-main">
       <div className="empleado-options">

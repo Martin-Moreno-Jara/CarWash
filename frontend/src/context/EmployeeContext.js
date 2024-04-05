@@ -6,17 +6,13 @@ export const employeeReducer = (state, action) => {
   switch (action.type) {
     case "SET_EMPLEADOS":
       return { empleados: action.payload };
-    case "SELECT":
-      return { selected: action.payload };
     default:
       return { state };
   }
 };
 
 export const EmployeeContextProvider = ({ children }) => {
-  useEffect(() => {
-    dispatch({ type: "SELECT", payload: false });
-  }, []);
+  useEffect(() => {}, []);
 
   const [state, dispatch] = useReducer(employeeReducer, { state: null });
   return (

@@ -1,13 +1,25 @@
 import { useState } from "react";
 import "../stylesheets/EmployeeForm.css";
-const EmployeeFormAdd = () => {
+const EmployeeFormAdd = ({ mostrar }) => {
   const [nombre, setNombre] = useState("");
   const handleNombre = (e) => {
     setNombre(e.target.value);
   };
   return (
     <div className="main-container">
-      <h2>Ingrese la información del empleado</h2>
+      <div
+        className="closebtn"
+        onClick={() => {
+          return !mostrar;
+        }}
+      >
+        <span class="material-symbols-outlined">close</span>
+      </div>
+      <h2>Ingrese la información del nuevo empleado</h2>
+      <p>
+        La contraseña asiganada debe tener mayúsculas, minúsculas, números y
+        carácteres espciales
+      </p>
       <form>
         <div className="form-fields">
           <div>

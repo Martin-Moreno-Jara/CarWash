@@ -8,6 +8,7 @@ import { useAuthContext } from "./hooks/useAuthContext";
 import HomeAdmin from "./pages/HomeAdmin";
 import HomeEmpleado from "./pages/HomeEmpleado";
 import CrudEmpleados from "./pages/CrudEmpleados";
+import { EmployeeContextProvider } from "./context/EmployeeContext";
 
 function App() {
   const { usuario } = useAuthContext();

@@ -22,7 +22,7 @@ const EmployeeList = () => {
       }
     };
     fetchEmployees();
-  }, []);
+  }, [dispatch]);
 
   const { selected } = useEmployeeContext();
   const { selectEmployee } = useSelectEmployee();

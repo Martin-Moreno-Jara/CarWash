@@ -1,10 +1,14 @@
 .main-container {
   height: 50vh;
-  width: 50vh;
+  width: auto;
   background: #e1cbcbdb;
   padding: 10px 200px 100px 50px;
   border-radius: 5px;
   box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-fields {
@@ -18,4 +22,16 @@
 }
 .submit-btn {
   border-radius: 20px;
+}
+.closebtn {
+  background-color: rgb(188, 195, 195);
+  border-radius: 15px;
+  width: 30px;
+  cursor: pointer;
+  align-self: flex-end;
+}
+.closebtn:hover {
+  background-color: rgb(188, 81, 81);
+  color: white;
+  font-weight: bold;
 }

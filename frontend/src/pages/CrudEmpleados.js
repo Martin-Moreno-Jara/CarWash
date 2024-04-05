@@ -2,8 +2,9 @@ import "../stylesheets/CrudEmpleados.css";
 import EmployeeFormAdd from "../components/EmployeeFormAdd";
 import EmployeeList from "../components/EmployeeList";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
+import EmployeeFormEdit from "../components/EmployeeFormEdit";
 const CrudEmpleados = () => {
-  const { show, dispatch } = useEmployeeCrudContext();
+  const { show, showEdit, dispatch } = useEmployeeCrudContext();
   return (
     <div className="crudEmpleados-main">
       <div className="empleado-options">
@@ -21,13 +22,25 @@ const CrudEmpleados = () => {
           >
             Crear empleado
           </div>
-          <div className="empleado-manage-btn">Editar empleado</div>
+          <div
+            className="empleado-manage-btn"
+            onClick={() => {
+              dispatch({ type: "SHOW_EDIT_DIALOG", payload: !showEdit });
+            }}
+          >
+            Editar empleado
+          </div>
         </div>
       </div>
       <div className="div-list">
         {show && (
           <div className="div-background">
             <EmployeeFormAdd />
+          </div>
+        )}
+        {showEdit && (
+          <div className="div-background">
+            <EmployeeFormEdit />
           </div>
         )}
         <div className="actual-list">

@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
-import { useSignup } from "../hooks/useSignup";
 import "../stylesheets/EmployeeForm.css";
 
-const EmployeeFormAdd = () => {
-  const { show, dispatch } = useEmployeeCrudContext();
-  const { signupEmployee, error, setError, isLoading } = useSignup();
+const EmployeeFormEdit = () => {
+  const { showEdit, dispatch } = useEmployeeCrudContext();
 
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
@@ -15,6 +13,7 @@ const EmployeeFormAdd = () => {
   const [usuario, setusuario] = useState("");
   const [contrasena, setcontrasena] = useState("");
   const [passConfirm, setPassConfirm] = useState("");
+
   const handleNombre = (e) => {
     setNombre(e.target.value);
   };
@@ -52,20 +51,20 @@ const EmployeeFormAdd = () => {
       passConfirm
     ) {
       if (passConfirm !== contrasena) {
-        setError("Las contraseñas no coinciden");
+        // setError("Las contraseñas no coinciden");
         return;
       }
-      await signupEmployee(
-        nombre,
-        apellido,
-        telefono,
-        cedula,
-        direccion,
-        usuario,
-        contrasena
-      );
+      //   await signupEmployee(
+      //     nombre,
+      //     apellido,
+      //     telefono,
+      //     cedula,
+      //     direccion,
+      //     usuario,
+      //     contrasena
+      //   );
     } else {
-      setError("Todos los campos deben ser llenados");
+      //   setError("Todos los campos deben ser llenados");
     }
   };
   return (
@@ -73,13 +72,13 @@ const EmployeeFormAdd = () => {
       <div
         className="closebtn"
         onClick={() => {
-          dispatch({ type: "SHOW_CREATE_DIALOG", payload: !show });
+          dispatch({ type: "SHOW_EDIT_DIALOG", payload: !showEdit });
         }}
       >
         <span class="material-symbols-outlined">close</span>
       </div>
-      <h1>Creación de empleado</h1>
-      <h2>Ingrese la información del nuevo empleado</h2>
+      <h1>Edición de empleado</h1>
+      <h2>Ingrese la nueva información del empleado</h2>
       <p>
         La contraseña asiganada debe tener mayúsculas, minúsculas, números y
         carácteres espciales
@@ -109,8 +108,7 @@ const EmployeeFormAdd = () => {
         </div>
         <button className="submit-btn">Crear empleado</button>
       </form>
-      {error && <div className="error">{error}</div>}
     </div>
   );
 };
-export default EmployeeFormAdd;
+export default EmployeeFormEdit;

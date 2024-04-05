@@ -46,16 +46,13 @@ const EmployeeList = () => {
                       apellido={empleado.apellido}
                       usuario={empleado.usuario}
                       telefono={empleado.telefono}
+                      cedula={empleado.cedula}
                     />
                   }
                 </label>
               </>
             ))}
         </div>
-      </div>
-      <div className="empleados-actions">
-        <div className="action-btn">Ver</div>
-        <div className="action-btn">Eliminar</div>
       </div>
     </>
   );

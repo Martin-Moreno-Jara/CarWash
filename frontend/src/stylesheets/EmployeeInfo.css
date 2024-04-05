@@ -1,12 +1,12 @@
 .empleadoInfo-main,
 .seleccionado {
   max-width: 700px;
-  height: 50px;
+  height: 90px;
   margin: 10px 5px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   background: #ccbeb7;
   border-radius: 4px;
 }
@@ -18,4 +18,32 @@
 
 .seleccionado {
   background: var(--accept);
+}
+.icons {
+  margin: 10px 20px 10px 15px;
+}
+.icons-data {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.empleadoInfo-btn {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+.empleado-btn {
+  background-color: rgb(187, 223, 183);
+  border-radius: 15px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.show-more:hover {
+  background-color: rgb(99, 209, 215);
+  color: #fff;
+}
+.delete:hover {
+  background-color: rgb(155, 58, 58);
+  color: #fff;
 }

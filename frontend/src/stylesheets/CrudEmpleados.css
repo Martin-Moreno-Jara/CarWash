@@ -1,11 +1,36 @@
 .crudEmpleados-main {
   display: grid;
-  grid-template-areas: "lista formulario";
-  grid-template-columns: 4fr 3fr;
+  grid-template-areas: "sidebar lista";
+  grid-template-columns: 1fr 5fr;
   background-image: linear-gradient(rgba(5, 7, 12, 0.6), rgba(5, 7, 12, 0.6)),
     url(../images/crud_empleado.jpg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   height: 85vh;
+}
+.empleado-options {
+  color: #fff;
+  background: rgba(5, 7, 12, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px;
+  text-align: justify;
+}
+.actual-list {
+  grid-area: main;
+}
+.div-list {
+  display: grid;
+  grid-template-areas:
+    ". . ."
+    ". main ."
+    ". . .";
+
+  grid-template-columns: 1fr 6fr 1fr;
+  grid-template-rows: auto;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
 }

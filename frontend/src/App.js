@@ -42,7 +42,10 @@ function App() {
               path="/empleado"
               element={usuario ? <HomeEmpleado /> : <Navigate to="/" />}
             />
-            <Route path="/admin/empleadoCrud" element={<CrudEmpleados />} />
+            <Route
+              path="/admin/empleadoCrud"
+              element={usuario ? <CrudEmpleados /> : <Navigate to="/" />}
+            />
           </Routes>
         </div>
         <Footer />

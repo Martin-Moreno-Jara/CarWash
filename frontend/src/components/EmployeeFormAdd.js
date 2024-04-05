@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../stylesheets/EmployeeForm.css";
-const EmployeeForm = () => {
+const EmployeeFormAdd = () => {
   const [nombre, setNombre] = useState("");
   const handleNombre = (e) => {
     setNombre(e.target.value);
@@ -36,4 +36,4 @@ const EmployeeForm = () => {
     </div>
   );
 };
-export default EmployeeForm;
+export default EmployeeFormAdd;

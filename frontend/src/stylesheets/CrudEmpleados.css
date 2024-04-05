@@ -22,15 +22,15 @@
   grid-area: main;
 }
 .div-list {
-  display: grid;
+  /* display: grid;
   grid-template-areas:
     ". . ."
     ". main ."
-    ". . .";
+    ". . ."; */
 
-  grid-template-columns: 1fr 6fr 1fr;
-  grid-template-rows: auto;
-  /* display: flex;
+  /* grid-template-columns: 1fr 6fr 1fr;
+  grid-template-rows: auto; */
+  display: flex;
   justify-content: center;
-  align-items: center; */
+  align-items: center;
 }

@@ -3,8 +3,8 @@
   flex-direction: column;
   align-items: center;
   background: #fff;
-  max-width: 800px;
-  height: 65vh;
+  min-width: 1050px;
+  height: 70vh;
   border-radius: 10px;
   margin-left: 25px;
   margin-bottom: 15px;
@@ -15,7 +15,7 @@
 }
 .details-container {
   background: #acabab;
-  width: 90%;
-  height: 60vh;
+  width: 95%;
+  height: 65vh;
   border-radius: 5px;
 }

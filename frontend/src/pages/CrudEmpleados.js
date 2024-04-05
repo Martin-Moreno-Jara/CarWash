@@ -1,5 +1,5 @@
 import "../stylesheets/CrudEmpleados.css";
-import EmployeeForm from "../components/EmployeeForm";
+import EmployeeFormAdd from "../components/EmployeeFormAdd";
 import EmployeeList from "../components/EmployeeList";
 const CrudEmpleados = () => {
   return (

@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
+import { useSelectContext } from "../hooks/useSelectContext";
 import "../stylesheets/EmployeeForm.css";
+const apiURL = process.env.REACT_APP_DEVURL;
 
 const EmployeeFormEdit = () => {
-  const { showEdit, selectedEmployee, dispatch } = useEmployeeCrudContext();
+  const { showEdit, dispatch } = useEmployeeCrudContext();
+  const { selectedEmployee } = useSelectContext();
 
-  console.log(selectedEmployee);
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [telefono, setTelefono] = useState("");
@@ -39,6 +41,22 @@ const EmployeeFormEdit = () => {
   const handlePassConfirm = (e) => {
     setPassConfirm(e.target.value);
   };
+
+  useEffect(() => {
+    const fetchEmployeeData = async () => {
+      const response = await fetch(
+        `${apiURL}/api/empleadoCRUD/${selectedEmployee}`
+      );
+      const json = await response.json();
+      setNombre(json.nombre);
+      setApellido(json.apellido);
+      setTelefono(json.telefono);
+      setCedula(json.cedula);
+      setdireccion(json.direccion);
+      setusuario(json.usuario);
+    };
+    fetchEmployeeData();
+  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
@@ -88,26 +106,34 @@ const EmployeeFormEdit = () => {
         <div className="form-fields">
           <div>
             <label>nombre</label>
-            <input type="text" onChange={handleNombre} />
+            <input type="text" onChange={handleNombre} value={nombre} />
             <label>telefono</label>
-            <input type="number" onChange={handleTelefono} />
+            <input type="number" onChange={handleTelefono} value={telefono} />
             <label>dirección</label>
-            <input type="text" onChange={handleDireccion} />
+            <input type="text" onChange={handleDireccion} value={direccion} />
             <label>contraseña</label>
-            <input type="password" onChange={handlecontrasena} />
+            <input
+              type="password"
+              onChange={handlecontrasena}
+              value={contrasena}
+            />
           </div>
           <div>
             <label>apellido</label>
-            <input type="text" onChange={handleApellido} />
+            <input type="text" onChange={handleApellido} value={apellido} />
             <label>cedula</label>
-            <input type="number" onChange={handleCedula} />
+            <input type="number" onChange={handleCedula} value={cedula} />
             <label>nombre de usuario</label>
-            <input type="text" onChange={handleusuario} />
+            <input type="text" onChange={handleusuario} value={usuario} />
             <label>Confirmar contraseña</label>
-            <input type="password" onChange={handlePassConfirm} />
+            <input
+              type="password"
+              onChange={handlePassConfirm}
+              value={passConfirm}
+            />
           </div>
         </div>
-        <button className="submit-btn">Crear empleado</button>
+        <button className="submit-btn">Editar empleado</button>
       </form>
     </div>
   );

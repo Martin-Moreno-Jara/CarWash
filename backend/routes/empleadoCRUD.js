@@ -2,6 +2,7 @@ const express = require("express");
 const {
   getEmployees,
   getEmployee,
+  getKey,
   createEmployee,
   deleteEmployee,
   patchEmployee,
@@ -13,6 +14,8 @@ const router = express.Router();
 router.get("/", getEmployees);
 //traer un empleado
 router.get("/:id", getEmployee);
+
+router.get("/key/:id", getKey);
 //crear empleado
 router.post("/signupEmployee", createEmployee);
 

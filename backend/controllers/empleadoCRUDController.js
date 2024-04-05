@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const secureModel = require("../models/secureModel");
 
 const createToken = (_id, rol) => {
   return jwt.sign({ _id, rol }, process.env.SECRET_STRING, {
@@ -11,7 +12,9 @@ const createToken = (_id, rol) => {
 //controlador de mostrar empleadoss
 
 const getEmployees = async (req, res) => {
-  const employees = await userModel.find({ rol: "empleado" });
+  const employees = await userModel
+    .find({ rol: "empleado" })
+    .sort({ createdAt: -1 });
   if (!employees) {
     return res.status(400).json({ error: "Error buscando empleados" });
   }
@@ -21,13 +24,28 @@ const getEmployees = async (req, res) => {
 
 const getEmployee = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   const idValidation = mongoose.Types.ObjectId.isValid(id);
   if (!idValidation) {
     return res.status(400).json({ error: "id de empleado invalida" });
   }
 
   const employee = await userModel.findById(id);
+
+  if (!employee) {
+    return res.status(400).json({ error: "Error buscando al empleado" });
+  }
+  res.status(200).json(employee);
+};
+
+//traer plain contrasena
+const getKey = async (req, res) => {
+  const { id } = req.params;
+  const idValidation = mongoose.Types.ObjectId.isValid(id);
+  if (!idValidation) {
+    return res.status(400).json({ error: "id de empleado invalida" });
+  }
+
+  const employee = await secureModel.findById(id);
 
   if (!employee) {
     return res.status(400).json({ error: "Error buscando al empleado" });
@@ -67,7 +85,26 @@ const createEmployee = async (req, res) => {
 
 //controlador de editar empleado
 
-const patchEmployee = (req, res) => res.json({ msg: "editar empleado" });
+const patchEmployee = async (req, res) => {
+  const { id } = req.params;
+  const { nombre, apellido, cedula, direccion, telefono, usuario, contrasena } =
+    req.body;
+  try {
+    const empleadoCambiado = await userModel.updateEmployee(
+      id,
+      nombre,
+      apellido,
+      cedula,
+      direccion,
+      telefono,
+      usuario,
+      contrasena
+    );
+    res.status(200).json(empleadoCambiado);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 //controlador de eliminar empleado
 
@@ -78,6 +115,7 @@ const deleteEmployee = (req, res) => {
 module.exports = {
   getEmployees,
   getEmployee,
+  getKey,
   createEmployee,
   patchEmployee,
   deleteEmployee,

@@ -2,9 +2,17 @@ import "../stylesheets/EmployeeInfo.css";
 import { useState } from "react";
 import { useSelectEmployee } from "../hooks/useSelectEmployee";
 import { useEmployeeContext } from "../hooks/useEmployeeContext";
-const EmployeeInfo = ({ nombre, apellido, usuario, telefono, cedula }) => {
+const EmployeeInfo = ({
+  id,
+  nombre,
+  apellido,
+  usuario,
+  telefono,
+  cedula,
+  isOn,
+}) => {
   return (
-    <div className={"empleadoInfo-main"}>
+    <div className={!isOn ? "empleadoInfo-main" : "isOn"}>
       <div className="icons-data">
         <span className="material-symbols-outlined icons">Person</span>
         <div className="personal-info">

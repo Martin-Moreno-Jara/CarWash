@@ -1,5 +1,5 @@
 .empleadoInfo-main,
-.seleccionado {
+.isOn {
   min-width: 700px;
   height: 90px;
   margin: 10px 5px;
@@ -10,6 +10,11 @@
   background: #ccbeb7;
   border-radius: 4px;
 }
+.isOn {
+  background: #a6e397;
+  border: 1px solid rgb(24, 66, 24);
+}
+
 .empleadoInfo-main:hover {
   background: #fff;
   border: 1px solid black;

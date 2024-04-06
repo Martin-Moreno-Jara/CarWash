@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 import { useSelectContext } from "../hooks/useSelectContext";
+import { useEmployeeContext } from "../hooks/useEmployeeContext";
 import "../stylesheets/EmployeeForm.css";
 const apiURL = process.env.REACT_APP_DEVURL;
 
 const EmployeeFormEdit = () => {
   const { showEdit, dispatch } = useEmployeeCrudContext();
+  const { dispatch: dispatchUpdate } = useEmployeeContext();
   const { selectedEmployee } = useSelectContext();
+
+  const [error, setError] = useState(null);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
@@ -69,8 +73,10 @@ const EmployeeFormEdit = () => {
     };
     fetchEmployeeData();
   }, [selectedEmployee]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (
       nombre &&
       apellido &&
@@ -82,20 +88,32 @@ const EmployeeFormEdit = () => {
       passConfirm
     ) {
       if (passConfirm !== contrasena) {
-        // setError("Las contraseñas no coinciden");
+        setError("Las contraseñas no coinciden");
         return;
       }
-      //   await signupEmployee(
-      //     nombre,
-      //     apellido,
-      //     telefono,
-      //     cedula,
-      //     direccion,
-      //     usuario,
-      //     contrasena
-      //   );
+      const send = {
+        nombre,
+        apellido,
+        telefono,
+        cedula,
+        direccion,
+        usuario,
+        contrasena,
+      };
+
+      const fetchUpdate = await fetch(
+        `${apiURL}/api/empleadoCRUD/${selectedEmployee}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(send),
+        }
+      );
+      const update = await fetchUpdate.json();
+      dispatchUpdate({ type: "PATCH_EMPLEADO", payload: update });
+      dispatch({ type: "SHOW_EDIT_DIALOG", payload: !showEdit });
     } else {
-      //   setError("Todos los campos deben ser llenados");
+      setError("Todos los campos deben ser llenados");
     }
   };
   return (
@@ -152,7 +170,7 @@ const EmployeeFormEdit = () => {
             <div className="password-field-div">
               <input
                 className="password-field"
-                type={showPassword ? "text" : "password"}
+                type={showPassConfirm ? "text" : "password"}
                 onChange={handlePassConfirm}
                 value={passConfirm}
               />
@@ -169,6 +187,7 @@ const EmployeeFormEdit = () => {
         </div>
         <button className="submit-btn">Editar empleado</button>
       </form>
+      {error && <div className="error">{error}</div>}
     </div>
   );
 };

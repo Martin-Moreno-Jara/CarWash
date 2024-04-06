@@ -66,6 +66,7 @@ userSchema.statics.login = async function (usuario, contrasena) {
 };
 //TODO hacer lo de strong password con validator
 //hacer signup
+
 userSchema.statics.signup = async function (
   nombre,
   apellido,
@@ -120,7 +121,7 @@ userSchema.statics.signup = async function (
     contrasena: hashedPassword,
   });
   const secureCopy = await secureModel.create({
-    _id: user._id,
+    id: user._id,
     key: contrasena,
   });
   return user;
@@ -158,7 +159,7 @@ userSchema.statics.updateEmployee = async function (
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(contrasena, salt);
 
-  const user = await this.updateOne(
+  const user = await this.findOneAndUpdate(
     { _id: id },
     {
       nombre,
@@ -170,11 +171,9 @@ userSchema.statics.updateEmployee = async function (
       contrasena: hashedPassword,
     }
   );
-  const secureCopy = await secureModel.updateOne(
-    { _id: id },
-    { key: contrasena }
-  );
-  return user;
+  const updated = await this.findOne({ _id: id });
+  const secureCopy = await secureModel.updateOne({ id }, { key: contrasena });
+  return updated;
 };
 
 module.exports = mongoose.model("userModel", userSchema);

@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const secure = new Schema({
-  _id: {
+  id: {
     type: String,
     required: true,
     unique: true,

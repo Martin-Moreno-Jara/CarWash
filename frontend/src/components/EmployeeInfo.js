@@ -12,6 +12,7 @@ const EmployeeInfo = ({
   isOn,
 }) => {
   const { dispatch } = useEmployeeContext();
+
   const handleDelete = async () => {
     const response = await fetch(`${apiURL}/api/empleadoCRUD/${id}`, {
       method: "DELETE",

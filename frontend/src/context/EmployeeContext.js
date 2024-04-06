@@ -9,7 +9,14 @@ export const employeeReducer = (state, action) => {
     case "ADD_EMPLEADO":
       return { empleados: [action.payload, ...state.empleados] };
     case "PATCH_EMPLEADO":
-      return {};
+      const updatedIndex = state.empleados.findIndex(
+        (empleado) => empleado._id === action.payload._id
+      );
+      const updatedArray = [...state.empleados];
+      updatedArray[updatedIndex] = action.payload;
+      return {
+        empleados: updatedArray,
+      };
     case "DELETE_EMPLEADO":
       return {
         empleados: state.empleados.filter(
@@ -17,7 +24,7 @@ export const employeeReducer = (state, action) => {
         ),
       };
     default:
-      return { state };
+      return state;
   }
 };
 

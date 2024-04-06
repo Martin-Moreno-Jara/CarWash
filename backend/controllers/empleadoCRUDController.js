@@ -45,7 +45,7 @@ const getKey = async (req, res) => {
     return res.status(400).json({ error: "id de empleado invalida" });
   }
 
-  const employee = await secureModel.findById(id);
+  const employee = await secureModel.findOne({ id });
 
   if (!employee) {
     return res.status(400).json({ error: "Error buscando al empleado" });
@@ -89,7 +89,18 @@ const patchEmployee = async (req, res) => {
   const { id } = req.params;
   const { nombre, apellido, cedula, direccion, telefono, usuario, contrasena } =
     req.body;
+
   try {
+    console.log(
+      id,
+      nombre,
+      apellido,
+      cedula,
+      direccion,
+      telefono,
+      usuario,
+      contrasena
+    );
     const empleadoCambiado = await userModel.updateEmployee(
       id,
       nombre,
@@ -118,7 +129,7 @@ const deleteEmployee = async (req, res) => {
     return res.status(400).json({ error: "id de empleado invalida" });
   }
   const deletion = await userModel.findOneAndDelete({ _id: id });
-  //const keyDeletion = await secureModel.deleteOne({ _id: id });
+  const keyDeletion = await secureModel.deleteOne({ id });
   res.status(200).json(deletion);
 };
 

@@ -7,7 +7,7 @@ const apiURL = process.env.REACT_APP_DEVURL;
 
 const EmployeeList = () => {
   const { empleados, dispatch } = useEmployeeContext();
-  const { selectedEmployee, dispatch: dispatchIsSelected } = useSelectContext();
+  const { dispatch: dispatchIsSelected } = useSelectContext();
 
   const [selectedCheckbox, setSelectedCheckbox] = useState(null);
 

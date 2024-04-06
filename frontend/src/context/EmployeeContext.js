@@ -8,6 +8,14 @@ export const employeeReducer = (state, action) => {
       return { empleados: action.payload };
     case "ADD_EMPLEADO":
       return { empleados: [action.payload, ...state.empleados] };
+    case "PATCH_EMPLEADO":
+      return {};
+    case "DELETE_EMPLEADO":
+      return {
+        empleados: state.empleados.filter(
+          (empleado) => empleado._id !== action.payload._id
+        ),
+      };
     default:
       return { state };
   }

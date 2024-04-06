@@ -117,7 +117,7 @@ const deleteEmployee = async (req, res) => {
   if (!idValidation) {
     return res.status(400).json({ error: "id de empleado invalida" });
   }
-  const deletion = await userModel.deleteOne({ _id: id });
+  const deletion = await userModel.findOneAndDelete({ _id: id });
   //const keyDeletion = await secureModel.deleteOne({ _id: id });
   res.status(200).json(deletion);
 };

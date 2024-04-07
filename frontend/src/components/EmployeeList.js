@@ -1,27 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import EmployeeInfo from "../components/EmployeeInfo";
 import { useEmployeeContext } from "../hooks/useEmployeeContext";
-import { useSelectContext } from "../hooks/useSelectContext";
 import "../stylesheets/EmployeeList.css";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 const apiURL = process.env.REACT_APP_DEVURL;
 
 const EmployeeList = () => {
   const { empleados, dispatch } = useEmployeeContext();
-  const { show } = useEmployeeCrudContext();
-  const { dispatch: dispatchIsSelected } = useSelectContext();
-
-  const [selectedCheckbox, setSelectedCheckbox] = useState(null);
-
-  const handleCheckbox = (e) => {
-    if (selectedCheckbox === e.target.id) {
-      setSelectedCheckbox(null);
-      dispatchIsSelected({ type: "SELECT_EMPLOYEE", payload: null });
-      return;
-    }
-    setSelectedCheckbox(e.target.id);
-    dispatchIsSelected({ type: "SELECT_EMPLOYEE", payload: e.target.id });
-  };
+  const { show, showEdit } = useEmployeeCrudContext();
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -40,7 +26,11 @@ const EmployeeList = () => {
   }, [dispatch]);
 
   return (
-    <div className={show ? "empleadoLista-main-noblur" : "empleadoLista-main"}>
+    <div
+      className={
+        show || showEdit ? "empleadoLista-main-noblur" : "empleadoLista-main"
+      }
+    >
       <table>
         <caption>Tabla de empleados</caption>
         <tr>
@@ -54,17 +44,6 @@ const EmployeeList = () => {
         {empleados &&
           empleados.map((empleado) => (
             <>
-              {/* <input
-                type="checkbox"
-                name="empleados"
-                id={empleado._id}
-                checked={empleado._id === selectedCheckbox ? true : false}
-                onChange={handleCheckbox}
-              ></input>
-              <label
-                htmlFor={empleado._id}
-                className={selected ? "details-label" : ""}
-              > */}
               {
                 <EmployeeInfo
                   id={empleado._id}
@@ -73,10 +52,8 @@ const EmployeeList = () => {
                   usuario={empleado.usuario}
                   telefono={empleado.telefono}
                   cedula={empleado.cedula}
-                  isOn={empleado._id === selectedCheckbox ? true : false}
                 />
               }
-              {/* </label> */}
             </>
           ))}
       </table>

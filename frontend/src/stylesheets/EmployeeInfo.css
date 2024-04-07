@@ -1,5 +1,4 @@
-.empleadoInfo-main,
-.isOn {
+.empleadoInfo-main {
   min-width: 700px;
   height: 90px;
   margin: 10px 5px;
@@ -10,45 +9,13 @@
   background: #ccbeb7;
   border-radius: 4px;
 }
-.isOn {
-  background: #a6e397;
-  border: 1px solid rgb(24, 66, 24);
-}
+
 .row-actions {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.empleadoInfo-main:hover {
-  background: #fff;
-  border: 1px solid black;
-  font-weight: bold;
-}
-
-.seleccionado {
-  background: var(--accept);
-}
-.icons {
-  margin: 10px 20px 10px 15px;
-}
-.icons-data {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-.empleadoInfo-btn {
-  display: flex;
-  flex-direction: column;
-  margin-right: 20px;
-}
-.empleado-btn {
-  background-color: rgb(187, 223, 183);
-  border-radius: 15px;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
 .action-div {
   display: flex;
   padding: 0.1rem;

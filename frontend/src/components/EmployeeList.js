@@ -3,10 +3,12 @@ import EmployeeInfo from "../components/EmployeeInfo";
 import { useEmployeeContext } from "../hooks/useEmployeeContext";
 import { useSelectContext } from "../hooks/useSelectContext";
 import "../stylesheets/EmployeeList.css";
+import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 const apiURL = process.env.REACT_APP_DEVURL;
 
 const EmployeeList = () => {
   const { empleados, dispatch } = useEmployeeContext();
+  const { show } = useEmployeeCrudContext();
   const { dispatch: dispatchIsSelected } = useSelectContext();
 
   const [selectedCheckbox, setSelectedCheckbox] = useState(null);
@@ -37,16 +39,22 @@ const EmployeeList = () => {
     fetchEmployees();
   }, [dispatch]);
 
-  const { selected } = useEmployeeContext();
-
   return (
-    <div className="empleadoLista-main">
-      lista de empleados
-      <div className="details-container">
+    <div className={show ? "empleadoLista-main-noblur" : "empleadoLista-main"}>
+      <table>
+        <caption>Tabla de empleados</caption>
+        <tr>
+          <th>Nombre</th>
+          <th>Usuario</th>
+          <th>Telefono</th>
+          <th>Cédula</th>
+          <th>acciones</th>
+        </tr>
+
         {empleados &&
           empleados.map((empleado) => (
-            <div>
-              <input
+            <>
+              {/* <input
                 type="checkbox"
                 name="empleados"
                 id={empleado._id}
@@ -56,22 +64,22 @@ const EmployeeList = () => {
               <label
                 htmlFor={empleado._id}
                 className={selected ? "details-label" : ""}
-              >
-                {
-                  <EmployeeInfo
-                    id={empleado._id}
-                    nombre={empleado.nombre}
-                    apellido={empleado.apellido}
-                    usuario={empleado.usuario}
-                    telefono={empleado.telefono}
-                    cedula={empleado.cedula}
-                    isOn={empleado._id === selectedCheckbox ? true : false}
-                  />
-                }
-              </label>
-            </div>
+              > */}
+              {
+                <EmployeeInfo
+                  id={empleado._id}
+                  nombre={empleado.nombre}
+                  apellido={empleado.apellido}
+                  usuario={empleado.usuario}
+                  telefono={empleado.telefono}
+                  cedula={empleado.cedula}
+                  isOn={empleado._id === selectedCheckbox ? true : false}
+                />
+              }
+              {/* </label> */}
+            </>
           ))}
-      </div>
+      </table>
     </div>
   );
 };

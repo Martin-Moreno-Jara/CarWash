@@ -14,6 +14,11 @@
   background: #a6e397;
   border: 1px solid rgb(24, 66, 24);
 }
+.row-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
 .empleadoInfo-main:hover {
   background: #fff;
@@ -44,8 +49,22 @@
   margin-bottom: 10px;
   cursor: pointer;
 }
-.show-more:hover {
-  background-color: rgb(99, 209, 215);
+.action-div {
+  display: flex;
+  padding: 0.1rem;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: #b6b4bbfd;
+  border-radius: 12px;
+}
+.edit:hover {
+  background-color: #b3ad44;
+  color: #fff;
+}
+
+.showmore:hover {
+  background-color: rgb(101, 139, 141);
   color: #fff;
 }
 .delete:hover {

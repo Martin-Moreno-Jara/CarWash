@@ -3,10 +3,8 @@ import EmployeeFormAdd from "../components/EmployeeFormAdd";
 import EmployeeList from "../components/EmployeeList";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 import EmployeeFormEdit from "../components/EmployeeFormEdit";
-import { useSelectContext } from "../hooks/useSelectContext";
 const CrudEmpleados = () => {
   const { show, showEdit, dispatch } = useEmployeeCrudContext();
-  const { selectedEmployee } = useSelectContext();
   return (
     <div className="crudEmpleados-main">
       <div className="empleado-options">
@@ -24,17 +22,6 @@ const CrudEmpleados = () => {
           >
             Crear empleado
           </div>
-          <button
-            className={
-              selectedEmployee ? "empleado-manage-btn" : "disabled-btn"
-            }
-            disabled={!selectedEmployee ? true : false}
-            onClick={() => {
-              dispatch({ type: "SHOW_EDIT_DIALOG", payload: !showEdit });
-            }}
-          >
-            Editar empleado
-          </button>
         </div>
       </div>
       <div className="div-list">

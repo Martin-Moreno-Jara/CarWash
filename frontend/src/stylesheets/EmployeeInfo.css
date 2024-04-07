@@ -1,5 +1,4 @@
-.empleadoInfo-main,
-.isOn {
+.empleadoInfo-main {
   min-width: 700px;
   height: 90px;
   margin: 10px 5px;
@@ -10,42 +9,29 @@
   background: #ccbeb7;
   border-radius: 4px;
 }
-.isOn {
-  background: #a6e397;
-  border: 1px solid rgb(24, 66, 24);
-}
 
-.empleadoInfo-main:hover {
-  background: #fff;
-  border: 1px solid black;
-  font-weight: bold;
-}
-
-.seleccionado {
-  background: var(--accept);
-}
-.icons {
-  margin: 10px 20px 10px 15px;
-}
-.icons-data {
+.row-actions {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
 }
-.empleadoInfo-btn {
+
+.action-div {
   display: flex;
-  flex-direction: column;
-  margin-right: 20px;
-}
-.empleado-btn {
-  background-color: rgb(187, 223, 183);
-  border-radius: 15px;
-  margin-bottom: 10px;
+  padding: 0.1rem;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  background-color: #b6b4bbfd;
+  border-radius: 12px;
 }
-.show-more:hover {
-  background-color: rgb(99, 209, 215);
+.edit:hover {
+  background-color: #b3ad44;
+  color: #fff;
+}
+
+.showmore:hover {
+  background-color: rgb(101, 139, 141);
   color: #fff;
 }
 .delete:hover {

@@ -1,7 +1,7 @@
 .main-container {
   height: 50vh;
   width: 70%;
-  background: #e1cbcbdb;
+  background: #c1c3c0db;
   padding: 10px 50px 100px 50px;
   border-radius: 5px;
   box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.5);
@@ -9,6 +9,18 @@
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
+}
+.main-container::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+.main-container::-webkit-scrollbar-thumb {
+  border-radius: 0.5rem;
+  background-color: #0004;
+  visibility: hidden;
+}
+.main-container:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
 }
 
 .form-fields {
@@ -63,4 +75,7 @@
   background-color: rgb(188, 81, 81);
   color: white;
   font-weight: bold;
+}
+.submit-btn {
+  background: #95cc94;
 }

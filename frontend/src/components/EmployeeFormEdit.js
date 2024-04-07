@@ -126,11 +126,10 @@ const EmployeeFormEdit = () => {
       >
         <span className="material-symbols-outlined">close</span>
       </div>
-      <h1>Edición de empleado</h1>
       <h2>Ingrese la nueva información del empleado</h2>
       <p>
         La contraseña asiganada debe tener mayúsculas, minúsculas, números y
-        carácteres espciales
+        carácteres especiales
       </p>
       <form className="form-div" onSubmit={handleSubmit}>
         <div className="form-fields">
@@ -185,7 +184,7 @@ const EmployeeFormEdit = () => {
             </div>
           </div>
         </div>
-        <button className="submit-btn">Editar empleado</button>
+        <button className="submit-btn">Guardar Cambios</button>
       </form>
       {error && <div className="error">{error}</div>}
     </div>

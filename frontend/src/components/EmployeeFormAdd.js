@@ -78,7 +78,6 @@ const EmployeeFormAdd = () => {
       >
         <span class="material-symbols-outlined">close</span>
       </div>
-      <h1>Creación de empleado</h1>
       <h2>Ingrese la información del nuevo empleado</h2>
       <p>
         La contraseña asiganada debe tener mayúsculas, minúsculas, números y

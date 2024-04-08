@@ -88,20 +88,32 @@ const EmployeeFormAdd = () => {
           <div>
             <label>nombre</label>
             <input type="text" onChange={handleNombre} />
-            <label>telefono</label>
-            <input type="number" onChange={handleTelefono} />
-            <label>dirección</label>
-            <input type="text" onChange={handleDireccion} />
-            <label>contraseña</label>
-            <input type="password" onChange={handlecontrasena} />
           </div>
           <div>
             <label>apellido</label>
             <input type="text" onChange={handleApellido} />
+          </div>
+          <div>
+            <label>telefono</label>
+            <input type="number" onChange={handleTelefono} />
+          </div>
+          <div>
             <label>cedula</label>
             <input type="number" onChange={handleCedula} />
+          </div>
+          <div>
+            <label>dirección</label>
+            <input type="text" onChange={handleDireccion} />
+          </div>
+          <div>
             <label>nombre de usuario</label>
             <input type="text" onChange={handleusuario} />
+          </div>
+          <div>
+            <label>contraseña</label>
+            <input type="password" onChange={handlecontrasena} />
+          </div>
+          <div>
             <label>Confirmar contraseña</label>
             <input type="password" onChange={handlePassConfirm} />
           </div>

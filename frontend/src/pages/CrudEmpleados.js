@@ -27,7 +27,7 @@ const CrudEmpleados = () => {
           </div>
         </div>
       </div>
-      <div className="div-list">
+      <div className={show || showEdit ? "div-list-dark" : "div-list"}>
         {show && (
           <div className="div-background">
             <EmployeeFormAdd />
@@ -38,7 +38,7 @@ const CrudEmpleados = () => {
             <EmployeeFormEdit />
           </div>
         )}
-        <div className="actual-list">
+        <div className={show || showEdit ? "actual-list-none" : "actual-list"}>
           <EmployeeList />
         </div>
       </div>

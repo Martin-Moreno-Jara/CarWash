@@ -32,7 +32,6 @@ const EmployeeList = () => {
       }
     >
       <table>
-        <caption>Tabla de empleados</caption>
         <tr>
           <th>Nombre</th>
           <th>Usuario</th>

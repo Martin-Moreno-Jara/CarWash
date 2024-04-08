@@ -136,10 +136,28 @@ const EmployeeFormEdit = () => {
           <div>
             <label>nombre</label>
             <input type="text" onChange={handleNombre} value={nombre} />
+          </div>
+          <div>
+            <label>apellido</label>
+            <input type="text" onChange={handleApellido} value={apellido} />
+          </div>
+          <div>
             <label>telefono</label>
             <input type="number" onChange={handleTelefono} value={telefono} />
+          </div>
+          <div>
+            <label>cedula</label>
+            <input type="number" onChange={handleCedula} value={cedula} />
+          </div>
+          <div>
             <label>dirección</label>
             <input type="text" onChange={handleDireccion} value={direccion} />
+          </div>
+          <div>
+            <label>nombre de usuario</label>
+            <input type="text" onChange={handleusuario} value={usuario} />
+          </div>
+          <div>
             <label>contraseña</label>
             <div className="password-field-div">
               <input
@@ -159,31 +177,28 @@ const EmployeeFormEdit = () => {
             </div>
           </div>
           <div>
-            <label>apellido</label>
-            <input type="text" onChange={handleApellido} value={apellido} />
-            <label>cedula</label>
-            <input type="number" onChange={handleCedula} value={cedula} />
-            <label>nombre de usuario</label>
-            <input type="text" onChange={handleusuario} value={usuario} />
-            <label>Confirmar contraseña</label>
-            <div className="password-field-div">
-              <input
-                className="password-field"
-                type={showPassConfirm ? "text" : "password"}
-                onChange={handlePassConfirm}
-                value={passConfirm}
-              />
-              <span
-                className="material-symbols-outlined see"
-                onClick={() => {
-                  setShowPassConfirm(!showPassConfirm);
-                }}
-              >
-                visibility_off
-              </span>
+            <div>
+              <label>Confirmar contraseña</label>
+              <div className="password-field-div">
+                <input
+                  className="password-field"
+                  type={showPassConfirm ? "text" : "password"}
+                  onChange={handlePassConfirm}
+                  value={passConfirm}
+                />
+                <span
+                  className="material-symbols-outlined see"
+                  onClick={() => {
+                    setShowPassConfirm(!showPassConfirm);
+                  }}
+                >
+                  visibility_off
+                </span>
+              </div>
             </div>
           </div>
         </div>
+
         <button className="submit-btn">Guardar Cambios</button>
       </form>
       {error && <div className="error">{error}</div>}

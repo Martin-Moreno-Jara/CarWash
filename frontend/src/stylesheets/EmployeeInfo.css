@@ -13,7 +13,7 @@
 .row-actions {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .action-div {
@@ -24,6 +24,10 @@
   cursor: pointer;
   background-color: #b6b4bbfd;
   border-radius: 12px;
+  margin-right: 15px;
+}
+.delete {
+  margin-right: 0;
 }
 .edit:hover {
   background-color: #b3ad44;
@@ -37,4 +41,9 @@
 .delete:hover {
   background-color: rgb(155, 58, 58);
   color: #fff;
+}
+@media (max-width: 1000px) {
+  .action-div {
+    margin-right: 18px;
+  }
 }

@@ -76,7 +76,7 @@ const EmployeeFormAdd = () => {
           dispatch({ type: "SHOW_CREATE_DIALOG", payload: !show });
         }}
       >
-        <span class="material-symbols-outlined">close</span>
+        <span className="material-symbols-outlined">close</span>
       </div>
       <h2>Ingrese la información del nuevo empleado</h2>
       <p>

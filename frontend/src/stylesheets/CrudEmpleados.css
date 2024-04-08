@@ -19,12 +19,14 @@
   text-align: justify;
 }
 .actual-list {
-  grid-area: main;
+  width: 85%;
 }
 .div-list {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: auto;
+  height: auto;
 }
 .div-background {
   position: fixed;
@@ -34,4 +36,49 @@
   background: rgba(0, 0, 0, 0.7);
   width: 84%;
   height: 85%;
+}
+@media (max-width: 1000px) {
+  .crudEmpleados-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .empleado-options {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    padding: 0;
+  }
+  .description {
+    margin: 0px 25px;
+  }
+  .options-btns {
+    margin-right: 15px;
+  }
+  .div-list {
+    width: 100%;
+  }
+}
+@media (max-width: 580px) {
+  .empleado-options {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    padding: 0;
+  }
+  .empleado-options h2,
+  p {
+    font-size: 0.7em;
+  }
+  .empleado-options h2 {
+    font-size: 0.8em;
+  }
+  .empleado-manage-btn {
+    font-size: smaller;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 5px;
+  }
 }

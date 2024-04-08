@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const HomeAdmin = () => {
   return (
     <div className="homeAdmin-main">
-      <div className="homeAdmin-info">Home del admin</div>
+      <div className="homeAdmin-info"></div>
       <div className="homeAdmin-options">
         <div className="options-text">
           <h2>Bienvenido administrador</h2>

@@ -66,7 +66,7 @@ nav .inicio-sesion-div {
   border: 2px solid var(--secondary-color);
   background: var(--secondary-color);
   padding: 8px 12px;
-  border-radius: 20px;
+  border-radius: 15px;
   margin-right: 25px;
   cursor: pointer;
 }
@@ -78,4 +78,23 @@ nav .inicio-sesion-div:hover {
 
 .pages {
   margin: 0 auto;
+}
+@media (max-width: 500px) {
+  header a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: smaller;
+  }
+  header a img {
+    width: 80px;
+    margin-bottom: 0;
+  }
+  header a h1 {
+    margin-top: 0;
+  }
+  nav .inicio-sesion-div {
+    font-size: 0.91em;
+  }
 }

@@ -12,12 +12,10 @@ const NavBar = () => {
   return (
     <header>
       <div className="mainHeader-container">
-        <div className="logo-container">
-          <Link to={"/"}>
-            <img src={carwashlogo} alt="Logo de la aplicacion" />
-            <h1>Carwash</h1>
-          </Link>
-        </div>
+        <Link to={"/"} className="logo-container">
+          <img src={carwashlogo} alt="Logo de la aplicacion" />
+          <h1>Carwash</h1>
+        </Link>
         {usuario && (
           <div className="navbar-info">
             {usuario.rol} {usuario.usuario}

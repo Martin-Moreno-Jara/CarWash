@@ -50,3 +50,10 @@
 .empleado-manage-btn:hover {
   font-weight: bold;
 }
+
+@media (max-width: 500px) {
+  .homeAdmin-main {
+    display: flex;
+    flex-direction: column;
+  }
+}

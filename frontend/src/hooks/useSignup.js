@@ -6,6 +6,7 @@ const apiURL = process.env.REACT_APP_DEVURL;
 export const useSignup = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
+
   const { dispatch: dispatchCloseWindow, show } = useEmployeeCrudContext();
   const { dispatch } = useEmployeeContext();
   const signupEmployee = async (

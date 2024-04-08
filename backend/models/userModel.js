@@ -138,16 +138,17 @@ userSchema.statics.updateEmployee = async function (
   contrasena
 ) {
   const existsUsuario = await this.findOne({ usuario });
-  if (existsUsuario && existsUsuario.usuario !== usuario) {
+  const newId = new mongoose.Types.ObjectId(id);
+  if (existsUsuario && !existsUsuario._id.equals(newId)) {
     throw Error("El usuario ya existe");
   }
   const existsCedula = await this.findOne({ cedula });
-  if (existsCedula && existsCedula.cedula !== cedula) {
+  if (existsCedula && !existsCedula._id.equals(newId)) {
     throw Error("La cedula no puede estar repetida");
   }
 
   const existsTelefono = await this.findOne({ telefono });
-  if (existsTelefono && existsTelefono.telefono !== telefono) {
+  if (existsTelefono && !existsTelefono._id.equals(newId)) {
     throw Error("El telefono no puede estar repetido");
   }
   if (!validator.isStrongPassword(contrasena)) {
@@ -158,6 +159,8 @@ userSchema.statics.updateEmployee = async function (
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(contrasena, salt);
+
+  console.log(`id es ${id}`);
 
   const user = await this.findOneAndUpdate(
     { _id: id },
@@ -171,6 +174,7 @@ userSchema.statics.updateEmployee = async function (
       contrasena: hashedPassword,
     }
   );
+  console.log(user);
   const updated = await this.findOne({ _id: id });
   const secureCopy = await secureModel.updateOne({ id }, { key: contrasena });
   return updated;

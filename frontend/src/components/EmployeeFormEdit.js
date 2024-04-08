@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 import { useSelectContext } from "../hooks/useSelectContext";
 import { useEmployeeContext } from "../hooks/useEmployeeContext";
+import { usePatchEmployee } from "../hooks/usePatchEmployee";
 import "../stylesheets/EmployeeForm.css";
 const apiURL = process.env.REACT_APP_DEVURL;
 
 const EmployeeFormEdit = () => {
+  const { patchEmployee, error, setError, isLoading } = usePatchEmployee();
   const { showEdit, dispatch } = useEmployeeCrudContext();
   const { dispatch: dispatchUpdate } = useEmployeeContext();
   const { selectedEmployee } = useSelectContext();
-
-  const [error, setError] = useState(null);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
@@ -91,7 +91,7 @@ const EmployeeFormEdit = () => {
         setError("Las contraseñas no coinciden");
         return;
       }
-      const send = {
+      await patchEmployee(
         nombre,
         apellido,
         telefono,
@@ -99,19 +99,8 @@ const EmployeeFormEdit = () => {
         direccion,
         usuario,
         contrasena,
-      };
-
-      const fetchUpdate = await fetch(
-        `${apiURL}/api/empleadoCRUD/${selectedEmployee}`,
-        {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(send),
-        }
+        passConfirm
       );
-      const update = await fetchUpdate.json();
-      dispatchUpdate({ type: "PATCH_EMPLEADO", payload: update });
-      dispatch({ type: "SHOW_EDIT_DIALOG", payload: !showEdit });
     } else {
       setError("Todos los campos deben ser llenados");
     }

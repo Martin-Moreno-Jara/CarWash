@@ -1,4 +1,9 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Francois+One&display=swap");
+
 :root {
   --primary-color: #596f62;
   --secondary-color: #2e434d;
@@ -10,7 +15,9 @@
 
 body {
   margin: 0;
-  font-family: "Francois One";
+
+
+  font-family: "Work Sans", "DM Sans", "Inter Tight", "Francois One";
   position: relative;
   min-height: 100vh;
 }

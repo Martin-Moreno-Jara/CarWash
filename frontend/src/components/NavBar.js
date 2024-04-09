@@ -28,7 +28,7 @@ const NavBar = () => {
             </Link>
           )}
           {usuario && (
-            <div className="inicio-sesion-div" onClick={makeLogout}>
+            <div className="cerrar-sesion-div" onClick={makeLogout}>
               Cerrar sesión
             </div>
           )}

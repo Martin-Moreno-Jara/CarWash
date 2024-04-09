@@ -1,0 +1,49 @@
+.empleadoInfo-main {
+  min-width: 700px;
+  height: 90px;
+  margin: 10px 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: #ccbeb7;
+  border-radius: 4px;
+}
+
+.row-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.action-div {
+  display: flex;
+  padding: 0.1rem;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: #b6b4bbfd;
+  border-radius: 12px;
+  margin-right: 15px;
+}
+.delete {
+  margin-right: 0;
+}
+.edit:hover {
+  background-color: #b3ad44;
+  color: #fff;
+}
+
+.showmore:hover {
+  background-color: rgb(101, 139, 141);
+  color: #fff;
+}
+.delete:hover {
+  background-color: rgb(155, 58, 58);
+  color: #fff;
+}
+@media (max-width: 1000px) {
+  .action-div {
+    margin-right: 18px;
+  }
+}

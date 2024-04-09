@@ -1,0 +1,11 @@
+.homeGeneral-mainContainer {
+  background-image: url(../images/home_background.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 85vh;
+}
+.homeGeneral-mainContainer h1 {
+  margin: 0;
+  color: #fff;
+}

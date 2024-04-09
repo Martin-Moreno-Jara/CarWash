@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Francois+One&display=swap");
+:root {
+  --primary-color: #596f62;
+  --secondary-color: #2e434d;
+  --third-color: #7ea16b;
+  --fourth-color: #70161e;
+  --error: #e61c1c;
+  --accept: #2ad233;
+}
+
+body {
+  margin: 0;
+  font-family: "Francois One";
+  position: relative;
+  min-height: 100vh;
+}
+
+header {
+  background: var(--primary-color);
+}
+
+footer {
+  background: var(--primary-color);
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  height: 40px;
+  position: fixed;
+}
+header img {
+  width: 100px;
+  margin: 10px 20px 10px 5px;
+}
+header .mainHeader-container {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+header a {
+  color: #000;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+footer .mainFooter-container {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 10px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+nav a {
+  margin-right: 20px;
+  font-size: 1.5em;
+}
+nav .inicio-sesion-div {
+  border: 2px solid var(--secondary-color);
+  background: var(--secondary-color);
+  padding: 8px 12px;
+  border-radius: 15px;
+  margin-right: 25px;
+  cursor: pointer;
+}
+nav .inicio-sesion-div:hover {
+  border: 2px solid var(--fourth-color);
+  padding: 8px 12px;
+  background: var(--third-color);
+}
+
+.pages {
+  margin: 0 auto;
+}
+@media (max-width: 500px) {
+  header a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: smaller;
+  }
+  header a img {
+    width: 80px;
+    margin-bottom: 0;
+  }
+  header a h1 {
+    margin-top: 0;
+  }
+  nav .inicio-sesion-div {
+    font-size: 0.91em;
+  }
+}

@@ -80,8 +80,9 @@ nav a {
 }
 nav .inicio-sesion-div,
 .cerrar-sesion-div {
-  border: 2px solid var(--secondary-color);
-  background: var(--secondary-color);
+  color: var(--formal-grey);
+  background: var(--regal-blue);
+  border: 1px solid var(--cream-grey);
   padding: 8px 12px;
   border-radius: 15px;
   margin-right: 25px;
@@ -92,10 +93,10 @@ nav .inicio-sesion-div {
   font-size: 0.8em;
 }
 
-nav .inicio-sesion-div:hover {
-  border: 2px solid var(--fourth-color);
+nav .inicio-sesion-div:hover,
+.cerrar-sesion-div:hover {
+  border: 2px solid var(--tuned-down-blue);
   padding: 8px 12px;
-  background: var(--third-color);
 }
 
 .pages {

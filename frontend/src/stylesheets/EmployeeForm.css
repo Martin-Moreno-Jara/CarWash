@@ -1,7 +1,7 @@
 .main-container {
   height: 50vh;
   width: 70%;
-  background: #c1c3c0db;
+  background-color: var(--cream-grey);
   padding: 10px 50px 100px 50px;
   border-radius: 5px;
   box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.5);
@@ -45,17 +45,19 @@
 }
 .submit-btn {
   border-radius: 5px;
-  background-color: var(--primary-color);
-  width: 120px;
+  color: var(--cream-grey);
+  background-color: var(--regal-blue);
+  border: 2px solid var(--cream-grey);
+  width: fit-content;
   padding: 10px;
   text-align: center;
   align-self: flex-end;
   justify-content: flex-end;
-  margin-right: 50px;
+  margin-right: 35px;
   cursor: pointer;
 }
 .submit-btn:hover {
-  background: #93cda1;
+  border: 2px solid var(--tuned-down-blue);
 }
 .password-field {
   margin-right: 0;
@@ -72,7 +74,11 @@
 
 .closebtn {
   background-color: rgb(188, 195, 195);
-  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  padding: 3px;
   width: 30px;
   cursor: pointer;
   align-self: flex-end;
@@ -82,9 +88,7 @@
   color: white;
   font-weight: bold;
 }
-.submit-btn {
-  background: #95cc94;
-}
+
 @media (max-width: 1000px) {
   .main-container {
     margin-top: 20px;

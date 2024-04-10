@@ -9,8 +9,8 @@
   height: 85vh;
 }
 .homeAdmin-options {
-  color: #fff;
-  background: rgba(5, 7, 12, 0.9);
+  color: var(--formal-grey);
+  background: var(--blackish-blue);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,7 +29,19 @@
 .homeAdmin-options p {
   text-align: justify;
 }
-.empleado-manage-btn,
+.empleado-manage-btn {
+  border: 1px solid var(--cream-white);
+  color: var(--cream-white);
+  background-color: var(--regal-blue);
+  height: 50px;
+  width: 190px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
 .disabled-btn {
   border: 1px solid var(--secondary-color);
   color: var(--secondary-color);
@@ -48,7 +60,7 @@
   cursor: auto;
 }
 .empleado-manage-btn:hover {
-  font-weight: bold;
+  border: 2px solid var(--tuned-down-blue);
 }
 
 @media (max-width: 500px) {

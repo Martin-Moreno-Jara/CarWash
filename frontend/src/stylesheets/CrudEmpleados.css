@@ -10,8 +10,8 @@
   height: 85vh;
 }
 .empleado-options {
-  color: #fff;
-  background: rgba(5, 7, 12, 0.9);
+  color: var(--formal-grey);
+  background: var(--blackish-blue);
   display: flex;
   flex-direction: column;
   align-items: center;

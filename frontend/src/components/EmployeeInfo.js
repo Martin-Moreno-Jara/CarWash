@@ -2,7 +2,7 @@ import "../stylesheets/EmployeeInfo.css";
 import { useEmployeeContext } from "../hooks/useEmployeeContext";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 import { useSelectContext } from "../hooks/useSelectContext";
-const apiURL = process.env.REACT_APP_DEVURL;
+const apiURL = process.env.REACT_APP_DEPLOYURL;
 const EmployeeInfo = ({ id, nombre, apellido, usuario, telefono, cedula }) => {
   const { dispatch } = useEmployeeContext();
   const { showEdit, dispatch: dispatchEdit } = useEmployeeCrudContext();

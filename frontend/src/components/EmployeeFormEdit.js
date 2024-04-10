@@ -4,7 +4,7 @@ import { useSelectContext } from "../hooks/useSelectContext";
 import { useEmployeeContext } from "../hooks/useEmployeeContext";
 import { usePatchEmployee } from "../hooks/usePatchEmployee";
 import "../stylesheets/EmployeeForm.css";
-const apiURL = process.env.REACT_APP_DEVURL;
+const apiURL = process.env.REACT_APP_DEPLOYURL;
 
 const EmployeeFormEdit = () => {
   const { patchEmployee, error, setError, isLoading } = usePatchEmployee();

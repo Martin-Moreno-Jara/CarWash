@@ -34,7 +34,7 @@ const Login = () => {
           <input type="password" onChange={handlePassword} />
         </div>
         <button className="login-btn" disabled={isLoading}>
-          Iniciar sesión
+          Iniciar Sesión
         </button>
         {error && <div className="error">{error}</div>}
       </form>

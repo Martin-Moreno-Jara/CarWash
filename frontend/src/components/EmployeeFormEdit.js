@@ -116,38 +116,38 @@ const EmployeeFormEdit = () => {
         <span className="material-symbols-outlined">close</span>
       </div>
       <h2>Ingrese la nueva información del empleado</h2>
-      <p>
+      <p className="password-tip">
         La contraseña asiganada debe tener mayúsculas, minúsculas, números y
         carácteres especiales
       </p>
       <form className="form-div" onSubmit={handleSubmit}>
         <div className="form-fields">
           <div>
-            <label>nombre</label>
+            <label>Nombre</label>
             <input type="text" onChange={handleNombre} value={nombre} />
           </div>
           <div>
-            <label>apellido</label>
+            <label>Apellido</label>
             <input type="text" onChange={handleApellido} value={apellido} />
           </div>
           <div>
-            <label>telefono</label>
+            <label>Teléfono</label>
             <input type="number" onChange={handleTelefono} value={telefono} />
           </div>
           <div>
-            <label>cedula</label>
+            <label>Cédula</label>
             <input type="number" onChange={handleCedula} value={cedula} />
           </div>
           <div>
-            <label>dirección</label>
+            <label>Dirección</label>
             <input type="text" onChange={handleDireccion} value={direccion} />
           </div>
           <div>
-            <label>nombre de usuario</label>
+            <label>Nombre de Usuario</label>
             <input type="text" onChange={handleusuario} value={usuario} />
           </div>
           <div>
-            <label>contraseña</label>
+            <label>Contraseña</label>
             <div className="password-field-div">
               <input
                 className="password-field"
@@ -167,7 +167,7 @@ const EmployeeFormEdit = () => {
           </div>
           <div>
             <div>
-              <label>Confirmar contraseña</label>
+              <label>Confirmar Contraseña</label>
               <div className="password-field-div">
                 <input
                   className="password-field"

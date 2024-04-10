@@ -18,18 +18,18 @@ const NavBar = () => {
         </Link>
         {usuario && (
           <div className="navbar-info">
-            {usuario.rol} {usuario.usuario}
+            {usuario.rol} <strong>{usuario.usuario}</strong>
           </div>
         )}
         <nav>
           {!usuario && (
             <Link to={"/login"}>
-              <div className="inicio-sesion-div">Iniciar sesión</div>
+              <div className="inicio-sesion-div">Iniciar Sesión</div>
             </Link>
           )}
           {usuario && (
             <div className="cerrar-sesion-div" onClick={makeLogout}>
-              Cerrar sesión
+              Cerrar Sesión
             </div>
           )}
         </nav>

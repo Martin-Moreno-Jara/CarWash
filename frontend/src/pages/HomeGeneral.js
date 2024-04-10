@@ -1,10 +1,6 @@
 import "../stylesheets/HomeGeneral.css";
 const HomeGeneral = () => {
-  return (
-    <div className="homeGeneral-mainContainer">
-      <h1>EL MEJOR CARWASH DEL UNIVERSO</h1>
-    </div>
-  );
+  return <div className="homeGeneral-mainContainer"></div>;
 };
 
 export default HomeGeneral;

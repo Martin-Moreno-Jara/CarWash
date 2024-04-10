@@ -35,9 +35,9 @@ const EmployeeList = () => {
         <tr>
           <th>Nombre</th>
           <th>Usuario</th>
-          <th>Telefono</th>
+          <th>Teléfono</th>
           <th>Cédula</th>
-          <th>acciones</th>
+          <th>Acciones</th>
         </tr>
 
         {empleados &&

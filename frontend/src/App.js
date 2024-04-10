@@ -22,7 +22,17 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={usuario ? <Navigate to="/admin" /> : <HomeGeneral />}
+              element={
+                usuario ? (
+                  usuario.rol === "administrador" ? (
+                    <Navigate to="/admin" />
+                  ) : (
+                    <Navigate to="/empleado" />
+                  )
+                ) : (
+                  <HomeGeneral />
+                )
+              }
             />
             <Route
               path="/login"

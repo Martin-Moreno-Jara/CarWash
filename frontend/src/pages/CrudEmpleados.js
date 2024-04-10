@@ -23,7 +23,7 @@ const CrudEmpleados = () => {
               dispatch({ type: "SHOW_CREATE_DIALOG", payload: !show });
             }}
           >
-            Crear empleado
+            Crear Empleado
           </div>
         </div>
       </div>

@@ -79,46 +79,46 @@ const EmployeeFormAdd = () => {
         <span className="material-symbols-outlined">close</span>
       </div>
       <h2>Ingrese la información del nuevo empleado</h2>
-      <p>
+      <p className="password-tip">
         La contraseña asiganada debe tener mayúsculas, minúsculas, números y
-        carácteres espciales
+        carácteres especiales
       </p>
       <form className="form-div" onSubmit={handleSubmit}>
         <div className="form-fields">
           <div>
-            <label>nombre</label>
+            <label>Nombre</label>
             <input type="text" onChange={handleNombre} />
           </div>
           <div>
-            <label>apellido</label>
+            <label>Apellido</label>
             <input type="text" onChange={handleApellido} />
           </div>
           <div>
-            <label>telefono</label>
+            <label>Teléfono</label>
             <input type="number" onChange={handleTelefono} />
           </div>
           <div>
-            <label>cedula</label>
+            <label>Cédula</label>
             <input type="number" onChange={handleCedula} />
           </div>
           <div>
-            <label>dirección</label>
+            <label>Dirección</label>
             <input type="text" onChange={handleDireccion} />
           </div>
           <div>
-            <label>nombre de usuario</label>
+            <label>Nombre de Usuario</label>
             <input type="text" onChange={handleusuario} />
           </div>
           <div>
-            <label>contraseña</label>
+            <label>Contraseña</label>
             <input type="password" onChange={handlecontrasena} />
           </div>
           <div>
-            <label>Confirmar contraseña</label>
+            <label>Confirmar Contraseña</label>
             <input type="password" onChange={handlePassConfirm} />
           </div>
         </div>
-        <button className="submit-btn">Crear empleado</button>
+        <button className="submit-btn">Crear Empleado</button>
       </form>
       {error && <div className="error">{error}</div>}
     </div>

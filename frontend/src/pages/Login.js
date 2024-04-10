@@ -1,7 +1,7 @@
 import "../stylesheets/Login.css";
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
-const apiURL = process.env.REACT_APP_DEVURL;
+const apiURL = process.env.REACT_APP_DEPLOYURL;
 const Login = () => {
   const { login, error, isLoading } = useLogin();
   const [nombreUsuario, setNombreUsuario] = useState("");
@@ -34,7 +34,7 @@ const Login = () => {
           <input type="password" onChange={handlePassword} />
         </div>
         <button className="login-btn" disabled={isLoading}>
-          Iniciar sesión
+          Iniciar Sesión
         </button>
         {error && <div className="error">{error}</div>}
       </form>

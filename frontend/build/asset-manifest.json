@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.86a1651b.css",
+    "main.js": "/static/js/main.087bfaff.js",
+    "static/media/admin_background.jpg": "/static/media/admin_background.8643cfe06c8ef8fc8c46.jpg",
+    "static/media/empleado_background.jpg": "/static/media/empleado_background.0378641e9b2c6f7954d0.jpg",
+    "static/media/home_background.jpg": "/static/media/home_background.2412fd65f8fc3b8be592.jpg",
+    "static/media/crud_empleado.jpg": "/static/media/crud_empleado.3047c6ed7b71b9f495d7.jpg",
+    "static/media/carwash-logo.jpg": "/static/media/carwash-logo.829d3ece0e0de75a680f.jpg",
+    "index.html": "/index.html",
+    "main.86a1651b.css.map": "/static/css/main.86a1651b.css.map",
+    "main.087bfaff.js.map": "/static/js/main.087bfaff.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.86a1651b.css",
+    "static/js/main.087bfaff.js"
+  ]
+}

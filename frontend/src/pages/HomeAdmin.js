@@ -14,7 +14,7 @@ const HomeAdmin = () => {
         </div>
         <div className="options-btns">
           <Link to="/admin/empleadoCrud">
-            <div className="empleado-manage-btn">Gestionar empleados</div>
+            <div className="empleado-manage-btn">Gestionar Empleados</div>
           </Link>
         </div>
       </div>

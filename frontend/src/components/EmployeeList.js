@@ -3,7 +3,7 @@ import EmployeeInfo from "../components/EmployeeInfo";
 import { useEmployeeContext } from "../hooks/useEmployeeContext";
 import "../stylesheets/EmployeeList.css";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
-const apiURL = process.env.REACT_APP_DEVURL;
+const apiURL = process.env.REACT_APP_DEPLOYURL;
 
 const EmployeeList = () => {
   const { empleados, dispatch } = useEmployeeContext();
@@ -35,9 +35,9 @@ const EmployeeList = () => {
         <tr>
           <th>Nombre</th>
           <th>Usuario</th>
-          <th>Telefono</th>
+          <th>Teléfono</th>
           <th>Cédula</th>
-          <th>acciones</th>
+          <th>Acciones</th>
         </tr>
 
         {empleados &&

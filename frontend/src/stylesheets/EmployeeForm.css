@@ -89,6 +89,9 @@
   font-weight: bold;
 }
 
+.password-tip {
+  font-size: 0.94em;
+}
 @media (max-width: 1000px) {
   .main-container {
     margin-top: 20px;

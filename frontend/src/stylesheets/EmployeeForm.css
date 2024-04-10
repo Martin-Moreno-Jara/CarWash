@@ -1,0 +1,103 @@
+.main-container {
+  height: 50vh;
+  width: 70%;
+  background-color: var(--cream-grey);
+  padding: 10px 50px 100px 50px;
+  border-radius: 5px;
+  box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+.main-container::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+.main-container::-webkit-scrollbar-thumb {
+  border-radius: 0.5rem;
+  background-color: #0004;
+  visibility: hidden;
+}
+.main-container:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
+}
+
+.form-fields {
+  width: auto;
+  display: grid;
+  grid-template-areas:
+    "nombre apellido"
+    "telefono cedula"
+    "direccion usuario"
+    "contra confir";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+.form-fields input {
+  width: 90%;
+  margin-right: 20px;
+}
+
+.form-div {
+  display: flex;
+  flex-direction: column;
+}
+.submit-btn {
+  border-radius: 5px;
+  color: var(--cream-grey);
+  background-color: var(--regal-blue);
+  border: 2px solid var(--cream-grey);
+  width: fit-content;
+  padding: 10px;
+  text-align: center;
+  align-self: flex-end;
+  justify-content: flex-end;
+  margin-right: 35px;
+  cursor: pointer;
+}
+.submit-btn:hover {
+  border: 2px solid var(--tuned-down-blue);
+}
+.password-field {
+  margin-right: 0;
+}
+.password-field-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 45px;
+}
+.see {
+  cursor: pointer;
+}
+
+.closebtn {
+  background-color: rgb(188, 195, 195);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  padding: 3px;
+  width: 30px;
+  cursor: pointer;
+  align-self: flex-end;
+}
+.closebtn:hover {
+  background-color: rgb(188, 81, 81);
+  color: white;
+  font-weight: bold;
+}
+
+@media (max-width: 1000px) {
+  .main-container {
+    margin-top: 20px;
+    height: 40vh;
+  }
+}
+@media (max-width: 580px) {
+  .form-fields {
+    display: flex;
+    flex-direction: column;
+  }
+}

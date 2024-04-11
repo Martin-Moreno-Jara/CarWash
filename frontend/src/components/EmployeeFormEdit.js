@@ -5,7 +5,7 @@ import { useEmployeeContext } from "../hooks/useEmployeeContext";
 import { usePatchEmployee } from "../hooks/usePatchEmployee";
 import MoonLoader from "react-spinners/MoonLoader";
 import "../stylesheets/EmployeeForm.css";
-const apiURL = process.env.REACT_APP_DEVURL;
+const apiURL = process.env.REACT_APP_DEPLOYURL;
 
 const EmployeeFormEdit = () => {
   const { patchEmployee, error, setError, isLoading } = usePatchEmployee();
@@ -16,6 +16,7 @@ const EmployeeFormEdit = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
   const [showFormats, setShowFormats] = useState(false);
+  const [loadingInfo, setLoadingInfo] = useState(null);
 
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
@@ -53,6 +54,7 @@ const EmployeeFormEdit = () => {
 
   useEffect(() => {
     const fetchEmployeeData = async () => {
+      setLoadingInfo(true);
       const response = await fetch(
         `${apiURL}/api/empleadoCRUD/${selectedEmployee}`
       );
@@ -62,7 +64,13 @@ const EmployeeFormEdit = () => {
         `${apiURL}/api/empleadoCRUD/key/${selectedEmployee}`
       );
       const jsonkey = await keyPromise.json();
-      console.log(json);
+
+      if (response.ok && keyPromise.ok) {
+        setLoadingInfo(false);
+      }
+      if (!response.ok && !keyPromise.ok) {
+        setLoadingInfo(false);
+      }
 
       setNombre(json.nombre);
       setApellido(json.apellido);
@@ -147,6 +155,11 @@ const EmployeeFormEdit = () => {
           <p>
             El formato de la cédula deben ser 10 dígitos sin espacio entre ellos
           </p>
+        </div>
+      )}
+      {loadingInfo && (
+        <div className="loading2">
+          <MoonLoader color="#1c143d" loading={loadingInfo} size={100} />
         </div>
       )}
       <form className="form-div" onSubmit={handleSubmit}>

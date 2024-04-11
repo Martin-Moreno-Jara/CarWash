@@ -4,7 +4,7 @@ import { useEmployeeContext } from "../hooks/useEmployeeContext";
 import "../stylesheets/EmployeeList.css";
 import MoonLoader from "react-spinners/MoonLoader";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
-const apiURL = process.env.REACT_APP_DEVURL;
+const apiURL = process.env.REACT_APP_DEPLOYURL;
 
 const EmployeeList = () => {
   const { empleados, dispatch } = useEmployeeContext();

@@ -24,7 +24,7 @@ const userSchema = new Schema(
       required: true,
     },
     telefono: {
-      type: Number,
+      type: String,
       required: true,
       unique: true,
     },
@@ -88,6 +88,7 @@ userSchema.statics.signup = async function (
   ) {
     throw Error("Todos los campos deben ser diligenciados");
   }
+  console.log(`telefono ${telefono}`);
   const existsUsuario = await this.findOne({ usuario });
   if (existsUsuario) {
     throw Error("El usuario ya existe");

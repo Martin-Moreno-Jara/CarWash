@@ -24,7 +24,7 @@ const userSchema = new Schema(
       required: true,
     },
     telefono: {
-      type: Number,
+      type: String,
       required: true,
       unique: true,
     },

@@ -22,6 +22,11 @@
 .main-container:hover::-webkit-scrollbar-thumb {
   visibility: visible;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 .form-fields {
   width: auto;
@@ -88,9 +93,18 @@
   color: white;
   font-weight: bold;
 }
-
-.password-tip {
+.show-formats {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.formatos {
   font-size: 0.94em;
+  border: 1px solid var(--tuned-down-blue);
+  padding: 5px;
+  border-radius: 8px;
+  margin-bottom: 20px;
 }
 @media (max-width: 1000px) {
   .main-container {

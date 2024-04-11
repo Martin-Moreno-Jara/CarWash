@@ -6,6 +6,7 @@ import "../stylesheets/EmployeeForm.css";
 const EmployeeFormAdd = () => {
   const { show, dispatch } = useEmployeeCrudContext();
   const { signupEmployee, error, setError, isLoading } = useSignup();
+  const [showFormats, setShowFormats] = useState(false);
 
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
@@ -40,6 +41,7 @@ const EmployeeFormAdd = () => {
     setPassConfirm(e.target.value);
   };
   const handleSubmit = async (e) => {
+    const realtel = telefono.replace(/\s/g, "");
     e.preventDefault();
     if (
       nombre &&
@@ -55,11 +57,12 @@ const EmployeeFormAdd = () => {
         setError("Las contraseñas no coinciden");
         return;
       }
+
       await signupEmployee(
         nombre,
         apellido,
         telefono,
-        cedula,
+        parseInt(cedula),
         direccion,
         usuario,
         contrasena
@@ -79,27 +82,67 @@ const EmployeeFormAdd = () => {
         <span className="material-symbols-outlined">close</span>
       </div>
       <h2>Ingrese la información del nuevo empleado</h2>
-      <p className="password-tip">
-        La contraseña asiganada debe tener mayúsculas, minúsculas, números y
-        carácteres especiales
-      </p>
+      <div
+        className="show-formats"
+        onClick={() => {
+          setShowFormats(!showFormats);
+        }}
+      >
+        {showFormats ? "ocultar formatos" : "Mostrar formatos aceptados"}{" "}
+        <span className="material-symbols-outlined">
+          {showFormats ? "keyboard_arrow_up" : "keyboard_arrow_down"}
+        </span>
+      </div>
+      {showFormats && (
+        <div className="formatos">
+          <p>
+            Tanto el nombre como el apellido solo aceptan letras del alfabeto
+            español
+          </p>
+          <p>
+            La contraseña asiganada debe tener mayúsculas, minúsculas, números y
+            carácteres especiales{" "}
+          </p>
+          <p>
+            El formato del número de teléfono deben 10 dígitos separados en dos
+            grupos de 3 números y uno de 4 números, separados por un espacio.
+            Como se muestra: <strong>320 330 4550</strong>
+          </p>
+          <p>
+            El formato de la cédula deben ser 10 dígitos sin espacio entre ellos
+          </p>
+        </div>
+      )}
+
       <form className="form-div" onSubmit={handleSubmit}>
         <div className="form-fields">
           <div>
             <label>Nombre</label>
-            <input type="text" onChange={handleNombre} />
+            <input
+              type="text"
+              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ]+"
+              onChange={handleNombre}
+            />
           </div>
           <div>
             <label>Apellido</label>
-            <input type="text" onChange={handleApellido} />
+            <input
+              type="text"
+              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ]+"
+              onChange={handleApellido}
+            />
           </div>
           <div>
             <label>Teléfono</label>
-            <input type="number" onChange={handleTelefono} />
+            <input
+              type="tel"
+              pattern="[0-9]{3} [0-9]{3} [0-9]{4}"
+              onChange={handleTelefono}
+            />
           </div>
           <div>
             <label>Cédula</label>
-            <input type="number" onChange={handleCedula} />
+            <input type="text" pattern="[0-9]{10}" onChange={handleCedula} />
           </div>
           <div>
             <label>Dirección</label>

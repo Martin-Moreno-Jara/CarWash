@@ -4,7 +4,7 @@ import { useSelectContext } from "../hooks/useSelectContext";
 import { useEmployeeContext } from "../hooks/useEmployeeContext";
 import { usePatchEmployee } from "../hooks/usePatchEmployee";
 import "../stylesheets/EmployeeForm.css";
-const apiURL = process.env.REACT_APP_DEPLOYURL;
+const apiURL = process.env.REACT_APP_DEVURL;
 
 const EmployeeFormEdit = () => {
   const { patchEmployee, error, setError, isLoading } = usePatchEmployee();
@@ -14,6 +14,7 @@ const EmployeeFormEdit = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
+  const [showFormats, setShowFormats] = useState(false);
 
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
@@ -60,7 +61,7 @@ const EmployeeFormEdit = () => {
         `${apiURL}/api/empleadoCRUD/key/${selectedEmployee}`
       );
       const jsonkey = await keyPromise.json();
-      console.log(selectedEmployee, jsonkey);
+      console.log(json);
 
       setNombre(json.nombre);
       setApellido(json.apellido);
@@ -95,7 +96,7 @@ const EmployeeFormEdit = () => {
         nombre,
         apellido,
         telefono,
-        cedula,
+        parseInt(cedula),
         direccion,
         usuario,
         contrasena,
@@ -116,27 +117,74 @@ const EmployeeFormEdit = () => {
         <span className="material-symbols-outlined">close</span>
       </div>
       <h2>Ingrese la nueva información del empleado</h2>
-      <p className="password-tip">
-        La contraseña asiganada debe tener mayúsculas, minúsculas, números y
-        carácteres especiales
-      </p>
+      <div
+        className="show-formats"
+        onClick={() => {
+          setShowFormats(!showFormats);
+        }}
+      >
+        {showFormats ? "ocultar formatos" : "Mostrar formatos aceptados"}{" "}
+        <span className="material-symbols-outlined">
+          {showFormats ? "keyboard_arrow_up" : "keyboard_arrow_down"}
+        </span>
+      </div>
+      {showFormats && (
+        <div className="formatos">
+          <p>
+            Tanto el nombre como el apellido solo aceptan letras del alfabeto
+            español
+          </p>
+          <p>
+            La contraseña asiganada debe tener mayúsculas, minúsculas, números y
+            carácteres especiales{" "}
+          </p>
+          <p>
+            El formato del número de teléfono deben 10 dígitos separados en dos
+            grupos de 3 números y uno de 4 números, separados por un espacio.
+            Como se muestra: <strong>320 330 4550</strong>
+          </p>
+          <p>
+            El formato de la cédula deben ser 10 dígitos sin espacio entre ellos
+          </p>
+        </div>
+      )}
       <form className="form-div" onSubmit={handleSubmit}>
         <div className="form-fields">
           <div>
             <label>Nombre</label>
-            <input type="text" onChange={handleNombre} value={nombre} />
+            <input
+              type="text"
+              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ]+"
+              onChange={handleNombre}
+              value={nombre}
+            />
           </div>
           <div>
             <label>Apellido</label>
-            <input type="text" onChange={handleApellido} value={apellido} />
+            <input
+              type="text"
+              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ]+"
+              onChange={handleApellido}
+              value={apellido}
+            />
           </div>
           <div>
             <label>Teléfono</label>
-            <input type="number" onChange={handleTelefono} value={telefono} />
+            <input
+              type="tel"
+              pattern="[0-9]{3} [0-9]{3} [0-9]{4}"
+              onChange={handleTelefono}
+              value={telefono}
+            />
           </div>
           <div>
             <label>Cédula</label>
-            <input type="number" onChange={handleCedula} value={cedula} />
+            <input
+              type="text"
+              pattern="[0-9]{10}"
+              onChange={handleCedula}
+              value={cedula}
+            />
           </div>
           <div>
             <label>Dirección</label>
@@ -161,7 +209,7 @@ const EmployeeFormEdit = () => {
                   setShowPassword(!showPassword);
                 }}
               >
-                visibility_off
+                {showPassword ? "visibility" : "visibility_off"}
               </span>
             </div>
           </div>
@@ -181,7 +229,7 @@ const EmployeeFormEdit = () => {
                     setShowPassConfirm(!showPassConfirm);
                   }}
                 >
-                  visibility_off
+                  {showPassConfirm ? "visibility" : "visibility_off"}
                 </span>
               </div>
             </div>

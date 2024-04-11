@@ -3,7 +3,7 @@ import EmployeeInfo from "../components/EmployeeInfo";
 import { useEmployeeContext } from "../hooks/useEmployeeContext";
 import "../stylesheets/EmployeeList.css";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
-const apiURL = process.env.REACT_APP_DEPLOYURL;
+const apiURL = process.env.REACT_APP_DEVURL;
 
 const EmployeeList = () => {
   const { empleados, dispatch } = useEmployeeContext();

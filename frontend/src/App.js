@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
@@ -48,15 +48,33 @@ function App() {
             ></Route>
             <Route
               path="/admin"
-              element={usuario ? <HomeAdmin /> : <Navigate to="/" />}
+              element={
+                usuario && usuario.rol === "administrador" ? (
+                  <HomeAdmin />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
             />
             <Route
               path="/empleado"
-              element={usuario ? <HomeEmpleado /> : <Navigate to="/" />}
+              element={
+                usuario && usuario.rol === "empleado" ? (
+                  <HomeEmpleado />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
             />
             <Route
               path="/admin/empleadoCrud"
-              element={usuario ? <CrudEmpleados /> : <Navigate to="/" />}
+              element={
+                usuario && usuario.rol === "administrador" ? (
+                  <CrudEmpleados />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
             />
           </Routes>
         </div>

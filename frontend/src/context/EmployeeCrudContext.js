@@ -2,7 +2,6 @@ import { createContext, useEffect, useReducer } from "react";
 export const EmployeeCrudContext = createContext();
 
 export const employeeCrudReducer = (state, action) => {
-  console.log(state.selectedEmployee);
   switch (action.type) {
     case "SHOW_CREATE_DIALOG":
       return { show: action.payload };

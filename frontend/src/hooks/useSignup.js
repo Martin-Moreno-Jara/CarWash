@@ -18,6 +18,8 @@ export const useSignup = () => {
     usuario,
     contrasena
   ) => {
+    setError(null);
+    setIsLoading(true);
     const response = await fetch(`${apiURL}/api/empleadoCRUD/signupEmployee`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -34,8 +36,10 @@ export const useSignup = () => {
     const json = await response.json();
     if (!response.ok) {
       setError(json.error);
+      setIsLoading(false);
     }
     if (response.ok) {
+      setIsLoading(false);
       setError(null);
       dispatch({ type: "ADD_EMPLEADO", payload: json });
       dispatchCloseWindow({ type: "SHOW_CREATE_DIALOG", payload: !show });

@@ -3,6 +3,7 @@ import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 import { useSelectContext } from "../hooks/useSelectContext";
 import { useEmployeeContext } from "../hooks/useEmployeeContext";
 import { usePatchEmployee } from "../hooks/usePatchEmployee";
+import MoonLoader from "react-spinners/MoonLoader";
 import "../stylesheets/EmployeeForm.css";
 const apiURL = process.env.REACT_APP_DEVURL;
 
@@ -236,8 +237,15 @@ const EmployeeFormEdit = () => {
           </div>
         </div>
 
-        <button className="submit-btn">Guardar Cambios</button>
+        <button className="submit-btn" disabled={isLoading}>
+          Guardar Cambios
+        </button>
       </form>
+      {isLoading && (
+        <div className="loading2">
+          <MoonLoader color="#1c143d" loading={isLoading} size={100} />
+        </div>
+      )}
       {error && <div className="error">{error}</div>}
     </div>
   );

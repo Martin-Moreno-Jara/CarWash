@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 import { useSignup } from "../hooks/useSignup";
+import MoonLoader from "react-spinners/MoonLoader";
 import "../stylesheets/EmployeeForm.css";
 
 const EmployeeFormAdd = () => {
@@ -41,7 +42,6 @@ const EmployeeFormAdd = () => {
     setPassConfirm(e.target.value);
   };
   const handleSubmit = async (e) => {
-    const realtel = telefono.replace(/\s/g, "");
     e.preventDefault();
     if (
       nombre &&
@@ -161,8 +161,16 @@ const EmployeeFormAdd = () => {
             <input type="password" onChange={handlePassConfirm} />
           </div>
         </div>
-        <button className="submit-btn">Crear Empleado</button>
+        <button className="submit-btn" disabled={isLoading}>
+          Crear Empleado
+        </button>
       </form>
+      {isLoading && (
+        <div className="loading2">
+          <MoonLoader color="#1c143d" loading={isLoading} size={100} />
+        </div>
+      )}
+
       {error && <div className="error">{error}</div>}
     </div>
   );

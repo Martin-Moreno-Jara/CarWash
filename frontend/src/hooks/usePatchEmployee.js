@@ -21,6 +21,7 @@ export const usePatchEmployee = () => {
     contrasena,
     passConfirm
   ) => {
+    setIsLoading(true);
     const send = {
       nombre,
       apellido,
@@ -41,10 +42,11 @@ export const usePatchEmployee = () => {
     );
     const update = await fetchUpdate.json();
     if (!fetchUpdate.ok) {
-      console.log(update.error);
+      setIsLoading(false);
       setError(update.error);
     }
     if (fetchUpdate.ok) {
+      setIsLoading(false);
       setError(null);
       dispatchUpdate({ type: "PATCH_EMPLEADO", payload: update });
       dispatch({ type: "SHOW_EDIT_DIALOG", payload: !showEdit });

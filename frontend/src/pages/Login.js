@@ -1,6 +1,7 @@
 import "../stylesheets/Login.css";
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
+import MoonLoader from "react-spinners/MoonLoader";
 const apiURL = process.env.REACT_APP_DEVURL;
 const Login = () => {
   const { login, error, isLoading } = useLogin();
@@ -36,6 +37,11 @@ const Login = () => {
         <button className="login-btn" disabled={isLoading}>
           Iniciar Sesión
         </button>
+        {isLoading && (
+          <div className="loading">
+            <MoonLoader color="#1c143d" loading={isLoading} size={100} />
+          </div>
+        )}
         {error && <div className="error">{error}</div>}
       </form>
     </div>

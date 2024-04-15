@@ -120,7 +120,7 @@ const EmployeeFormAdd = () => {
             <label>Nombre</label>
             <input
               type="text"
-              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ]+"
+              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ ]+"
               onChange={handleNombre}
             />
           </div>
@@ -128,7 +128,7 @@ const EmployeeFormAdd = () => {
             <label>Apellido</label>
             <input
               type="text"
-              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ]+"
+              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ ]+"
               onChange={handleApellido}
             />
           </div>
@@ -150,11 +150,15 @@ const EmployeeFormAdd = () => {
           </div>
           <div>
             <label>Nombre de Usuario</label>
-            <input type="text" onChange={handleusuario} />
+            <input type="text" onChange={handleusuario} autoComplete="off" />
           </div>
           <div>
-            <label>Contraseña</label>
-            <input type="password" onChange={handlecontrasena} />
+            <label>Contraseña </label>
+            <input
+              type="password"
+              onChange={handlecontrasena}
+              autoComplete="off"
+            />
           </div>
           <div>
             <label>Confirmar Contraseña</label>

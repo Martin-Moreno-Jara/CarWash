@@ -10,15 +10,36 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
+import { useSelectContext } from "../hooks/useSelectContext";
 //ENV VARIABLE API
 const apiURL = process.env.REACT_APP_DEPLOYURL;
 
 //FETCH EMPLOYEES FOR THE TABLE
 const EmployeeList = () => {
+  const { selectedEmployee, dispatch: dispatchIsSelected } = useSelectContext();
+  const handleDelete = async (e) => {
+    const id = e.target.value;
+    console.log(id);
+    dispatchIsSelected({
+      type: "SELECT_EMPLOYEE",
+      payload: id,
+    });
+    const response = await fetch(
+      `${apiURL}/api/empleadoCRUD/${selectedEmployee}`,
+      {
+        method: "DELETE",
+      }
+    );
+    const json = await response.json();
+
+    dispatch({ type: "DELETE_EMPLEADO", payload: json });
+  };
+
   const columns = [
     {
       header: "Nombre",
       accessorKey: "nombre",
+      cell: ({ row }) => `${row.original.nombre} ${row.original.apellido}`,
     },
     {
       header: "Usuario",
@@ -35,10 +56,11 @@ const EmployeeList = () => {
     {
       header: "Acciones",
       accessorKey: "acciones",
+      cell: ({ row }) => <EmployeeInfo id={row.original._id} />,
     },
   ];
   const { empleados, dispatch } = useEmployeeContext();
-  const { show, showEdit } = useEmployeeCrudContext();
+  const { show, showEdit, dispatch: dispatchEdit } = useEmployeeCrudContext();
   const [isLoading, setIsLoading] = useState(null);
 
   useEffect(() => {
@@ -92,7 +114,7 @@ const EmployeeList = () => {
               </tr>
             ))}
 
-          {empleados &&
+          {/* {empleados &&
             empleados.map((empleado) => (
               <>
                 {
@@ -106,7 +128,7 @@ const EmployeeList = () => {
                   />
                 }
               </>
-            ))}
+            ))} */}
         </tbody>
       </table>
       {isLoading && (

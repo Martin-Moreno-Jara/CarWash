@@ -8,6 +8,7 @@ import {
   useReactTable,
   getCoreRowModel,
   flexRender,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 import { useSelectContext } from "../hooks/useSelectContext";
@@ -17,23 +18,6 @@ const apiURL = process.env.REACT_APP_DEPLOYURL;
 //FETCH EMPLOYEES FOR THE TABLE
 const EmployeeList = () => {
   const { selectedEmployee, dispatch: dispatchIsSelected } = useSelectContext();
-  const handleDelete = async (e) => {
-    const id = e.target.value;
-    console.log(id);
-    dispatchIsSelected({
-      type: "SELECT_EMPLOYEE",
-      payload: id,
-    });
-    const response = await fetch(
-      `${apiURL}/api/empleadoCRUD/${selectedEmployee}`,
-      {
-        method: "DELETE",
-      }
-    );
-    const json = await response.json();
-
-    dispatch({ type: "DELETE_EMPLEADO", payload: json });
-  };
 
   const columns = [
     {
@@ -81,10 +65,17 @@ const EmployeeList = () => {
     fetchEmployees();
   }, [dispatch]);
 
+  const [columnFilters, setColumnFilters] = useState("");
+
   const table = useReactTable({
     data: empleados,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      globalFilter: columnFilters,
+    },
+    onGlobalFilterChange: setColumnFilters,
   });
   return (
     <div
@@ -92,6 +83,11 @@ const EmployeeList = () => {
         show || showEdit ? "empleadoLista-main-noblur" : "empleadoLista-main"
       }
     >
+      <input
+        type="text"
+        placeholder="Búsqueda"
+        onChange={(e) => setColumnFilters(e.target.value)}
+      />
       <table>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -113,22 +109,6 @@ const EmployeeList = () => {
                 ))}
               </tr>
             ))}
-
-          {/* {empleados &&
-            empleados.map((empleado) => (
-              <>
-                {
-                  <EmployeeInfo
-                    id={empleado._id}
-                    nombre={empleado.nombre}
-                    apellido={empleado.apellido}
-                    usuario={empleado.usuario}
-                    telefono={empleado.telefono}
-                    cedula={empleado.cedula}
-                  />
-                }
-              </>
-            ))} */}
         </tbody>
       </table>
       {isLoading && (

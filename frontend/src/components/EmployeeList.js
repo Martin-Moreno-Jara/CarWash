@@ -9,6 +9,8 @@ import {
   getCoreRowModel,
   flexRender,
   getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
 } from "@tanstack/react-table";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 import { useSelectContext } from "../hooks/useSelectContext";
@@ -22,8 +24,9 @@ const EmployeeList = () => {
   const columns = [
     {
       header: "Nombre",
-      accessorKey: "nombre",
-      cell: ({ row }) => `${row.original.nombre} ${row.original.apellido}`,
+      accessorFn: (row) => `${row.nombre} ${row.apellido}`,
+      //accessorKey: "nombre",
+      //cell: ({ row }) => `${row.original.nombre} ${row.original.apellido}`,
     },
     {
       header: "Usuario",
@@ -66,16 +69,21 @@ const EmployeeList = () => {
   }, [dispatch]);
 
   const [columnFilters, setColumnFilters] = useState("");
+  const [sorting, setSorting] = useState([]);
 
   const table = useReactTable({
     data: empleados,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     state: {
       globalFilter: columnFilters,
+      sorting,
     },
     onGlobalFilterChange: setColumnFilters,
+    onSortingChange: setSorting,
   });
   return (
     <div
@@ -93,7 +101,20 @@ const EmployeeList = () => {
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id}>{header.column.columnDef.header}</th>
+                <th
+                  key={header.id}
+                  onClick={header.column.getToggleSortingHandler()}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                  {
+                    { asc: "⬆️", desc: "⬇️" }[
+                      header.column.getIsSorted() ?? null
+                    ]
+                  }
+                </th>
               ))}
             </tr>
           ))}
@@ -116,6 +137,24 @@ const EmployeeList = () => {
           <MoonLoader color="#1c143d" loading={isLoading} size={100} />
         </div>
       )}
+      <button onClick={() => table.setPageIndex(0)}>Primera</button>
+      <button
+        onClick={() => {
+          table.previousPage();
+        }}
+      >
+        Anterior
+      </button>
+      <button
+        onClick={() => {
+          table.nextPage();
+        }}
+      >
+        Siguiente
+      </button>
+      <button onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
+        Última
+      </button>
     </div>
   );
 };

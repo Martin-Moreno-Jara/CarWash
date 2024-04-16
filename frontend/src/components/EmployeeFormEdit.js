@@ -168,7 +168,7 @@ const EmployeeFormEdit = () => {
             <label>Nombre</label>
             <input
               type="text"
-              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ]+"
+              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ ]+"
               onChange={handleNombre}
               value={nombre}
             />
@@ -177,7 +177,7 @@ const EmployeeFormEdit = () => {
             <label>Apellido</label>
             <input
               type="text"
-              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ]+"
+              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ ]+"
               onChange={handleApellido}
               value={apellido}
             />

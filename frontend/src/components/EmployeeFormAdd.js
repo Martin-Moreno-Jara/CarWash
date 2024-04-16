@@ -120,7 +120,7 @@ const EmployeeFormAdd = () => {
             <label>Nombre</label>
             <input
               type="text"
-              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ]+"
+              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ ]+"
               onChange={handleNombre}
             />
           </div>
@@ -128,7 +128,7 @@ const EmployeeFormAdd = () => {
             <label>Apellido</label>
             <input
               type="text"
-              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ]+"
+              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ ]+"
               onChange={handleApellido}
             />
           </div>

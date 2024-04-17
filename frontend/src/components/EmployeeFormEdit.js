@@ -5,7 +5,7 @@ import { useEmployeeContext } from "../hooks/useEmployeeContext";
 import { usePatchEmployee } from "../hooks/usePatchEmployee";
 import MoonLoader from "react-spinners/MoonLoader";
 import "../stylesheets/EmployeeForm.css";
-const apiURL = process.env.REACT_APP_DEPLOYURL;
+const apiURL = process.env.REACT_APP_DEVURL;
 
 const EmployeeFormEdit = () => {
   const { patchEmployee, error, setError, isLoading } = usePatchEmployee();

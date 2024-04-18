@@ -197,23 +197,77 @@ userSchema.statics.updateEmployee = async function (
   direccion,
   telefono,
   usuario,
-  contrasena
+  contrasena,
+  passConfirm,
+  loggedUser
 ) {
+  if (
+    !nombre ||
+    !apellido ||
+    !cedula ||
+    !direccion ||
+    !telefono ||
+    !usuario ||
+    !contrasena ||
+    !passConfirm
+  ) {
+    await logModel.create({
+      madeBy: loggedUser,
+      action: "UPDATE EMPLOYEE",
+      action_detail: `Tried to update employee, but not all fields are filled`,
+      status: "FAILED",
+    });
+    throw Error("Todos los campos deben ser diligenciados");
+  }
   const existsUsuario = await this.findOne({ usuario });
   const newId = new mongoose.Types.ObjectId(id);
   if (existsUsuario && !existsUsuario._id.equals(newId)) {
+    await logModel.create({
+      madeBy: loggedUser,
+      action: "UPDATE EMPLOYEE",
+      action_detail: `Tried to update employee, but new username is already in use`,
+      status: "FAILED",
+    });
     throw Error("El usuario ya existe");
   }
   const existsCedula = await this.findOne({ cedula });
   if (existsCedula && !existsCedula._id.equals(newId)) {
+    await logModel.create({
+      madeBy: loggedUser,
+      action: "UPDATE EMPLOYEE",
+      action_detail: `Tried to update employee, but new document is already in use`,
+      status: "FAILED",
+    });
     throw Error("La cedula no puede estar repetida");
   }
 
   const existsTelefono = await this.findOne({ telefono });
   if (existsTelefono && !existsTelefono._id.equals(newId)) {
+    await logModel.create({
+      madeBy: loggedUser,
+      action: "UPDATE EMPLOYEE",
+      action_detail: `Tried to update employee, but new cellphone number is already in use`,
+      status: "FAILED",
+    });
     throw Error("El telefono no puede estar repetido");
   }
+  if (contrasena !== passConfirm) {
+    await logModel.create({
+      madeBy: loggedUser,
+      action: "UPDATE EMPLOYEE",
+      action_detail: `Tried to update employee, but password doesn't match`,
+      status: "FAILED",
+    });
+
+    throw Error("Las contraseñas no coinciden");
+  }
   if (!validator.isStrongPassword(contrasena)) {
+    await logModel.create({
+      madeBy: loggedUser,
+      action: "UPDATE EMPLOYEE",
+      action_detail: `Tried to update employee, but password is weak`,
+      status: "FAILED",
+    });
     throw Error(
       "La contraseña es debil. Incluir mayúsculas,minúsculas, números y caracter especial"
     );

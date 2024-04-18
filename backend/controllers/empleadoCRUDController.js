@@ -98,20 +98,18 @@ const createEmployee = async (req, res) => {
 
 const patchEmployee = async (req, res) => {
   const { id } = req.params;
-  const { nombre, apellido, cedula, direccion, telefono, usuario, contrasena } =
-    req.body;
+  const {
+    nombre,
+    apellido,
+    cedula,
+    direccion,
+    telefono,
+    usuario,
+    contrasena,
+    passConfirm,
+  } = req.body;
 
   try {
-    console.log(
-      id,
-      nombre,
-      apellido,
-      cedula,
-      direccion,
-      telefono,
-      usuario,
-      contrasena
-    );
     const empleadoCambiado = await userModel.updateEmployee(
       id,
       nombre,
@@ -120,10 +118,19 @@ const patchEmployee = async (req, res) => {
       direccion,
       telefono,
       usuario,
-      contrasena
+      contrasena,
+      passConfirm,
+      req.loggedUser.usuario
     );
+    await logModel.create({
+      madeBy: req.loggedUser.usuario,
+      action: "UPDATE EMPLOYEE",
+      action_detail: `Admin ${req.loggedUser.usuario} updated employee ${usuario}`,
+      status: "SUCCESSFUL",
+    });
     res.status(200).json(empleadoCambiado);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ error: error.message });
   }
 };

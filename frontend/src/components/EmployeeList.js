@@ -137,7 +137,7 @@ const EmployeeList = () => {
           <MoonLoader color="#1c143d" loading={isLoading} size={100} />
         </div>
       )}
-      <button onClick={() => table.setPageIndex(0)}>Primera</button>
+      {/* <button onClick={() => table.setPageIndex(0)}>Primera</button>
       <button
         onClick={() => {
           table.previousPage();
@@ -154,7 +154,7 @@ const EmployeeList = () => {
       </button>
       <button onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
         Última
-      </button>
+      </button> */}
     </div>
   );
 };

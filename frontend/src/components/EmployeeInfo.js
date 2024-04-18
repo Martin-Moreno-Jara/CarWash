@@ -13,7 +13,7 @@ const EmployeeInfo = ({ id }) => {
   const handleDelete = async () => {
     const response = await fetch(`${apiURL}/api/empleadoCRUD/${id}`, {
       method: "DELETE",
-      Authorization: `Bearer ${loggedUser.token}`,
+      headers: { Authorization: `Bearer ${loggedUser.token}` },
     });
     const json = await response.json();
 

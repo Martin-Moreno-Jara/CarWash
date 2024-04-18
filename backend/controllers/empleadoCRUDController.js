@@ -148,6 +148,12 @@ const deleteEmployee = async (req, res) => {
   }
   const deletion = await userModel.findOneAndDelete({ _id: id });
   const keyDeletion = await secureModel.deleteOne({ id });
+  await logModel.create({
+    madeBy: req.loggedUser.usuario,
+    action: "DELETE EMPLOYEE",
+    action_detail: `Admin ${req.loggedUser.usuario} deleted employee ${deletion.usuario}`,
+    status: "SUCCESSFUL",
+  });
   res.status(200).json(deletion);
 };
 

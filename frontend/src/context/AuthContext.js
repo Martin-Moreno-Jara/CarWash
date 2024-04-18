@@ -15,7 +15,6 @@ export const authReducer = (state, action) => {
 export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("usuario"));
-
     if (token) {
       dispatch({ type: "LOGIN", payload: token });
     }

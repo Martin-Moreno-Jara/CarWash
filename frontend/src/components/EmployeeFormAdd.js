@@ -43,33 +43,17 @@ const EmployeeFormAdd = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      nombre &&
-      apellido &&
-      telefono &&
-      cedula &&
-      direccion &&
-      usuario &&
-      contrasena &&
-      passConfirm
-    ) {
-      if (passConfirm !== contrasena) {
-        setError("Las contraseñas no coinciden");
-        return;
-      }
 
-      await signupEmployee(
-        nombre,
-        apellido,
-        telefono,
-        parseInt(cedula),
-        direccion,
-        usuario,
-        contrasena
-      );
-    } else {
-      setError("Todos los campos deben ser llenados");
-    }
+    await signupEmployee(
+      nombre,
+      apellido,
+      telefono,
+      parseInt(cedula),
+      direccion,
+      usuario,
+      contrasena,
+      passConfirm
+    );
   };
   return (
     <div className="main-container">

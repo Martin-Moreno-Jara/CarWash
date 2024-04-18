@@ -5,7 +5,8 @@ import { useEmployeeContext } from "../hooks/useEmployeeContext";
 import { usePatchEmployee } from "../hooks/usePatchEmployee";
 import MoonLoader from "react-spinners/MoonLoader";
 import "../stylesheets/EmployeeForm.css";
-const apiURL = process.env.REACT_APP_DEPLOYURL;
+import { useAuthContext } from "../hooks/useAuthContext";
+const apiURL = process.env.REACT_APP_DEVURL;
 
 const EmployeeFormEdit = () => {
   const { patchEmployee, error, setError, isLoading } = usePatchEmployee();
@@ -51,17 +52,20 @@ const EmployeeFormEdit = () => {
   const handlePassConfirm = (e) => {
     setPassConfirm(e.target.value);
   };
+  const { usuario: loggedUser } = useAuthContext();
 
   useEffect(() => {
     const fetchEmployeeData = async () => {
       setLoadingInfo(true);
       const response = await fetch(
-        `${apiURL}/api/empleadoCRUD/${selectedEmployee}`
+        `${apiURL}/api/empleadoCRUD/${selectedEmployee}`,
+        { headers: { Authorization: `Bearer ${loggedUser.token}` } }
       );
       const json = await response.json();
 
       const keyPromise = await fetch(
-        `${apiURL}/api/empleadoCRUD/key/${selectedEmployee}`
+        `${apiURL}/api/empleadoCRUD/key/${selectedEmployee}`,
+        { headers: { Authorization: `Bearer ${loggedUser.token}` } }
       );
       const jsonkey = await keyPromise.json();
 
@@ -71,6 +75,7 @@ const EmployeeFormEdit = () => {
       if (!response.ok && !keyPromise.ok) {
         setLoadingInfo(false);
       }
+      console.log(json.usuario);
 
       setNombre(json.nombre);
       setApellido(json.apellido);
@@ -82,38 +87,20 @@ const EmployeeFormEdit = () => {
       setPassConfirm(jsonkey.key);
     };
     fetchEmployeeData();
-  }, [selectedEmployee]);
+  }, [selectedEmployee, loggedUser.token]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (
-      nombre &&
-      apellido &&
-      telefono &&
-      cedula &&
-      direccion &&
-      usuario &&
-      contrasena &&
+    await patchEmployee(
+      nombre,
+      apellido,
+      telefono,
+      parseInt(cedula),
+      direccion,
+      usuario,
+      contrasena,
       passConfirm
-    ) {
-      if (passConfirm !== contrasena) {
-        setError("Las contraseñas no coinciden");
-        return;
-      }
-      await patchEmployee(
-        nombre,
-        apellido,
-        telefono,
-        parseInt(cedula),
-        direccion,
-        usuario,
-        contrasena,
-        passConfirm
-      );
-    } else {
-      setError("Todos los campos deben ser llenados");
-    }
+    );
   };
   return (
     <div className="main-container">

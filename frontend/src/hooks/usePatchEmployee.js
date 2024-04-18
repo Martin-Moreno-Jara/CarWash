@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useEmployeeContext } from "./useEmployeeContext";
 import { useEmployeeCrudContext } from "./useEmployeeCrudContext";
 import { useSelectContext } from "./useSelectContext";
-const apiURL = process.env.REACT_APP_DEPLOYURL;
+import { useAuthContext } from "./useAuthContext";
+const apiURL = process.env.REACT_APP_DEVURL;
 
 export const usePatchEmployee = () => {
   const { selectedEmployee } = useSelectContext();
@@ -10,6 +11,7 @@ export const usePatchEmployee = () => {
   const [isLoading, setIsLoading] = useState(null);
   const { showEdit, dispatch } = useEmployeeCrudContext();
   const { dispatch: dispatchUpdate } = useEmployeeContext();
+  const { usuario: loggedUser } = useAuthContext();
 
   const patchEmployee = async (
     nombre,
@@ -30,13 +32,17 @@ export const usePatchEmployee = () => {
       direccion,
       usuario,
       contrasena,
+      passConfirm,
     };
 
     const fetchUpdate = await fetch(
       `${apiURL}/api/empleadoCRUD/${selectedEmployee}`,
       {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${loggedUser.token}`,
+        },
         body: JSON.stringify(send),
       }
     );

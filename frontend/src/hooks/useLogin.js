@@ -1,6 +1,6 @@
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useState } from "react";
-const apiURL = process.env.REACT_APP_DEPLOYURL;
+const apiURL = process.env.REACT_APP_DEVURL;
 
 export const useLogin = () => {
   const { dispatch } = useAuthContext();
@@ -24,7 +24,6 @@ export const useLogin = () => {
     if (response.ok) {
       setIsLoading(false);
       setError(null);
-      console.log("inicio de sesion exitoso");
       localStorage.setItem("usuario", JSON.stringify(json));
       dispatch({ type: "LOGIN", payload: json });
     }

@@ -6,7 +6,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 const NavBar = () => {
   const { usuario } = useAuthContext();
   const { logout } = useLogout();
-  const makeLogout = () => {
+  const makeLogout = async () => {
     logout();
   };
   return (

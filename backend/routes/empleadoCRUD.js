@@ -7,8 +7,11 @@ const {
   deleteEmployee,
   patchEmployee,
 } = require("../controllers/empleadoCRUDController");
+const requireAuth = require("../middleware/requireAuth");
 
 const router = express.Router();
+//requerir estar logeado
+router.use(requireAuth);
 
 //traer todos los empleados
 router.get("/", getEmployees);

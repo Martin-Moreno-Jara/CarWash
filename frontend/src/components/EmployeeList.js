@@ -4,6 +4,7 @@ import EmployeeInfo from "../components/EmployeeInfo";
 import { useEmployeeContext } from "../hooks/useEmployeeContext";
 import "../stylesheets/EmployeeList.css";
 import MoonLoader from "react-spinners/MoonLoader";
+import { useAuthContext } from "../hooks/useAuthContext";
 import {
   useReactTable,
   getCoreRowModel,
@@ -15,7 +16,7 @@ import {
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 import { useSelectContext } from "../hooks/useSelectContext";
 //ENV VARIABLE API
-const apiURL = process.env.REACT_APP_DEPLOYURL;
+const apiURL = process.env.REACT_APP_DEVURL;
 
 //FETCH EMPLOYEES FOR THE TABLE
 const EmployeeList = () => {
@@ -49,15 +50,20 @@ const EmployeeList = () => {
   const { empleados, dispatch } = useEmployeeContext();
   const { show, showEdit, dispatch: dispatchEdit } = useEmployeeCrudContext();
   const [isLoading, setIsLoading] = useState(null);
+  const { usuario } = useAuthContext();
 
   useEffect(() => {
+    console.log(usuario);
     const fetchEmployees = async () => {
       setIsLoading(true);
-      const response = await fetch(`${apiURL}/api/empleadoCRUD`);
+      const response = await fetch(`${apiURL}/api/empleadoCRUD`, {
+        headers: { Authorization: `Bearer ${usuario.token}` },
+      });
       const json = await response.json();
 
       if (!response.ok) {
         setIsLoading(false);
+        console.log(json);
         throw Error("No se pudieron traer empleados");
       }
       if (response.ok) {

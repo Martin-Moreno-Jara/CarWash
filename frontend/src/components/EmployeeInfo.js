@@ -2,15 +2,18 @@ import "../stylesheets/EmployeeInfo.css";
 import { useEmployeeContext } from "../hooks/useEmployeeContext";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 import { useSelectContext } from "../hooks/useSelectContext";
-const apiURL = process.env.REACT_APP_DEPLOYURL;
+import { useAuthContext } from "../hooks/useAuthContext";
+const apiURL = process.env.REACT_APP_DEVURL;
 const EmployeeInfo = ({ id }) => {
   const { dispatch } = useEmployeeContext();
   const { showEdit, dispatch: dispatchEdit } = useEmployeeCrudContext();
   const { dispatch: dispatchIsSelected } = useSelectContext();
+  const { usuario: loggedUser } = useAuthContext();
 
   const handleDelete = async () => {
     const response = await fetch(`${apiURL}/api/empleadoCRUD/${id}`, {
       method: "DELETE",
+      Authorization: `Bearer ${loggedUser.token}`,
     });
     const json = await response.json();
 

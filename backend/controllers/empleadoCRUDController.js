@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const secureModel = require("../models/secureModel");
+const logModel = require("../models/logModel");
 
 const createToken = (_id, rol) => {
   return jwt.sign({ _id, rol }, process.env.SECRET_STRING, {
@@ -65,6 +66,7 @@ const createEmployee = async (req, res) => {
     rol,
     usuario,
     contrasena,
+    passConfirm,
   } = req.body;
   try {
     const usuarioCreado = await userModel.signup(
@@ -75,8 +77,17 @@ const createEmployee = async (req, res) => {
       telefono,
       rol,
       usuario,
-      contrasena
+      contrasena,
+      passConfirm,
+      req.loggedUser.usuario
     );
+    await logModel.create({
+      madeBy: req.loggedUser.usuario,
+      action: "CREATE EMPLOYEE",
+      action_detail: `Admin ${req.loggedUser.usuario} created employee ${usuario}`,
+      status: "SUCCESSFUL",
+    });
+
     res.status(200).json(usuarioCreado);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -87,20 +98,18 @@ const createEmployee = async (req, res) => {
 
 const patchEmployee = async (req, res) => {
   const { id } = req.params;
-  const { nombre, apellido, cedula, direccion, telefono, usuario, contrasena } =
-    req.body;
+  const {
+    nombre,
+    apellido,
+    cedula,
+    direccion,
+    telefono,
+    usuario,
+    contrasena,
+    passConfirm,
+  } = req.body;
 
   try {
-    console.log(
-      id,
-      nombre,
-      apellido,
-      cedula,
-      direccion,
-      telefono,
-      usuario,
-      contrasena
-    );
     const empleadoCambiado = await userModel.updateEmployee(
       id,
       nombre,
@@ -109,10 +118,19 @@ const patchEmployee = async (req, res) => {
       direccion,
       telefono,
       usuario,
-      contrasena
+      contrasena,
+      passConfirm,
+      req.loggedUser.usuario
     );
+    await logModel.create({
+      madeBy: req.loggedUser.usuario,
+      action: "UPDATE EMPLOYEE",
+      action_detail: `Admin ${req.loggedUser.usuario} updated employee ${usuario}`,
+      status: "SUCCESSFUL",
+    });
     res.status(200).json(empleadoCambiado);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ error: error.message });
   }
 };

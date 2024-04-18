@@ -206,7 +206,12 @@ const EmployeeFormEdit = () => {
           </div>
           <div>
             <label>Nombre de Usuario</label>
-            <input type="text" onChange={handleusuario} value={usuario} />
+            <input
+              type="text"
+              onChange={handleusuario}
+              value={usuario}
+              autoComplete="off"
+            />
           </div>
           <div>
             <label>Contraseña</label>
@@ -216,6 +221,7 @@ const EmployeeFormEdit = () => {
                 type={showPassword ? "text" : "password"}
                 onChange={handlecontrasena}
                 value={contrasena}
+                autoComplete="off"
               />
               <span
                 className="material-symbols-outlined see"

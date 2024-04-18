@@ -150,11 +150,15 @@ const EmployeeFormAdd = () => {
           </div>
           <div>
             <label>Nombre de Usuario</label>
-            <input type="text" onChange={handleusuario} />
+            <input type="text" onChange={handleusuario} autoComplete="off" />
           </div>
           <div>
-            <label>Contraseña</label>
-            <input type="password" onChange={handlecontrasena} />
+            <label>Contraseña </label>
+            <input
+              type="password"
+              onChange={handlecontrasena}
+              autoComplete="off"
+            />
           </div>
           <div>
             <label>Confirmar Contraseña</label>

@@ -8,6 +8,8 @@ const EmployeeFormAdd = () => {
   const { show, dispatch } = useEmployeeCrudContext();
   const { signupEmployee, error, setError, isLoading } = useSignup();
   const [showFormats, setShowFormats] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassConfirm, setShowPassConfirm] = useState(false);
 
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
@@ -138,15 +140,42 @@ const EmployeeFormAdd = () => {
           </div>
           <div>
             <label>Contraseña </label>
-            <input
-              type="password"
-              onChange={handlecontrasena}
-              autoComplete="off"
-            />
+            <div className="password-field-div">
+              <input
+                className="password-field"
+                type={showPassword ? "text" : "password"}
+                onChange={handlecontrasena}
+                value={contrasena}
+                autoComplete="off"
+              />
+              <span
+                className="material-symbols-outlined see"
+                onClick={() => {
+                  setShowPassword(!showPassword);
+                }}
+              >
+                {showPassword ? "visibility" : "visibility_off"}
+              </span>
+            </div>
           </div>
           <div>
             <label>Confirmar Contraseña</label>
-            <input type="password" onChange={handlePassConfirm} />
+            <div className="password-field-div">
+              <input
+                className="password-field"
+                type={showPassConfirm ? "text" : "password"}
+                onChange={handlePassConfirm}
+                value={passConfirm}
+              />
+              <span
+                className="material-symbols-outlined see"
+                onClick={() => {
+                  setShowPassConfirm(!showPassConfirm);
+                }}
+              >
+                {showPassConfirm ? "visibility" : "visibility_off"}
+              </span>
+            </div>
           </div>
         </div>
         <button className="submit-btn" disabled={isLoading}>

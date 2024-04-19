@@ -197,20 +197,9 @@ userSchema.statics.updateEmployee = async function (
   direccion,
   telefono,
   usuario,
-  contrasena,
-  passConfirm,
   loggedUser
 ) {
-  if (
-    !nombre ||
-    !apellido ||
-    !cedula ||
-    !direccion ||
-    !telefono ||
-    !usuario ||
-    !contrasena ||
-    !passConfirm
-  ) {
+  if (!nombre || !apellido || !cedula || !direccion || !telefono || !usuario) {
     await logModel.create({
       madeBy: loggedUser,
       action: "UPDATE EMPLOYEE",
@@ -251,30 +240,6 @@ userSchema.statics.updateEmployee = async function (
     });
     throw Error("El telefono no puede estar repetido");
   }
-  if (contrasena !== passConfirm) {
-    await logModel.create({
-      madeBy: loggedUser,
-      action: "UPDATE EMPLOYEE",
-      action_detail: `Tried to update employee, but password doesn't match`,
-      status: "FAILED",
-    });
-
-    throw Error("Las contraseñas no coinciden");
-  }
-  if (!validator.isStrongPassword(contrasena)) {
-    await logModel.create({
-      madeBy: loggedUser,
-      action: "UPDATE EMPLOYEE",
-      action_detail: `Tried to update employee, but password is weak`,
-      status: "FAILED",
-    });
-    throw Error(
-      "La contraseña es debil. Incluir mayúsculas,minúsculas, números y caracter especial"
-    );
-  }
-
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(contrasena, salt);
 
   const user = await this.findOneAndUpdate(
     { _id: id },
@@ -285,12 +250,10 @@ userSchema.statics.updateEmployee = async function (
       direccion,
       telefono,
       usuario,
-      contrasena: hashedPassword,
     }
   );
   console.log(user);
   const updated = await this.findOne({ _id: id });
-  const secureCopy = await secureModel.updateOne({ id }, { key: contrasena });
   return updated;
 };
 

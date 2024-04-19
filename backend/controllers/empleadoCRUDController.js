@@ -98,16 +98,7 @@ const createEmployee = async (req, res) => {
 
 const patchEmployee = async (req, res) => {
   const { id } = req.params;
-  const {
-    nombre,
-    apellido,
-    cedula,
-    direccion,
-    telefono,
-    usuario,
-    contrasena,
-    passConfirm,
-  } = req.body;
+  const { nombre, apellido, cedula, direccion, telefono, usuario } = req.body;
 
   try {
     const empleadoCambiado = await userModel.updateEmployee(
@@ -118,8 +109,6 @@ const patchEmployee = async (req, res) => {
       direccion,
       telefono,
       usuario,
-      contrasena,
-      passConfirm,
       req.loggedUser.usuario
     );
     await logModel.create({

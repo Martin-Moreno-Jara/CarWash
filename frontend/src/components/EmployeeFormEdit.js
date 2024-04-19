@@ -14,8 +14,6 @@ const EmployeeFormEdit = () => {
   const { dispatch: dispatchUpdate } = useEmployeeContext();
   const { selectedEmployee } = useSelectContext();
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPassConfirm, setShowPassConfirm] = useState(false);
   const [showFormats, setShowFormats] = useState(false);
   const [loadingInfo, setLoadingInfo] = useState(null);
 
@@ -25,8 +23,6 @@ const EmployeeFormEdit = () => {
   const [cedula, setCedula] = useState("");
   const [direccion, setdireccion] = useState("");
   const [usuario, setusuario] = useState("");
-  const [contrasena, setcontrasena] = useState("");
-  const [passConfirm, setPassConfirm] = useState("");
 
   const handleNombre = (e) => {
     setNombre(e.target.value);
@@ -46,12 +42,7 @@ const EmployeeFormEdit = () => {
   const handleusuario = (e) => {
     setusuario(e.target.value);
   };
-  const handlecontrasena = (e) => {
-    setcontrasena(e.target.value);
-  };
-  const handlePassConfirm = (e) => {
-    setPassConfirm(e.target.value);
-  };
+
   const { usuario: loggedUser } = useAuthContext();
 
   useEffect(() => {
@@ -63,16 +54,10 @@ const EmployeeFormEdit = () => {
       );
       const json = await response.json();
 
-      const keyPromise = await fetch(
-        `${apiURL}/api/empleadoCRUD/key/${selectedEmployee}`,
-        { headers: { Authorization: `Bearer ${loggedUser.token}` } }
-      );
-      const jsonkey = await keyPromise.json();
-
-      if (response.ok && keyPromise.ok) {
+      if (response.ok) {
         setLoadingInfo(false);
       }
-      if (!response.ok && !keyPromise.ok) {
+      if (!response.ok) {
         setLoadingInfo(false);
       }
       console.log(json.usuario);
@@ -83,8 +68,6 @@ const EmployeeFormEdit = () => {
       setCedula(json.cedula);
       setdireccion(json.direccion);
       setusuario(json.usuario);
-      setcontrasena(jsonkey.key);
-      setPassConfirm(jsonkey.key);
     };
     fetchEmployeeData();
   }, [selectedEmployee, loggedUser.token]);
@@ -97,9 +80,7 @@ const EmployeeFormEdit = () => {
       telefono,
       parseInt(cedula),
       direccion,
-      usuario,
-      contrasena,
-      passConfirm
+      usuario
     );
   };
   return (
@@ -200,49 +181,7 @@ const EmployeeFormEdit = () => {
               autoComplete="off"
             />
           </div>
-          <div>
-            <label>Contraseña</label>
-            <div className="password-field-div">
-              <input
-                className="password-field"
-                type={showPassword ? "text" : "password"}
-                onChange={handlecontrasena}
-                value={contrasena}
-                autoComplete="off"
-              />
-              <span
-                className="material-symbols-outlined see"
-                onClick={() => {
-                  setShowPassword(!showPassword);
-                }}
-              >
-                {showPassword ? "visibility" : "visibility_off"}
-              </span>
-            </div>
-          </div>
-          <div>
-            <div>
-              <label>Confirmar Contraseña</label>
-              <div className="password-field-div">
-                <input
-                  className="password-field"
-                  type={showPassConfirm ? "text" : "password"}
-                  onChange={handlePassConfirm}
-                  value={passConfirm}
-                />
-                <span
-                  className="material-symbols-outlined see"
-                  onClick={() => {
-                    setShowPassConfirm(!showPassConfirm);
-                  }}
-                >
-                  {showPassConfirm ? "visibility" : "visibility_off"}
-                </span>
-              </div>
-            </div>
-          </div>
         </div>
-
         <button className="submit-btn" disabled={isLoading}>
           Guardar Cambios
         </button>

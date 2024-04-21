@@ -1,4 +1,5 @@
-const servicioModel = require("../models/servicioModel"); //importar el modelo del servicio para hacer las busquedas, inserciones, etc a traves de el
+const servicioModel = require("../models/servicioModel");
+const logModel = require("../models/logModel");
 
 //controlador de mostrar servicios
 const getServices = (req, res) => {
@@ -26,6 +27,13 @@ const createService = async (req, res) => {
       encargado,
       carInfo
     );
+    await logModel.create({
+      //TODO: cambiar madeby
+      madeBy: "Yet no authentication",
+      action: "CREATE SERVICE",
+      action_detail: `user USUARIO successfully created service`,
+      status: "SUCCESSFUL",
+    });
     res.status(200).json(servicio);
   } catch (error) {
     res.status(400).json({ error: error.message });

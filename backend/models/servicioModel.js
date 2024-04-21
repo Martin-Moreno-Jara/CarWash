@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const logModel = require("./logModel");
 const Schema = mongoose.Schema;
 
 const encargadoSchema = new Schema({
@@ -60,6 +61,8 @@ const servicioSchema = new Schema(
   },
   { timestamps: true }
 );
+
+//TODO: enviar el token de autenticacion luego de hacer front
 servicioSchema.statics.insertService = async function (
   cliente,
   placa,
@@ -77,11 +80,25 @@ servicioSchema.statics.insertService = async function (
     !precio ||
     !encargado
   ) {
+    await logModel.create({
+      //TODO: cambiar madeby
+      madeBy: "Yet no authentication",
+      action: "CREATE SERVICE",
+      action_detail: `user USUARIO tried to create service, but didn't fill mandatory fields`,
+      status: "FAILED",
+    });
     throw Error("Diligencie los campos obligatorios");
   }
   const previousServices = await this.find({ placa });
   previousServices.forEach((service) => {
     if (service.estado === "En proceso") {
+      logModel.create({
+        //TODO: cambiar madeby
+        madeBy: "Yet no authentication",
+        action: "CREATE SERVICE",
+        action_detail: `user USUARIO tried to create service, but there's alreay an opened service with this car`,
+        status: "FAILED",
+      });
       throw Error("Este carro ya tiene un servicio abierto.");
     }
   });

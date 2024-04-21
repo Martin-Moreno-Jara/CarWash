@@ -79,10 +79,13 @@ servicioSchema.statics.insertService = async function (
   ) {
     throw Error("Diligencie los campos obligatorios");
   }
-  const previousService = await this.findOne({ placa });
-  if (previousService && previousService.estado === "En proceso") {
-    throw Error("El vehiculo ya tiene un servicio que no ha concluido");
-  }
+  const previousServices = await this.find({ placa });
+  previousServices.forEach((service) => {
+    if (service.estado === "En proceso") {
+      throw Error("Este carro ya tiene un servicio abierto.");
+    }
+  });
+
   const servicio = await this.create({
     cliente,
     placa,

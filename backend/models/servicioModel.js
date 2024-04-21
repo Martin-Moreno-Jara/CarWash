@@ -60,5 +60,39 @@ const servicioSchema = new Schema(
   },
   { timestamps: true }
 );
+servicioSchema.statics.insertService = async function (
+  cliente,
+  placa,
+  tipoAuto,
+  tipoServicio,
+  precio,
+  encargado,
+  carInfo
+) {
+  if (
+    !cliente ||
+    !placa ||
+    !tipoAuto ||
+    !tipoServicio ||
+    !precio ||
+    !encargado
+  ) {
+    throw Error("Diligencie los campos obligatorios");
+  }
+  const previousService = await this.findOne({ placa });
+  if (previousService && previousService.estado === "En proceso") {
+    throw Error("El vehiculo ya tiene un servicio que no ha concluido");
+  }
+  const servicio = await this.create({
+    cliente,
+    placa,
+    tipoAuto,
+    tipoServicio,
+    precio,
+    encargado,
+    carInfo,
+  });
+  return servicio;
+};
 
 module.exports = mongoose.model("servicioModel", servicioSchema);

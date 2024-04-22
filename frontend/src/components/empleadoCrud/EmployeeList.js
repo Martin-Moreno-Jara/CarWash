@@ -11,14 +11,14 @@ import {
   getSortedRowModel,
 } from "@tanstack/react-table";
 //CUSTOM HOOKS
-import { useEmployeeContext } from "../hooks/useEmployeeContext";
-import { useAuthContext } from "../hooks/useAuthContext";
-import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
-import { useSelectContext } from "../hooks/useSelectContext";
+import { useEmployeeContext } from "../../hooks/useEmployeeContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { useEmployeeCrudContext } from "../../hooks/useEmployeeCrudContext";
+import { useSelectContext } from "../../hooks/useSelectContext";
 //COMPONENTS
-import EmployeeInfo from "../components/EmployeeInfo";
+import EmployeeInfo from "./EmployeeInfo";
 //STYLESHEET
-import "../stylesheets/EmployeeList.css";
+import "../../stylesheets/EmployeeList.css";
 //ENV VARIABLES
 const apiURL = process.env.REACT_APP_DEVURL;
 //**************************************************************

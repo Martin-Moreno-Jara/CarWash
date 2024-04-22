@@ -1,11 +1,11 @@
 //************************** IMPORTED
 //CUSTOM HOOKS
-import { useEmployeeContext } from "../hooks/useEmployeeContext";
-import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
-import { useSelectContext } from "../hooks/useSelectContext";
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useEmployeeContext } from "../../hooks/useEmployeeContext";
+import { useEmployeeCrudContext } from "../../hooks/useEmployeeCrudContext";
+import { useSelectContext } from "../../hooks/useSelectContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
 //STYLESHEET
-import "../stylesheets/EmployeeInfo.css";
+import "../../stylesheets/EmployeeInfo.css";
 //ENV VARIABLES
 const apiURL = process.env.REACT_APP_DEVURL;
 //**************************************************************

@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import MoonLoader from "react-spinners/MoonLoader";
 //CUSTOM HOOKS
-import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
-import { useSelectContext } from "../hooks/useSelectContext";
-import { useAuthContext } from "../hooks/useAuthContext";
-import { usePatchEmployee } from "../hooks/usePatchEmployee";
+import { useEmployeeCrudContext } from "../../hooks/useEmployeeCrudContext";
+import { useSelectContext } from "../../hooks/useSelectContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { usePatchEmployee } from "../../hooks/usePatchEmployee";
 //STYLESHEET
-import "../stylesheets/EmployeeForm.css";
+import "../../stylesheets/EmployeeForm.css";
 //ENV VARIABLES
 const apiURL = process.env.REACT_APP_DEVURL;
 //**************************************************************

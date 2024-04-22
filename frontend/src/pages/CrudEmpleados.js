@@ -3,8 +3,8 @@
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 //COMPONENTS
 import EmployeeFormAdd from "../components/empleadoCrud/EmployeeFormAdd";
-import EmployeeList from "../components/EmployeeList";
-import EmployeeFormEdit from "../components/EmployeeFormEdit";
+import EmployeeList from "../components/empleadoCrud/EmployeeList";
+import EmployeeFormEdit from "../components/empleadoCrud/EmployeeFormEdit";
 //STYLESHEET
 import "../stylesheets/CrudEmpleados.css";
 //**************************************************************

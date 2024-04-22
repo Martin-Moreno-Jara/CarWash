@@ -9,6 +9,7 @@ import { useAuthContext } from "./hooks/useAuthContext";
 import HomeAdmin from "./pages/HomeAdmin";
 import HomeEmpleado from "./pages/HomeEmpleado";
 import CrudEmpleados from "./pages/CrudEmpleados";
+import CrudServicios from "./pages/CrudServicios";
 import { EmployeeContextProvider } from "./context/EmployeeContext";
 
 function App() {
@@ -76,6 +77,8 @@ function App() {
                 )
               }
             />
+            <Route path="/admin/servicioCrud" element={<CrudServicios />} />
+            <Route path="/empleado/servicioCrud" element={<CrudServicios />} />
           </Routes>
         </div>
         <Footer />

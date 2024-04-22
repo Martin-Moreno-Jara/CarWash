@@ -1,6 +1,11 @@
-import { useAuthContext } from "../hooks/useAuthContext";
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
 import { useState } from "react";
+//CUSTOM HOOKS
+import { useAuthContext } from "../hooks/useAuthContext";
+//ENV VARIBLES
 const apiURL = process.env.REACT_APP_DEVURL;
+//**************************************************************
 
 export const useLogin = () => {
   const { dispatch } = useAuthContext();

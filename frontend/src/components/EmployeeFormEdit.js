@@ -1,17 +1,21 @@
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
 import { useEffect, useState } from "react";
+import MoonLoader from "react-spinners/MoonLoader";
+//CUSTOM HOOKS
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 import { useSelectContext } from "../hooks/useSelectContext";
-import { useEmployeeContext } from "../hooks/useEmployeeContext";
-import { usePatchEmployee } from "../hooks/usePatchEmployee";
-import MoonLoader from "react-spinners/MoonLoader";
-import "../stylesheets/EmployeeForm.css";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { usePatchEmployee } from "../hooks/usePatchEmployee";
+//STYLESHEET
+import "../stylesheets/EmployeeForm.css";
+//ENV VARIABLES
 const apiURL = process.env.REACT_APP_DEVURL;
+//**************************************************************
 
 const EmployeeFormEdit = () => {
-  const { patchEmployee, error, setError, isLoading } = usePatchEmployee();
+  const { patchEmployee, error, isLoading } = usePatchEmployee();
   const { showEdit, dispatch } = useEmployeeCrudContext();
-  const { dispatch: dispatchUpdate } = useEmployeeContext();
   const { selectedEmployee } = useSelectContext();
 
   const [showFormats, setShowFormats] = useState(false);

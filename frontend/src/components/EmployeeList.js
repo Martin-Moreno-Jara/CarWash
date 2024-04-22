@@ -1,10 +1,7 @@
-//MODULES IMPORTED
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
 import { useEffect, useState } from "react";
-import EmployeeInfo from "../components/EmployeeInfo";
-import { useEmployeeContext } from "../hooks/useEmployeeContext";
-import "../stylesheets/EmployeeList.css";
 import MoonLoader from "react-spinners/MoonLoader";
-import { useAuthContext } from "../hooks/useAuthContext";
 import {
   useReactTable,
   getCoreRowModel,
@@ -13,10 +10,18 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
 } from "@tanstack/react-table";
+//CUSTOM HOOKS
+import { useEmployeeContext } from "../hooks/useEmployeeContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 import { useSelectContext } from "../hooks/useSelectContext";
-//ENV VARIABLE API
+//COMPONENTS
+import EmployeeInfo from "../components/EmployeeInfo";
+//STYLESHEET
+import "../stylesheets/EmployeeList.css";
+//ENV VARIABLES
 const apiURL = process.env.REACT_APP_DEVURL;
+//**************************************************************
 
 //FETCH EMPLOYEES FOR THE TABLE
 const EmployeeList = () => {

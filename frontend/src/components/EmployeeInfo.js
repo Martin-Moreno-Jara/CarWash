@@ -1,9 +1,15 @@
-import "../stylesheets/EmployeeInfo.css";
+//************************** IMPORTED
+//CUSTOM HOOKS
 import { useEmployeeContext } from "../hooks/useEmployeeContext";
 import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
 import { useSelectContext } from "../hooks/useSelectContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+//STYLESHEET
+import "../stylesheets/EmployeeInfo.css";
+//ENV VARIABLES
 const apiURL = process.env.REACT_APP_DEVURL;
+//**************************************************************
+
 const EmployeeInfo = ({ id }) => {
   const { dispatch } = useEmployeeContext();
   const { showEdit, dispatch: dispatchEdit } = useEmployeeCrudContext();

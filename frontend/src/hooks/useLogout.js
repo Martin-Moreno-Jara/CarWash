@@ -1,5 +1,9 @@
+//************************** IMPORTED
+//CUSTOM HOOKS
 import { useAuthContext } from "../hooks/useAuthContext";
+//ENV VARIBLES
 const apiURL = process.env.REACT_APP_DEVURL;
+//**************************************************************
 
 //TODO
 export const useLogout = () => {

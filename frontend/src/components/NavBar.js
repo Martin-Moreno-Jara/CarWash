@@ -1,7 +1,12 @@
-import carwashlogo from "../images/carwash-logo.jpg";
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
 import { Link } from "react-router-dom";
+//CUSTOM HOOKS
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
+//COMPONENTS
+import carwashlogo from "../images/carwash-logo.jpg";
+//**************************************************************
 
 const NavBar = () => {
   const { usuario } = useAuthContext();

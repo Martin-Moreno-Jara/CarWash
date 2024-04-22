@@ -1,3 +1,10 @@
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
+//CUSTOM HOOKS
+//COMPONENTS
+//STYLESHEET
+//ENV VARIABLES
+//**************************************************************
 const CrudServicios = () => {
   return (
     <div className="crudEmpleados-main">

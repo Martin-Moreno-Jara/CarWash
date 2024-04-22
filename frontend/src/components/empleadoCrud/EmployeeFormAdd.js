@@ -1,12 +1,17 @@
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
 import { useState } from "react";
-import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
-import { useSignup } from "../hooks/useSignup";
 import MoonLoader from "react-spinners/MoonLoader";
-import "../stylesheets/EmployeeForm.css";
+//CUSTOM HOOKS
+import { useSignup } from "../../hooks/useSignup";
+import { useEmployeeCrudContext } from "../../hooks/useEmployeeCrudContext";
+//STYLESHEET
+import "../../stylesheets/EmployeeForm.css";
+//**************************************************************
 
 const EmployeeFormAdd = () => {
   const { show, dispatch } = useEmployeeCrudContext();
-  const { signupEmployee, error, setError, isLoading } = useSignup();
+  const { signupEmployee, error, isLoading } = useSignup();
   const [showFormats, setShowFormats] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);

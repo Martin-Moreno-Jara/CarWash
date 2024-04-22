@@ -1,9 +1,14 @@
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
 import { useState } from "react";
+//CUSTOM HOOKS
 import { useEmployeeContext } from "./useEmployeeContext";
 import { useEmployeeCrudContext } from "./useEmployeeCrudContext";
 import { useSelectContext } from "./useSelectContext";
 import { useAuthContext } from "./useAuthContext";
+//ENV VARIBLES
 const apiURL = process.env.REACT_APP_DEVURL;
+//**************************************************************
 
 export const usePatchEmployee = () => {
   const { selectedEmployee } = useSelectContext();

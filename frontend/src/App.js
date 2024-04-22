@@ -1,16 +1,20 @@
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import React, { useEffect } from "react";
-import "./App.css";
+//CUSTOM HOOKS
+import { useAuthContext } from "./hooks/useAuthContext";
+//COMPONENTS
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import HomeGeneral from "./pages/HomeGeneral";
 import Login from "./pages/Login";
-import { useAuthContext } from "./hooks/useAuthContext";
 import HomeAdmin from "./pages/HomeAdmin";
 import HomeEmpleado from "./pages/HomeEmpleado";
 import CrudEmpleados from "./pages/CrudEmpleados";
 import CrudServicios from "./pages/CrudServicios";
-import { EmployeeContextProvider } from "./context/EmployeeContext";
+//STYLESHEET
+import "./App.css";
+//**************************************************************
 
 function App() {
   const { usuario } = useAuthContext();

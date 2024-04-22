@@ -1,8 +1,13 @@
-import "../stylesheets/Login.css";
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
 import { useState } from "react";
-import { useLogin } from "../hooks/useLogin";
 import MoonLoader from "react-spinners/MoonLoader";
-const apiURL = process.env.REACT_APP_DEVURL;
+//CUSTOM HOOKS
+import { useLogin } from "../hooks/useLogin";
+//STYLESHEET
+import "../stylesheets/Login.css";
+//**************************************************************
+
 const Login = () => {
   const { login, error, isLoading } = useLogin();
   const [nombreUsuario, setNombreUsuario] = useState("");

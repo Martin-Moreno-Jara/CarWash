@@ -1,5 +1,10 @@
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
 import { Link } from "react-router-dom";
+//STYLESHEET
 import "../stylesheets/HomeEmpleado.css";
+//**************************************************************
+
 const HomeEmpleado = () => {
   return (
     <div className="homeAdmin-main">

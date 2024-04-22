@@ -3,11 +3,12 @@
 //CUSTOM HOOKS
 //COMPONENTS
 //STYLESHEET
+import "../stylesheets/CrudServicios.css";
 //ENV VARIABLES
 //**************************************************************
 const CrudServicios = () => {
   return (
-    <div className="crudEmpleados-main">
+    <div className="crudServicios-main">
       <div className="empleado-options">
         <div className="description">
           <h2>Modulo de gestión de servicios</h2>
@@ -21,9 +22,9 @@ const CrudServicios = () => {
           <div className="empleado-manage-btn">Crear servicio</div>
         </div>
       </div>
-      <div className={"div-list-dark"}>
-        {<div className="div-background"></div>}
-        {<div className="div-background"></div>}
+      <div className="div-list">
+        {/* {<div className="div-background"></div>}
+        {<div className="div-background"></div>} */}
         <div className={"actual-list"}></div>
       </div>
     </div>

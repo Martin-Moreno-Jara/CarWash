@@ -77,7 +77,7 @@ const EmployeeList = () => {
       }
     };
     fetchEmployees();
-  }, [dispatch]);
+  }, [dispatch, usuario]);
 
   const [columnFilters, setColumnFilters] = useState("");
   const [sorting, setSorting] = useState([]);

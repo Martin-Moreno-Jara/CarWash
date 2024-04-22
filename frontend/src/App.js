@@ -13,7 +13,6 @@ import HomeEmpleado from "./pages/HomeEmpleado";
 import CrudEmpleados from "./pages/CrudEmpleados";
 import CrudServicios from "./pages/CrudServicios";
 //STYLESHEET
-import "./App.css";
 //**************************************************************
 
 function App() {

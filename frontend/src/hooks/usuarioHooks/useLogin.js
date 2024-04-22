@@ -2,7 +2,7 @@
 //REACT HOOKS/IMPORTS
 import { useState } from "react";
 //CUSTOM HOOKS
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useAuthContext } from "../useAuthContext";
 //ENV VARIBLES
 const apiURL = process.env.REACT_APP_DEVURL;
 //**************************************************************

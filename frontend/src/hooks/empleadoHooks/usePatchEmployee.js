@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useEmployeeContext } from "./useEmployeeContext";
 import { useEmployeeCrudContext } from "./useEmployeeCrudContext";
 import { useSelectContext } from "./useSelectContext";
-import { useAuthContext } from "./useAuthContext";
+import { useAuthContext } from "../useAuthContext";
 //ENV VARIBLES
 const apiURL = process.env.REACT_APP_DEVURL;
 //**************************************************************

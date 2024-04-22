@@ -11,10 +11,10 @@ import {
   getSortedRowModel,
 } from "@tanstack/react-table";
 //CUSTOM HOOKS
-import { useEmployeeContext } from "../../hooks/useEmployeeContext";
+import { useEmployeeContext } from "../../hooks/empleadoHooks/useEmployeeContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { useEmployeeCrudContext } from "../../hooks/useEmployeeCrudContext";
-import { useSelectContext } from "../../hooks/useSelectContext";
+import { useEmployeeCrudContext } from "../../hooks/empleadoHooks/useEmployeeCrudContext";
+import { useSelectContext } from "../../hooks/empleadoHooks/useSelectContext";
 //COMPONENTS
 import EmployeeInfo from "./EmployeeInfo";
 //STYLESHEET

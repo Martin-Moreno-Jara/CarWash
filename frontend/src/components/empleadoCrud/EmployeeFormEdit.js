@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import MoonLoader from "react-spinners/MoonLoader";
 //CUSTOM HOOKS
-import { useEmployeeCrudContext } from "../../hooks/useEmployeeCrudContext";
-import { useSelectContext } from "../../hooks/useSelectContext";
+import { useEmployeeCrudContext } from "../../hooks/empleadoHooks/useEmployeeCrudContext";
+import { useSelectContext } from "../../hooks/empleadoHooks/useSelectContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { usePatchEmployee } from "../../hooks/usePatchEmployee";
+import { usePatchEmployee } from "../../hooks/empleadoHooks/usePatchEmployee";
 //STYLESHEET
 import "../../stylesheets/EmployeeForm.css";
 //ENV VARIABLES

@@ -1,6 +1,6 @@
 //************************** IMPORTED
 //CUSTOM HOOKS
-import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
+import { useEmployeeCrudContext } from "../hooks/empleadoHooks/useEmployeeCrudContext";
 //COMPONENTS
 import EmployeeFormAdd from "../components/empleadoCrud/EmployeeFormAdd";
 import EmployeeList from "../components/empleadoCrud/EmployeeList";

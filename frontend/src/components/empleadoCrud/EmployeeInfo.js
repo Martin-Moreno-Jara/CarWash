@@ -1,8 +1,8 @@
 //************************** IMPORTED
 //CUSTOM HOOKS
-import { useEmployeeContext } from "../../hooks/useEmployeeContext";
-import { useEmployeeCrudContext } from "../../hooks/useEmployeeCrudContext";
-import { useSelectContext } from "../../hooks/useSelectContext";
+import { useEmployeeContext } from "../../hooks/empleadoHooks/useEmployeeContext";
+import { useEmployeeCrudContext } from "../../hooks/empleadoHooks/useEmployeeCrudContext";
+import { useSelectContext } from "../../hooks/empleadoHooks/useSelectContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
 //STYLESHEET
 import "../../stylesheets/EmployeeInfo.css";

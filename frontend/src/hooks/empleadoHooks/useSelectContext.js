@@ -2,7 +2,7 @@
 //REACT HOOKS/IMPORTS
 import { useContext } from "react";
 //CONTEXT
-import { SelectContext } from "../context/SelectContext";
+import { SelectContext } from "../../context/empleadoContextos/SelectContext";
 //**************************************************************
 
 export const useSelectContext = () => {

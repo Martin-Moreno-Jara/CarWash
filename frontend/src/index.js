@@ -4,9 +4,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 //CONTEXT PROVIDER
 import { AuthContextProvider } from "./context/AuthContext";
-import { EmployeeContextProvider } from "./context/EmployeeContext";
-import { EmployeeCrudContextProvider } from "./context/EmployeeCrudContext";
-import { SelectContextProvider } from "./context/SelectContext";
+import { EmployeeContextProvider } from "./context/empleadoContextos/EmployeeContext";
+import { EmployeeCrudContextProvider } from "./context/empleadoContextos/EmployeeCrudContext";
+import { SelectContextProvider } from "./context/empleadoContextos/SelectContext";
 //COMPONENTS
 import App from "./App";
 //STYLESHEET

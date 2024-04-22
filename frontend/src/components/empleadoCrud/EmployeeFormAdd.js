@@ -3,8 +3,8 @@
 import { useState } from "react";
 import MoonLoader from "react-spinners/MoonLoader";
 //CUSTOM HOOKS
-import { useSignup } from "../../hooks/useSignup";
-import { useEmployeeCrudContext } from "../../hooks/useEmployeeCrudContext";
+import { useSignup } from "../../hooks/usuarioHooks/useSignup";
+import { useEmployeeCrudContext } from "../../hooks/empleadoHooks/useEmployeeCrudContext";
 //STYLESHEET
 import "../../stylesheets/EmployeeForm.css";
 //**************************************************************

@@ -2,7 +2,7 @@
 //REACT HOOKS/IMPORTS
 import { useContext } from "react";
 //CONTEXT
-import { EmployeeContext } from "../context/EmployeeContext";
+import { EmployeeContext } from "../../context/empleadoContextos/EmployeeContext";
 //**************************************************************
 
 export const useEmployeeContext = () => {

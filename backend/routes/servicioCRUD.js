@@ -10,7 +10,6 @@ const {
 const requireAuth = require("../middleware/requireAuth");
 
 const router = express.Router();
-//TODO: Habilitar requireAuth luego del front
 router.use(requireAuth);
 
 //traer todos los empleados

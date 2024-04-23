@@ -5,7 +5,7 @@ const logModel = require("../models/logModel");
 
 const createToken = (_id, rol) => {
   return jwt.sign({ _id, rol }, process.env.SECRET_STRING, {
-    expiresIn: "1d",
+    expiresIn: "1y",
   });
 };
 

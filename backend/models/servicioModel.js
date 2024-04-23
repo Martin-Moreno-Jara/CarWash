@@ -11,6 +11,10 @@ const encargadoSchema = new Schema({
     type: String,
     required: true,
   },
+  encargadoUsuario: {
+    type: String,
+    required: true,
+  },
 });
 
 const servicioSchema = new Schema(

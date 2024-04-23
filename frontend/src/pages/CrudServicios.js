@@ -1,11 +1,15 @@
 //************************** IMPORTED
 //REACT HOOKS/IMPORTS
+import { useState } from "react";
+import ServiceAddForm from "../components/servicioCrud/ServiceAddForm";
 //CUSTOM HOOKS
 //COMPONENTS
 //STYLESHEET
 //ENV VARIABLES
+
 //**************************************************************
 const CrudServicios = () => {
+  const [displayCreate, setDisplayCreate] = useState(false);
   return (
     <div className="crudEmpleados-main">
       <div className="empleado-options">
@@ -18,13 +22,24 @@ const CrudServicios = () => {
         </div>
 
         <div className="options-btns">
-          <div className="empleado-manage-btn">Crear servicio</div>
+          <div
+            className="empleado-manage-btn"
+            onClick={() => {
+              setDisplayCreate(!displayCreate);
+            }}
+          >
+            Crear servicio
+          </div>
         </div>
       </div>
-      <div className={"div-list-dark"}>
-        {<div className="div-background"></div>}
-        {<div className="div-background"></div>}
-        <div className={"actual-list"}></div>
+      <div className="div-list">
+        {displayCreate && (
+          <div className="div-background">
+            <ServiceAddForm displaySelf={displayCreate} />
+          </div>
+        )}
+        {/* {<div className="div-background"></div>}
+        <div className={"actual-list"}></div> */}
       </div>
     </div>
   );

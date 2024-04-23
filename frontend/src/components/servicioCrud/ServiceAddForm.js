@@ -14,6 +14,7 @@ const ServiceAddForm = ({ displaySelf, setDisplay }) => {
   }, [displaySelf]);
 
   const [showFormats, setShowFormats] = useState(false);
+
   return (
     <>
       {display && (

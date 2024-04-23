@@ -13,6 +13,7 @@ import {
 import { useAuthContext } from "../../hooks/useAuthContext";
 //COMPONENTS
 //STYLESHEET
+import "../../stylesheets/ServiceList.css";
 //ENV VARIABLES
 const apiURL = process.env.REACT_APP_DEVURL;
 
@@ -68,7 +69,21 @@ const ServiceList = () => {
     { header: "Tipo de Auto", accessorKey: "tipoAuto" },
     { header: "Servicio", accessorKey: "tipoServicio" },
     { header: "Precio", accessorKey: "precio" },
-    { header: "Estado", accessorKey: "estado" },
+    {
+      header: "Estado",
+      accessorKey: "estado",
+      cell: ({ row }) => (
+        <div
+          className={
+            row.original.estado === "Terminado"
+              ? "estado-terminado"
+              : "estado-en-proceso"
+          }
+        >
+          {row.original.estado}
+        </div>
+      ),
+    },
     { header: "Acciones", accessorKey: "acciones" },
   ];
   const adminColumns = [
@@ -139,7 +154,7 @@ const ServiceList = () => {
             table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
+                  <td key={cell.id} data-cell={cell.column.columnDef.header}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

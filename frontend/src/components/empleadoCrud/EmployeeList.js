@@ -48,7 +48,7 @@ const EmployeeList = () => {
     },
     {
       header: "Acciones",
-      accessorKey: "acciones",
+      accessorKey: "Acciones",
       cell: ({ row }) => <EmployeeInfo id={row.original._id} />,
     },
   ];
@@ -136,7 +136,7 @@ const EmployeeList = () => {
             table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
+                  <td key={cell.id} data-cell={cell.column.columnDef.header}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

@@ -75,7 +75,10 @@ const ServiceList = () => {
     ...columns.slice(0, 6),
     {
       header: "Encargado",
-      accessorFn: (row) => `${row.encargado[0].encargadoNombre}`,
+      accessorFn: (row) =>
+        `${row.encargado[0].encargadoUsuario} (${
+          row.encargado[0].encargadoNombre.split(" ")[0]
+        })`,
     },
     ...columns.slice(6),
   ];

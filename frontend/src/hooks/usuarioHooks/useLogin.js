@@ -21,6 +21,7 @@ export const useLogin = () => {
       body: JSON.stringify({ usuario, contrasena }),
     });
     const json = await response.json();
+    console.log(json);
 
     if (!response.ok) {
       setIsLoading(false);

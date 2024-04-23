@@ -21,7 +21,14 @@ const loginUser = async (req, res) => {
       action_detail: `user ${usuario} tried to login`,
       status: "SUCCESSFUL",
     });
-    res.status(200).json({ usuario, rol: usuarioLogeado.rol, token });
+    res.status(200).json({
+      usuario,
+      nombre: usuarioLogeado.nombre,
+      apellido: usuarioLogeado.apellido,
+      id: usuarioLogeado._id,
+      rol: usuarioLogeado.rol,
+      token,
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

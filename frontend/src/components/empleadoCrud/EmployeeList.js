@@ -77,7 +77,7 @@ const EmployeeList = () => {
       }
     };
     fetchEmployees();
-  }, [dispatch]);
+  }, [dispatch, usuario]);
 
   const [columnFilters, setColumnFilters] = useState("");
   const [sorting, setSorting] = useState([]);
@@ -103,6 +103,7 @@ const EmployeeList = () => {
       }
     >
       <input
+        className="search-input"
         type="text"
         placeholder="Búsqueda"
         onChange={(e) => setColumnFilters(e.target.value)}

@@ -5,13 +5,14 @@ import ServiceAddForm from "../components/servicioCrud/ServiceAddForm";
 //CUSTOM HOOKS
 //COMPONENTS
 //STYLESHEET
+import "../stylesheets/CrudServicios.css";
 //ENV VARIABLES
 
 //**************************************************************
 const CrudServicios = () => {
   const [displayCreate, setDisplayCreate] = useState(false);
   return (
-    <div className="crudEmpleados-main">
+    <div className="crudServicios-main">
       <div className="empleado-options">
         <div className="description">
           <h2>Modulo de gestión de servicios</h2>

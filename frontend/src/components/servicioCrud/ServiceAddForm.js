@@ -7,10 +7,10 @@ import { useEffect, useState } from "react";
 //ENV VARIABLES
 //**************************************************************
 
-const ServiceAddForm = ({ displaySelf }) => {
-  const [display, setDisplay] = useState(null);
+const ServiceAddForm = ({ displaySelf, setDisplay }) => {
+  const [display, setDisplays] = useState(null);
   useEffect(() => {
-    setDisplay(displaySelf);
+    setDisplays(displaySelf);
   }, [displaySelf]);
 
   const [showFormats, setShowFormats] = useState(false);
@@ -22,7 +22,7 @@ const ServiceAddForm = ({ displaySelf }) => {
             <span
               className="material-symbols-outlined"
               onClick={() => {
-                setDisplay(!display);
+                setDisplay(!displaySelf);
               }}
             >
               close

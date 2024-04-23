@@ -35,7 +35,10 @@ const CrudServicios = () => {
       <div className="div-list">
         {displayCreate && (
           <div className="div-background">
-            <ServiceAddForm displaySelf={displayCreate} />
+            <ServiceAddForm
+              displaySelf={displayCreate}
+              setDisplay={setDisplayCreate}
+            />
           </div>
         )}
         {/* {<div className="div-background"></div>}

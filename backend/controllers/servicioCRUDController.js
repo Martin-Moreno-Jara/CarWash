@@ -1,19 +1,40 @@
+const mongoose = require("mongoose");
 const servicioModel = require("../models/servicioModel");
 const logModel = require("../models/logModel");
 
-//controlador de mostrar servicios
-const getServices = (req, res) => {
-  res.json({ msg: "mostrar servicios" });
+// mostrar todos los servicios (admin)
+const getAllServices = async (req, res) => {
+  //TODO:perdir autenticación luego de hacer front
+  try {
+    const servicios = await servicioModel.find();
+    res.status(200).json(servicios);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getserviceByEmployee = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "Invalid id" });
+  }
+  const objectId = new mongoose.Types.ObjectId(id);
+  //TODO:perdir autenticación luego de hacer front
+  try {
+    const servicios = await servicioModel.find({
+      "encargado.encargadoId": objectId,
+    });
+    res.status(200).json(servicios);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 //controlador de mostrar un servicio
 
-const getService = (req, res) => {
-  res.json({ msg: "mostrar servicio" });
-};
+const getService = (req, res) => {};
 
-//controlador de crear servicio
-
+//crear servicio
 const createService = async (req, res) => {
   const { cliente, placa, tipoAuto, tipoServicio, precio, encargado, carInfo } =
     req.body;
@@ -36,6 +57,7 @@ const createService = async (req, res) => {
     });
     res.status(200).json(servicio);
   } catch (error) {
+    console.log(error.message);
     res.status(400).json({ error: error.message });
   }
 };
@@ -51,7 +73,8 @@ const deleteService = (req, res) => {
 };
 
 module.exports = {
-  getServices,
+  getAllServices,
+  getserviceByEmployee,
   getService,
   createService,
   patchService,

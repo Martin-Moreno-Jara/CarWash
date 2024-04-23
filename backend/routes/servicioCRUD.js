@@ -1,6 +1,7 @@
 const express = require("express");
 const {
-  getServices,
+  getAllServices,
+  getserviceByEmployee,
   getService,
   createService,
   patchService,
@@ -13,7 +14,9 @@ const router = express.Router();
 //router.use(requireAuth);
 
 //traer todos los empleados
-router.get("/", getServices);
+router.get("/", getAllServices);
+
+router.get("/employee/:id", getserviceByEmployee);
 //traer un empleado
 router.get("/:id", getService);
 //crear empleado

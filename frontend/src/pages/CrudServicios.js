@@ -1,41 +1,18 @@
 //************************** IMPORTED
 //REACT HOOKS/IMPORTS
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ServiceAddForm from "../components/servicioCrud/ServiceAddForm";
 //CUSTOM HOOKS
-import { useAuthContext } from "../hooks/useAuthContext";
 //COMPONENTS
+import ServiceList from "../components/servicioCrud/ServiceList";
 //STYLESHEET
 import "../stylesheets/CrudServicios.css";
 //ENV VARIABLES
-const apiURL = process.env.REACT_APP_DEVURL;
 
 //**************************************************************
 const CrudServicios = () => {
-  const { usuario } = useAuthContext();
-
   const [displayCreate, setDisplayCreate] = useState(false);
-  useEffect(() => {
-    const fetchAllServies = async () => {
-      const response = await fetch(`${apiURL}/api/servicioCRUD`, {
-        headers: { Authorization: `Bearer ${usuario.token}` },
-      });
-      const json = await response.json();
-      if (!response.ok) {
-        throw Error(`no se pudo porque: ${json}`);
-      }
-      if (response.ok) {
-        console.log(json);
-      }
-    };
-    const fetchServicesByEmployee = async () => {};
-    if (usuario.rol === "administrador") {
-      fetchAllServies();
-    }
-    if (usuario.rol === "empleado") {
-      console.log("traer pal empleado");
-    }
-  }, []);
+
   return (
     <div className="crudServicios-main">
       <div className="empleado-options">
@@ -67,8 +44,9 @@ const CrudServicios = () => {
             />
           </div>
         )}
-        {/* {<div className="div-background"></div>}
-        <div className={"actual-list"}></div> */}
+        <div className="actual-list">
+          <ServiceList />
+        </div>
       </div>
     </div>
   );

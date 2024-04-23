@@ -1,6 +1,6 @@
 //************************** IMPORTED
 //REACT HOOKS/IMPORTS
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 //CUSTOM HOOKS
 import { useAuthContext } from "../../hooks/useAuthContext";
 //COMPONENTS
@@ -12,6 +12,7 @@ const apiURL = process.env.REACT_APP_DEVURL;
 
 const ServiceList = () => {
   const { usuario } = useAuthContext();
+  const [servicios, setServicios] = useState([]);
 
   useEffect(() => {
     const fetchAllServies = async () => {
@@ -24,6 +25,7 @@ const ServiceList = () => {
       }
       if (response.ok) {
         console.log(json);
+        setServicios(json);
       }
     };
     const fetchServicesByEmployee = async () => {
@@ -39,6 +41,7 @@ const ServiceList = () => {
       }
       if (response.ok) {
         console.log(json);
+        setServicios(json);
       }
     };
     if (usuario.rol === "administrador") {
@@ -50,7 +53,7 @@ const ServiceList = () => {
   }, [usuario.id, usuario.rol, usuario.token]);
   return (
     <div>
-      <p>Hola</p>
+      {servicios && servicios.map((servicio) => <p>{servicio.cliente}</p>)}
     </div>
   );
 };

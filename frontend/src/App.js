@@ -80,8 +80,26 @@ function App() {
                 )
               }
             />
-            <Route path="/admin/servicioCrud" element={<CrudServicios />} />
-            <Route path="/empleado/servicioCrud" element={<CrudServicios />} />
+            <Route
+              path="/admin/servicioCrud"
+              element={
+                usuario && usuario.rol === "administrador" ? (
+                  <CrudServicios />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/empleado/servicioCrud"
+              element={
+                usuario && usuario.rol === "empleado" ? (
+                  <CrudServicios />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
           </Routes>
         </div>
         <Footer />

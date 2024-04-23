@@ -103,6 +103,7 @@ const EmployeeList = () => {
       }
     >
       <input
+        className="search-input"
         type="text"
         placeholder="Búsqueda"
         onChange={(e) => setColumnFilters(e.target.value)}

@@ -9,7 +9,7 @@
   border-radius: 10px;
   margin-left: 25px;
   margin-bottom: 15px;
-  box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   overflow-y: scroll;
 }
@@ -34,13 +34,17 @@ table {
   background-color: #fffb;
   overflow: hidden;
   overflow-y: scroll;
+  border: 1px solid var(--regal-blue);
+  margin-bottom: 15px;
+  border-radius: 15px;
 }
 
 th {
   /* position: sticky; */
   top: 0;
   left: 0;
-  background-color: #d5d1defe;
+  background-color: var(--regal-blue);
+  color: #fff;
 }
 
 tr:nth-child(even) {
@@ -54,11 +58,10 @@ table,
 th,
 td {
   border-collapse: collapse;
-  padding: 1rem;
+  padding: 0.7rem 1rem;
 }
-td,
-th {
-  border-right: 1px solid black;
+.search-input {
+  border: 1px solid var(--regal-blue);
 }
 
 @media (max-width: 1000px) {

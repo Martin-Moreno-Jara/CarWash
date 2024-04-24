@@ -1,11 +1,12 @@
 //************************** IMPORTED
 //REACT HOOKS/IMPORTS
-import { useState } from "react";
+import { useEffect, useState } from "react";
 //CUSTOM HOOKS
 //COMPONENTS
 //STYLESHEET
 import "../../stylesheets/ServiceAddForm.css";
 //ENV VARIABLES
+const apiURL = process.env.REACT_APP_DEVURL;
 //**************************************************************
 
 const ServiceAddForm = ({ displaySelf, setDisplay }) => {
@@ -16,13 +17,35 @@ const ServiceAddForm = ({ displaySelf, setDisplay }) => {
     { nombre: "Carro", key: 1 },
     { nombre: "Camioneta", key: 2 },
   ];
+  const [tarifas, setTarifas] = useState([]);
+  const serviciosOptions = tarifas.map((tarifa) => ({
+    nombre: tarifa.servicio,
+    carro: tarifa.precio[0].carro,
+    camioneta: tarifa.precio[0].camioneta,
+    key: tarifa._id,
+  }));
+
+  //traer tipos de servicios para dropdown
+  useEffect(() => {
+    const fetchTarifas = async () => {
+      const response = await fetch(`${apiURL}/api/tarifas`);
+      const json = await response.json();
+      if (!response.ok) {
+        throw Error(`no se pudo porque: ${json}`);
+      }
+      if (response.ok) {
+        setTarifas(json);
+      }
+    };
+    fetchTarifas();
+  }, []);
 
   //estados para manejar los inputs
   const [cliente, setCliente] = useState("");
   const [placa, setPlaca] = useState("");
   const [tipoAuto, setTipoAuto] = useState("");
   const [servicio, setServicio] = useState("");
-  const [precio, setPrecio] = useState("$ -");
+  const [precio, setPrecio] = useState("");
   const [detalles, setDetalles] = useState("");
 
   //funciones para guardar los cambios en los estados
@@ -38,10 +61,23 @@ const ServiceAddForm = ({ displaySelf, setDisplay }) => {
   const handleServicio = (e) => {
     setServicio(e.target.value);
   };
-  const handlePrecio = (e) => {};
   const handleDetalles = (e) => {
     setDetalles(e.target.value);
   };
+
+  //cambiar el precio
+  useEffect(() => {
+    serviciosOptions.forEach((serviceOption) => {
+      if (serviceOption.nombre === servicio) {
+        if (tipoAuto === "Carro") {
+          setPrecio(serviceOption.carro);
+        }
+        if (tipoAuto === "Camioneta") {
+          setPrecio(serviceOption.camioneta);
+        }
+      }
+    });
+  }, [tipoAuto, servicio, serviciosOptions]);
 
   //funcion para controlar el envio del formulario
   const handleSubmit = (e) => {
@@ -110,6 +146,7 @@ const ServiceAddForm = ({ displaySelf, setDisplay }) => {
               <div>
                 <label>Tipo de auto</label>
                 <select className="form-select" onChange={handleTipoAuto}>
+                  <option></option>
                   {autoOptions.map((option) => (
                     <option key={option.key}>{option.nombre}</option>
                   ))}
@@ -117,11 +154,22 @@ const ServiceAddForm = ({ displaySelf, setDisplay }) => {
               </div>
               <div>
                 <label>Tipo de servicio</label>
-                <input type="text" onChange={handleServicio} />
+                <select className="form-select" onChange={handleServicio}>
+                  <option></option>
+                  {serviciosOptions.map((option) => (
+                    <option key={option.key} content="hola">
+                      {option.nombre}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div>
                 <label>Precio</label>
-                <span>{precio}</span>
+                <span>
+                  {precio
+                    ? `$ ${new Intl.NumberFormat().format(precio)}`
+                    : "$ -"}
+                </span>
               </div>
 
               <div>

@@ -67,7 +67,13 @@ const ServiceList = () => {
     { header: "Cliente", accessorKey: "cliente" },
     { header: "Tipo de Auto", accessorKey: "tipoAuto" },
     { header: "Servicio", accessorKey: "tipoServicio" },
-    { header: "Precio", accessorKey: "precio" },
+    {
+      header: "Precio",
+      accessorKey: "precio",
+      cell: ({ row }) => (
+        <>$ {new Intl.NumberFormat().format(row.original.precio)}</>
+      ),
+    },
     {
       header: "Estado",
       accessorKey: "estado",

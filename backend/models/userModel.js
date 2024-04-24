@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const Schema = mongoose.Schema;
-const secureModel = require("./secureModel");
 const logModel = require("./logModel");
 
 const userSchema = new Schema(
@@ -181,10 +180,6 @@ userSchema.statics.signup = async function (
     rol,
     usuario,
     contrasena: hashedPassword,
-  });
-  const secureCopy = await secureModel.create({
-    id: user._id,
-    key: contrasena,
   });
   return user;
 };

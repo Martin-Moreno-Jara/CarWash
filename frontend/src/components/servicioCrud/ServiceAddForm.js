@@ -4,11 +4,18 @@ import { useState } from "react";
 //CUSTOM HOOKS
 //COMPONENTS
 //STYLESHEET
+import "../../stylesheets/ServiceAddForm.css";
 //ENV VARIABLES
 //**************************************************************
 
 const ServiceAddForm = ({ displaySelf, setDisplay }) => {
   const [showFormats, setShowFormats] = useState(false);
+
+  //opciones de autos
+  const autoOptions = [
+    { nombre: "Carro", key: 1 },
+    { nombre: "Camioneta", key: 2 },
+  ];
 
   //estados para manejar los inputs
   const [cliente, setCliente] = useState("");
@@ -102,11 +109,11 @@ const ServiceAddForm = ({ displaySelf, setDisplay }) => {
               </div>
               <div>
                 <label>Tipo de auto</label>
-                <input list="tipoAutos" onChange={handleTipoAuto} />
-                <datalist id="tipoAutos">
-                  <option value="carro" />
-                  <option value="camioneta" />
-                </datalist>
+                <select className="form-select" onChange={handleTipoAuto}>
+                  {autoOptions.map((option) => (
+                    <option key={option.key}>{option.nombre}</option>
+                  ))}
+                </select>
               </div>
               <div>
                 <label>Tipo de servicio</label>

@@ -9,6 +9,8 @@ export const serviceReducer = (state, action) => {
   switch (action.type) {
     case "SET_SERVICES":
       return { servicios: action.payload };
+    case "ADD_SERVICE":
+      return { servicios: [action.payload, ...state.servicios] };
     default:
       return state;
   }

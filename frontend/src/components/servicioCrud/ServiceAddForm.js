@@ -2,6 +2,9 @@
 //REACT HOOKS/IMPORTS
 import { useEffect, useState } from "react";
 //CUSTOM HOOKS
+import { useServiceContext } from "../../hooks/servicioHooks/useServiceContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
+
 //COMPONENTS
 //STYLESHEET
 import "../../stylesheets/ServiceAddForm.css";
@@ -10,7 +13,10 @@ const apiURL = process.env.REACT_APP_DEVURL;
 //**************************************************************
 
 const ServiceAddForm = ({ displaySelf, setDisplay }) => {
+  const { usuario } = useAuthContext();
+  const { dispatch } = useServiceContext();
   const [showFormats, setShowFormats] = useState(false);
+  const [error, setError] = useState(null);
 
   //opciones de autos
   const autoOptions = [
@@ -80,9 +86,43 @@ const ServiceAddForm = ({ displaySelf, setDisplay }) => {
   }, [tipoAuto, servicio, serviciosOptions]);
 
   //funcion para controlar el envio del formulario
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    setError(null);
     e.preventDefault();
-    console.log(cliente, placa, tipoAuto, servicio, detalles);
+    console.log(usuario);
+    const encargado = {
+      encargadoId: usuario.id,
+      encargadoNombre: usuario.nombre,
+      encargadoUsuario: usuario.usuario,
+    };
+    console.log(encargado);
+    const response = await fetch(`${apiURL}/api/servicioCRUD`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${usuario.token}`,
+      },
+      body: JSON.stringify({
+        cliente,
+        placa,
+        tipoAuto,
+        tipoServicio: servicio,
+        precio,
+        encargado,
+        carInfo: detalles,
+      }),
+    });
+    //TODO:Poner estados de errores e Isloading
+    const json = await response.json();
+    if (!response.ok) {
+      setError(json.error);
+      console.log(json);
+    }
+    if (response.ok) {
+      setError(null);
+      dispatch({ type: "ADD_SERVICE", payload: json });
+    }
+
     setDisplay(false);
   };
   return (

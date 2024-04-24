@@ -6,7 +6,7 @@ const logModel = require("../models/logModel");
 const getAllServices = async (req, res) => {
   //TODO:perdir autenticación luego de hacer front
   try {
-    const servicios = await servicioModel.find();
+    const servicios = await servicioModel.find().sort({ createdAt: -1 });
     res.status(200).json(servicios);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -21,9 +21,11 @@ const getserviceByEmployee = async (req, res) => {
   const objectId = new mongoose.Types.ObjectId(id);
   //TODO:perdir autenticación luego de hacer front
   try {
-    const servicios = await servicioModel.find({
-      "encargado.encargadoId": objectId,
-    });
+    const servicios = await servicioModel
+      .find({
+        "encargado.encargadoId": objectId,
+      })
+      .sort({ createdAt: -1 });
     res.status(200).json(servicios);
   } catch (error) {
     res.status(400).json({ error: error.message });

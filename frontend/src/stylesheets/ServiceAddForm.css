@@ -1,0 +1,8 @@
+.form-select {
+  margin-top: 15px;
+  padding: 5px 10px;
+  text-align: center;
+  width: 60%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}

@@ -44,7 +44,7 @@ const CrudServicios = () => {
             />
           </div>
         )}
-        <div className="actual-list">
+        <div className={displayCreate ? "actual-list-none" : "actual-list"}>
           <ServiceList />
         </div>
       </div>

@@ -1,6 +1,6 @@
 //************************** IMPORTED
 //REACT HOOKS/IMPORTS
-import { useEffect, useState } from "react";
+import { useState } from "react";
 //CUSTOM HOOKS
 //COMPONENTS
 //STYLESHEET
@@ -8,16 +8,43 @@ import { useEffect, useState } from "react";
 //**************************************************************
 
 const ServiceAddForm = ({ displaySelf, setDisplay }) => {
-  const [display, setDisplays] = useState(null);
-  useEffect(() => {
-    setDisplays(displaySelf);
-  }, [displaySelf]);
-
   const [showFormats, setShowFormats] = useState(false);
 
+  //estados para manejar los inputs
+  const [cliente, setCliente] = useState("");
+  const [placa, setPlaca] = useState("");
+  const [tipoAuto, setTipoAuto] = useState("");
+  const [servicio, setServicio] = useState("");
+  const [precio, setPrecio] = useState("$ -");
+  const [detalles, setDetalles] = useState("");
+
+  //funciones para guardar los cambios en los estados
+  const handleCliente = (e) => {
+    setCliente(e.target.value);
+  };
+  const handlePlaca = (e) => {
+    setPlaca(e.target.value.toUpperCase());
+  };
+  const handleTipoAuto = (e) => {
+    setTipoAuto(e.target.value);
+  };
+  const handleServicio = (e) => {
+    setServicio(e.target.value);
+  };
+  const handlePrecio = (e) => {};
+  const handleDetalles = (e) => {
+    setDetalles(e.target.value);
+  };
+
+  //funcion para controlar el envio del formulario
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(cliente, placa, tipoAuto, servicio, detalles);
+    setDisplay(false);
+  };
   return (
     <>
-      {display && (
+      {displaySelf && (
         <div className="main-container">
           <div className="closebtn">
             <span
@@ -44,41 +71,38 @@ const ServiceAddForm = ({ displaySelf, setDisplay }) => {
           {showFormats && (
             <div className="formatos">
               <p>
-                Tanto el nombre como el apellido solo aceptan letras del
-                alfabeto español
+                El nombre del cliente solo acepta carácteres del alfabeto
+                español
               </p>
               <p>
-                La contraseña asiganada debe tener mayúsculas, minúsculas,
-                números y carácteres especiales{" "}
-              </p>
-              <p>
-                El formato del número de teléfono deben 10 dígitos separados en
-                dos grupos de 3 números y uno de 4 números, separados por un
-                espacio. Como se muestra: <strong>320 330 4550</strong>
-              </p>
-              <p>
-                El formato de la cédula deben ser 10 dígitos sin espacio entre
-                ellos
+                La placa del auto debe estar en el formato colombiano, es decir,
+                tres letras seguidas de un espacio y luego tres números. Como se
+                aprecia en el ejemplo: <strong>ABC 123</strong>
               </p>
             </div>
           )}
 
-          <form className="form-div">
+          <form className="form-div" onSubmit={handleSubmit}>
             <div className="form-fields">
               <div>
                 <label>Cliente</label>
                 <input
                   type="text"
                   pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ ]+"
+                  onChange={handleCliente}
                 />
               </div>
               <div>
                 <label>Placa del auto</label>
-                <input type="text" pattern="[A-Z]{3} [0-9]{3}" />
+                <input
+                  type="text"
+                  pattern="[a-zA-Z]{3} [0-9]{3}"
+                  onChange={handlePlaca}
+                />
               </div>
               <div>
                 <label>Tipo de auto</label>
-                <input list="tipoAutos" />
+                <input list="tipoAutos" onChange={handleTipoAuto} />
                 <datalist id="tipoAutos">
                   <option value="carro" />
                   <option value="camioneta" />
@@ -86,16 +110,16 @@ const ServiceAddForm = ({ displaySelf, setDisplay }) => {
               </div>
               <div>
                 <label>Tipo de servicio</label>
-                <input type="text" />
+                <input type="text" onChange={handleServicio} />
               </div>
               <div>
                 <label>Precio</label>
-                <span>$precio</span>
+                <span>{precio}</span>
               </div>
 
               <div>
                 <label>Detalles del auto</label>
-                <input type="text" />
+                <input type="text" onChange={handleDetalles} />
               </div>
             </div>
             <button className="submit-btn">Generar Servicio</button>

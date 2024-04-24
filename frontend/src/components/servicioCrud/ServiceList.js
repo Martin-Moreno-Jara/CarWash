@@ -34,7 +34,6 @@ const ServiceList = () => {
         throw Error(`no se pudo porque: ${json}`);
       }
       if (response.ok) {
-        console.log(json);
         setServicios(json);
       }
     };
@@ -50,7 +49,6 @@ const ServiceList = () => {
         throw Error(`no se pudo porque: ${json}`);
       }
       if (response.ok) {
-        console.log(json);
         setServicios(json);
       }
     };
@@ -97,9 +95,6 @@ const ServiceList = () => {
     },
     ...columns.slice(6),
   ];
-
-  console.log(columns);
-  console.log(adminColumns);
 
   const [columnFilters, setColumnFilters] = useState("");
   const [sorting, setSorting] = useState([]);

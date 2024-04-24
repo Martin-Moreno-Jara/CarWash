@@ -11,6 +11,7 @@ import { SelectContextProvider } from "./context/empleadoContextos/SelectContext
 import App from "./App";
 //STYLESHEET
 import "./index.css";
+import { ServiceContextProvider } from "./context/servicioContext/ServiceContext";
 //**************************************************************
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -18,11 +19,13 @@ root.render(
   <AuthContextProvider>
     <EmployeeContextProvider>
       <EmployeeCrudContextProvider>
-        <SelectContextProvider>
-          <React.StrictMode>
-            <App />
-          </React.StrictMode>
-        </SelectContextProvider>
+        <ServiceContextProvider>
+          <SelectContextProvider>
+            <React.StrictMode>
+              <App />
+            </React.StrictMode>
+          </SelectContextProvider>
+        </ServiceContextProvider>
       </EmployeeCrudContextProvider>
     </EmployeeContextProvider>
   </AuthContextProvider>

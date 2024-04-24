@@ -11,6 +11,7 @@ import {
 } from "@tanstack/react-table";
 //CUSTOM HOOKS
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { useServiceContext } from "../../hooks/servicioHooks/useServiceContext";
 //COMPONENTS
 //STYLESHEET
 import "../../stylesheets/ServiceList.css";
@@ -21,7 +22,7 @@ const apiURL = process.env.REACT_APP_DEVURL;
 
 const ServiceList = () => {
   const { usuario } = useAuthContext();
-  const [servicios, setServicios] = useState([]);
+  const { servicios, dispatch } = useServiceContext();
 
   //Traer los datos para la tabla
   useEffect(() => {
@@ -34,7 +35,7 @@ const ServiceList = () => {
         throw Error(`no se pudo porque: ${json}`);
       }
       if (response.ok) {
-        setServicios(json);
+        dispatch({ type: "SET_SERVICES", payload: json });
       }
     };
     const fetchServicesByEmployee = async () => {
@@ -49,7 +50,7 @@ const ServiceList = () => {
         throw Error(`no se pudo porque: ${json}`);
       }
       if (response.ok) {
-        setServicios(json);
+        dispatch({ type: "SET_SERVICES", payload: json });
       }
     };
     if (usuario.rol === "administrador") {
@@ -58,7 +59,7 @@ const ServiceList = () => {
     if (usuario.rol === "empleado") {
       fetchServicesByEmployee();
     }
-  }, [usuario.id, usuario.rol, usuario.token]);
+  }, [usuario.id, usuario.rol, usuario.token, dispatch]);
 
   //configuraciones para la tabla
   const columns = [

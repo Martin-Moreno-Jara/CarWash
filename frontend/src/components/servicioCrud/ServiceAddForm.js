@@ -2,6 +2,7 @@
 //REACT HOOKS/IMPORTS
 import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
+import MoonLoader from "react-spinners/MoonLoader";
 //CUSTOM HOOKS
 import { useServiceContext } from "../../hooks/servicioHooks/useServiceContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
@@ -24,6 +25,7 @@ const ServiceAddForm = ({ displaySelf, setDisplay }) => {
   //Estados para mostrar condicionalmente contenido
   const [showFormats, setShowFormats] = useState(false);
   const [error, setError] = useState(null);
+  const [isLoading, setIsloading] = useState(null);
 
   //opciones de autos para dropdown
   const autoOptions = [
@@ -97,6 +99,7 @@ const ServiceAddForm = ({ displaySelf, setDisplay }) => {
 
   //funcion para controlar el envio del formulario
   const handleSubmit = async (e) => {
+    setIsloading(true);
     setError(null);
     e.preventDefault();
     console.log(usuario);
@@ -126,11 +129,13 @@ const ServiceAddForm = ({ displaySelf, setDisplay }) => {
     const json = await response.json();
     if (!response.ok) {
       setError(json.error);
+      setIsloading(false);
       enqueueSnackbar("Error al crear servicio", { variant: "error" });
     }
     if (response.ok) {
       setError(null);
       dispatch({ type: "ADD_SERVICE", payload: json });
+      setIsloading(false);
       enqueueSnackbar("Servicio creado correctamente", { variant: "success" });
       setDisplay(false);
     }
@@ -229,11 +234,11 @@ const ServiceAddForm = ({ displaySelf, setDisplay }) => {
             </div>
             <button className="submit-btn">Generar Servicio</button>
           </form>
-          {/* {isLoading && (
-        <div className="loading2">
-          <MoonLoader color="#1c143d" loading={isLoading} size={100} />
-        </div>
-      )} */}
+          {isLoading && (
+            <div className="loading2">
+              <MoonLoader color="#1c143d" loading={isLoading} size={100} />
+            </div>
+          )}
 
           {error && <div className="error">{error}</div>}
         </div>

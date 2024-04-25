@@ -1,6 +1,7 @@
 //************************** IMPORTED
 //REACT HOOKS/IMPORTS
 import { useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
 //CUSTOM HOOKS
 import { useServiceContext } from "../../hooks/servicioHooks/useServiceContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
@@ -13,17 +14,26 @@ const apiURL = process.env.REACT_APP_DEVURL;
 //**************************************************************
 
 const ServiceAddForm = ({ displaySelf, setDisplay }) => {
+  //variable global del usuario y su dispatch (viene desde el contexto de autenticacion)
   const { usuario } = useAuthContext();
   const { dispatch } = useServiceContext();
+
+  //snackbar de notistack para mostrar mensaje de confirmacion
+  const { enqueueSnackbar } = useSnackbar();
+
+  //Estados para mostrar condicionalmente contenido
   const [showFormats, setShowFormats] = useState(false);
   const [error, setError] = useState(null);
 
-  //opciones de autos
+  //opciones de autos para dropdown
   const autoOptions = [
     { nombre: "Carro", key: 1 },
     { nombre: "Camioneta", key: 2 },
   ];
+
   const [tarifas, setTarifas] = useState([]);
+
+  //opciones de servicios para dropdown
   const serviciosOptions = tarifas.map((tarifa) => ({
     nombre: tarifa.servicio,
     carro: tarifa.precio[0].carro,
@@ -116,14 +126,14 @@ const ServiceAddForm = ({ displaySelf, setDisplay }) => {
     const json = await response.json();
     if (!response.ok) {
       setError(json.error);
-      console.log(json);
+      enqueueSnackbar("Error al crear servicio", { variant: "error" });
     }
     if (response.ok) {
       setError(null);
       dispatch({ type: "ADD_SERVICE", payload: json });
+      enqueueSnackbar("Servicio creado correctamente", { variant: "success" });
+      setDisplay(false);
     }
-
-    setDisplay(false);
   };
   return (
     <>
@@ -225,7 +235,7 @@ const ServiceAddForm = ({ displaySelf, setDisplay }) => {
         </div>
       )} */}
 
-          {/* {error && <div className="error">{error}</div>} */}
+          {error && <div className="error">{error}</div>}
         </div>
       )}
     </>

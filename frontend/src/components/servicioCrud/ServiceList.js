@@ -1,6 +1,7 @@
 //************************** IMPORTED
 //REACT HOOKS/IMPORTS
 import { useEffect, useState } from "react";
+import MoonLoader from "react-spinners/MoonLoader";
 import {
   useReactTable,
   getCoreRowModel,
@@ -8,7 +9,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-} from "@tanstack/react-table";
+} from "@tanstack/react-table"; //para la tabla
 //CUSTOM HOOKS
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useServiceContext } from "../../hooks/servicioHooks/useServiceContext";
@@ -21,20 +22,28 @@ const apiURL = process.env.REACT_APP_DEVURL;
 //**************************************************************
 
 const ServiceList = () => {
+  //variable global del usuario y su dispatch (viene desde el contexto de autenticacion)
   const { usuario } = useAuthContext();
+  //variable que tiene la lista de servicios y su despatch
   const { servicios, dispatch } = useServiceContext();
+
+  //estado para mostrar loader
+  const [isLoading, setIsLoading] = useState(null);
 
   //Traer los datos para la tabla
   useEffect(() => {
+    setIsLoading(true);
     const fetchAllServies = async () => {
       const response = await fetch(`${apiURL}/api/servicioCRUD`, {
         headers: { Authorization: `Bearer ${usuario.token}` },
       });
       const json = await response.json();
       if (!response.ok) {
+        setIsLoading(false);
         throw Error(`no se pudo porque: ${json}`);
       }
       if (response.ok) {
+        setIsLoading(false);
         dispatch({ type: "SET_SERVICES", payload: json });
       }
     };
@@ -47,9 +56,11 @@ const ServiceList = () => {
       );
       const json = await response.json();
       if (!response.ok) {
+        setIsLoading(false);
         throw Error(`no se pudo porque: ${json}`);
       }
       if (response.ok) {
+        setIsLoading(false);
         dispatch({ type: "SET_SERVICES", payload: json });
       }
     };
@@ -164,11 +175,11 @@ const ServiceList = () => {
             ))}
         </tbody>
       </table>
-      {/* {isLoading && (
+      {isLoading && (
         <div className="loading">
           <MoonLoader color="#1c143d" loading={isLoading} size={100} />
         </div>
-      )} */}
+      )}
       <button onClick={() => table.setPageIndex(0)}>Primera</button>
       <button
         onClick={() => {

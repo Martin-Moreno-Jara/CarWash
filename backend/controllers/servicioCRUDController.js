@@ -74,7 +74,7 @@ const deleteService = async (req, res) => {
   //res.json({ msg: "eliminar servicio" });
   try {
     const { id } = req.params;
-    if(!id) {
+    if (!id) {
       return res.status(400).json({ error: "No hay valor de id" });
     }
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -89,8 +89,8 @@ const deleteService = async (req, res) => {
       action: "DELETE SERVICE",
       action_detail: `Servicio ${id} eliminado de manera exitosa`,
       status: "SUCCESSFUL",
-    }); 
-    res.status(200).json({ message: "Servicio eliminado de manera existosa"});
+    });
+    res.status(200).json(deletedService);
   } catch (error) {
     console.log(error.message);
     res.status(400).json({ error: error.message });

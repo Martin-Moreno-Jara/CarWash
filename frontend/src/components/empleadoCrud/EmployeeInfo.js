@@ -26,7 +26,7 @@ const EmployeeInfo = ({ id }) => {
     dispatch({ type: "DELETE_EMPLEADO", payload: json });
   };
   return (
-    <td data-cell="acciones" className="row-actions">
+    <span data-cell="acciones" className="row-actions">
       <div className="action-div showmore">
         <span className="material-symbols-outlined">more_horiz</span>
       </div>
@@ -37,8 +37,7 @@ const EmployeeInfo = ({ id }) => {
           onClick={() => {
             dispatchEdit({ type: "SHOW_EDIT_DIALOG", payload: !showEdit });
             dispatchIsSelected({ type: "SELECT_EMPLOYEE", payload: id });
-          }}
-        >
+          }}>
           edit
         </span>
       </div>
@@ -46,7 +45,7 @@ const EmployeeInfo = ({ id }) => {
       <div className="action-div delete" onClick={handleDelete}>
         <span className="material-symbols-outlined">delete</span>
       </div>
-    </td>
+    </span>
   );
 };
 export default EmployeeInfo;

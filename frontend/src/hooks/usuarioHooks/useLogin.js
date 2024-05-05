@@ -1,6 +1,11 @@
-import { useAuthContext } from "../hooks/useAuthContext";
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
 import { useState } from "react";
-const apiURL = process.env.REACT_APP_DEPLOYURL;
+//CUSTOM HOOKS
+import { useAuthContext } from "../useAuthContext";
+//ENV VARIBLES
+const apiURL = process.env.REACT_APP_DEVURL;
+//**************************************************************
 
 export const useLogin = () => {
   const { dispatch } = useAuthContext();
@@ -16,6 +21,7 @@ export const useLogin = () => {
       body: JSON.stringify({ usuario, contrasena }),
     });
     const json = await response.json();
+    console.log(json);
 
     if (!response.ok) {
       setIsLoading(false);
@@ -24,7 +30,6 @@ export const useLogin = () => {
     if (response.ok) {
       setIsLoading(false);
       setError(null);
-      console.log("inicio de sesion exitoso");
       localStorage.setItem("usuario", JSON.stringify(json));
       dispatch({ type: "LOGIN", payload: json });
     }

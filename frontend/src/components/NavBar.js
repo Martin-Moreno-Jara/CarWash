@@ -1,12 +1,17 @@
-import carwashlogo from "../images/carwash-logo.jpg";
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
 import { Link } from "react-router-dom";
-import { useLogout } from "../hooks/useLogout";
+//CUSTOM HOOKS
+import { useLogout } from "../hooks/usuarioHooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
+//COMPONENTS
+import carwashlogo from "../images/carwash-logo.jpg";
+//**************************************************************
 
 const NavBar = () => {
   const { usuario } = useAuthContext();
   const { logout } = useLogout();
-  const makeLogout = () => {
+  const makeLogout = async () => {
     logout();
   };
   return (

@@ -1,4 +1,7 @@
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
 import { createContext, useReducer } from "react";
+//**************************************************************
 
 export const SelectContext = createContext();
 

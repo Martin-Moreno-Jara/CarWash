@@ -1,0 +1,16 @@
+td {
+  text-align: center;
+}
+.estado-en-proceso,
+.estado-terminado {
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 15px;
+  margin: auto;
+}
+.estado-terminado {
+  background: var(--estado-terminado);
+}
+.estado-en-proceso {
+  background: var(--estado-default);
+}

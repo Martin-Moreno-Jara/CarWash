@@ -5,12 +5,13 @@ import { useEmployeeCrudContext } from "../hooks/empleadoHooks/useEmployeeCrudCo
 import EmployeeFormAdd from "../components/empleadoCrud/EmployeeFormAdd";
 import EmployeeList from "../components/empleadoCrud/EmployeeList";
 import EmployeeFormEdit from "../components/empleadoCrud/EmployeeFormEdit";
+import EmployeeFormMore from "../components/empleadoCrud/EmployeeFormMore";
 //STYLESHEET
 import "../stylesheets/CrudEmpleados.css";
 //**************************************************************
 
 const CrudEmpleados = () => {
-  const { show, showEdit, dispatch } = useEmployeeCrudContext();
+  const { show, showEdit, showMore, dispatch } = useEmployeeCrudContext();
   return (
     <div className="crudEmpleados-main">
       <div className="empleado-options">
@@ -33,7 +34,7 @@ const CrudEmpleados = () => {
           </div>
         </div>
       </div>
-      <div className={show || showEdit ? "div-list-dark" : "div-list"}>
+      <div className={show || showEdit || showMore ? "div-list-dark" : "div-list"}>
         {show && (
           <div className="div-background">
             <EmployeeFormAdd />
@@ -44,7 +45,12 @@ const CrudEmpleados = () => {
             <EmployeeFormEdit />
           </div>
         )}
-        <div className={show || showEdit ? "actual-list-none" : "actual-list"}>
+        {showMore && (
+          <div className="div-background">
+            <EmployeeFormMore />
+          </div>
+        )}
+        <div className={show || showEdit ||showMore ? "actual-list-none" : "actual-list"}>
           <EmployeeList />
         </div>
       </div>

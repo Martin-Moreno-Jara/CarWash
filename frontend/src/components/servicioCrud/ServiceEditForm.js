@@ -136,6 +136,8 @@ const handleEncargadoChange = (e) => {
       encargadoUsuario: selectedUsuario
     });
   }
+
+  setEncargado(selectedUsuario);
 };
 
   

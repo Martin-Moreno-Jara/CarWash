@@ -66,9 +66,10 @@ const createService = async (req, res) => {
 
 //controlador de editar servicio
 
-// const patchService = (req, res) => 
+// const patchService = (req, res) => res.json({ msg: "editar servicio" });
+
 const patchService = async (req, res) => {
-  // res.json({ msg: "editar servicio" });
+ 
   const { id } = req.params;
   const { cliente, placa, tipoAuto, tipoServicio, precio, encargado, carInfo } = req.body;
 

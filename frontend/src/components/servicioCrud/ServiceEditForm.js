@@ -18,14 +18,24 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
   //variable global del usuario y su dispatch (viene desde el contexto de autenticacion)
   const { usuario } = useAuthContext();
   const { dispatch } = useServiceContext();
+  
 
   //snackbar de notistack para mostrar mensaje de confirmacion
   const { enqueueSnackbar } = useSnackbar();
 
+  const additionalUser = {
+    apellido: "Jimenez",
+    cedula: "1000897654",
+    nombre: "Raul",
+    rol: "administrador",
+    usuario: "raulJm",
+    _id: "660b75a326e70fee3afe0740"
+  };
+
   //Estados para mostrar condicionalmente contenido
   const [showFormats, setShowFormats] = useState(false);
   const [error, setError] = useState(null);
-  const [isLoading, setIsloading] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
 
   //opciones de autos para dropdown
   const autoOptions = [
@@ -58,13 +68,42 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
     fetchTarifas();
   }, []);
 
+
+  const [employeeList, setEmployeeList] = useState([]);
+
+  // Obtener la lista de empleados del backend
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      setIsLoading(true);
+      const response = await fetch(`${apiURL}/api/empleadoCRUD`, {
+        headers: { Authorization: `Bearer ${usuario.token}` },
+      });
+      const json = await response.json();
+
+      if (!response.ok) {
+        setIsLoading(false);
+        console.log(json);
+        throw Error("No se pudieron traer empleados");
+      }
+      if (response.ok) {
+        setIsLoading(false);
+        setEmployeeList(json);
+      }
+    };
+    fetchEmployees();
+  }, []);
+
   //estados para manejar los inputs
   const [cliente, setCliente] = useState(editedService ? editedService.cliente : "");
   const [placa, setPlaca] = useState(editedService ? editedService.placa : "");
   const [tipoAuto, setTipoAuto] = useState(editedService ? editedService.tipoAuto : "");
   const [servicio, setServicio] = useState(editedService ? editedService.tipoServicio : "");
   const [precio, setPrecio] = useState(editedService ? editedService.precio : "");
+  const [encargado, setEncargado] = useState(editedService ? editedService.encargado[0].encargadoUsuario : "");
   const [detalles, setDetalles] = useState(editedService ? editedService.carInfo : "");
+  const employeesWithAdditionalUser = [additionalUser, ...employeeList];
+
+
   
 
 
@@ -84,6 +123,9 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
   const handleDetalles = (e) => {
     setDetalles(e.target.value);
   };
+  const handleEncargado = (e) => {
+    setEncargado(e.target.value);
+  };
 
   //cambiar el precio
   useEffect(() => {
@@ -99,16 +141,19 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
     });
   }, [tipoAuto, servicio, serviciosOptions]);
 
+  
+
   //funcion para controlar el envio del formulario
   const handleSubmit = async (e) => {
-    setIsloading(true);
+    setIsLoading(true);
     setError(null);
     e.preventDefault();
     
     const encargado = {
-      encargadoId: usuario.id,
-      encargadoNombre: usuario.nombre,
-      encargadoUsuario: usuario.usuario,
+      //cambiar esto
+      //encargadoId: usuario.id,
+      //encargadoNombre: usuario.nombre,
+      //encargadoUsuario: usuario.usuario,
     };
   
     try {
@@ -125,7 +170,7 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
           tipoServicio: servicio,
           precio,
           encargado,
-          carInfo: detalles,
+          carInfo: detalles
         }),
       });
   
@@ -137,13 +182,12 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
   
       // Actualizar el estado local con el servicio actualizado
       dispatch({ type: "UPDATE_SERVICE", payload: json });
-  
-      setIsloading(false);
+      setIsLoading(false);
       enqueueSnackbar("Servicio editado correctamente", { variant: "success" });
       onClose(); // Cerrar el formulario después de la edición exitosa
     } catch (error) {
       setError(error.message);
-      setIsloading(false);
+      setIsLoading(false);
       enqueueSnackbar("Error al editar servicio", { variant: "error" });
     }
   };
@@ -231,17 +275,36 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
                 </select>
               </div>
               <div>
+                <label>Encargado</label>
+                {usuario.rol === 'administrador' ? (
+                  <select className="form-select" value={encargado} onChange={(e) => setEncargado(e.target.value)} required>
+                    <option></option>
+                    {employeesWithAdditionalUser.map((employee) => (
+                      <option key={employee._id} value={employee.usuario}>
+                        {employee.usuario} {/* Cambiar a la propiedad deseada */}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <input
+                    type="text"
+                    value={encargado}
+                    onChange={(e) => setEncargado(e.target.value)}
+                    disabled
+                  />
+                )}
+              </div>
+              <div>
+                <label>Detalles del auto</label>
+                <input type="text" value={detalles} onChange={handleDetalles} />
+              </div>
+              <div>
                 <label>Precio</label>
                 <span>
                   {precio
                     ? `$ ${new Intl.NumberFormat().format(precio)}`
                     : "$ -"}
                 </span>
-              </div>
-
-              <div>
-                <label>Detalles del auto</label>
-                <input type="text" value={detalles} onChange={handleDetalles} />
               </div>
             </div>
             <button className="submit-btn">Editar servicio</button>

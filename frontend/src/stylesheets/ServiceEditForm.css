@@ -1,13 +1,14 @@
 /* ServiceEditForm.css */
 
 .main-container {
-    height: auto;
+    height: 80%;
     width: 70%;
     background-color: var(--cream-grey);
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    overflow-y: scroll;
   }
   
   .form-div {

@@ -66,7 +66,36 @@ const createService = async (req, res) => {
 
 //controlador de editar servicio
 
-const patchService = (req, res) => res.json({ msg: "editar servicio" });
+// const patchService = (req, res) => 
+const patchService = async (req, res) => {
+  // res.json({ msg: "editar servicio" });
+  const { id } = req.params;
+  const { cliente, placa, tipoAuto, tipoServicio, precio, encargado, carInfo } = req.body;
+
+  try {
+    const servicioCambiado = await servicioModel.updateService(
+      id,
+      cliente,
+      placa,
+      tipoAuto,
+      tipoServicio,
+      precio,
+      encargado,
+      carInfo
+    );
+    await logModel.create({
+      //TODO: cambiar madeby, action_detail
+      madeBy: "Yet no authentication",
+      action: "UPDATE SERVICE",
+      action_detail: `Admin ${1} updated employee ${1}`,
+      status: "SUCCESSFUL",
+    });
+    res.status(200).json(servicioCambiado);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error.message });
+  }
+};
 
 //controlador de eliminar servicio
 

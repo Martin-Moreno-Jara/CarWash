@@ -119,4 +119,56 @@ servicioSchema.statics.insertService = async function (
   return servicio;
 };
 
+servicioSchema.statics.updateService = async function (
+  id,
+  cliente,
+  placa,
+  tipoAuto,
+  tipoServicio,
+  precio,
+  encargado,
+  carInfo
+) {
+  if (!cliente || !placa || !tipoAuto || !tipoServicio || !encargado) {
+    await logModel.create({
+      //TODO: cambiar madeby
+      madeBy: "Yet no authentication",
+      action: "UPDATE SERVICE",
+      action_detail: `Tried to update service, but not all required fields are filled`,
+      status: "FAILED",
+    });
+    throw Error("Todos los campos obligatorios deben ser diligenciados");
+  }
+  const existsSERVICE = await this.findOne({ placa });
+  const newId = new mongoose.Types.ObjectId(id);
+  if (existsSERVICE && !existsSERVICE._id.equals(newId)) {
+    await logModel.create({
+      //TODO: cambiar madeby
+      madeBy: "Yet no authentication",
+      action: "UPDATE SERVICE",
+      action_detail: `Tried to update service, but new service.placa is already in process`,
+      status: "FAILED",
+    });
+      //TODO: cambiar el throw
+    throw Error("El servicio hace cosas y no se que jaja");
+  }
+
+  const service = await this.findOneAndUpdate(
+    { _id: id },
+    {
+      id,
+      cliente,
+      placa,
+      tipoAuto,
+      tipoServicio,
+      precio,
+      encargado,
+      carInfo
+    }
+  );
+  console.log(service);
+  const updated = await this.findOne({ _id: id });
+  return updated;
+};
+
 module.exports = mongoose.model("servicioModel", servicioSchema);

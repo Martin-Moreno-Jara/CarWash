@@ -5,7 +5,6 @@ import MoonLoader from "react-spinners/MoonLoader";
 //CUSTOM HOOKS
 import { useServiceContext } from "../../hooks/servicioHooks/useServiceContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
-
 //COMPONENTS
 //STYLESHEET
 import "../../stylesheets/ServiceEditForm.css";
@@ -18,14 +17,12 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
   //variable global del usuario y su dispatch (viene desde el contexto de autenticacion)
   const { usuario } = useAuthContext();
   const { dispatch } = useServiceContext();
-  
 
   //snackbar de notistack para mostrar mensaje de confirmacion
   const { enqueueSnackbar } = useSnackbar();
 
   const additionalUser = {
     apellido: "Jimenez",
-    cedula: "1000897654",
     nombre: "Raul",
     rol: "administrador",
     usuario: "raulJm",
@@ -100,10 +97,13 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
   const [servicio, setServicio] = useState(editedService ? editedService.tipoServicio : "");
   const [precio, setPrecio] = useState(editedService ? editedService.precio : "");
   const [encargado, setEncargado] = useState(editedService ? editedService.encargado[0].encargadoUsuario : "");
+  const [encargadoAct, setEncargadoAct] = useState({
+    encargadoId: "",
+    encargadoNombre: "",
+    encargadoUsuario: ""
+  });
   const [detalles, setDetalles] = useState(editedService ? editedService.carInfo : "");
   const employeesWithAdditionalUser = [additionalUser, ...employeeList];
-
-
 
   //funciones para guardar los cambios en los estados
   const handleCliente = (e) => {
@@ -121,9 +121,24 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
   const handleDetalles = (e) => {
     setDetalles(e.target.value);
   };
-  const handleEncargado = (e) => {
-    setEncargado(e.target.value);
-  };
+  // Manejar cambio en el select de encargado
+const handleEncargadoChange = (e) => {
+  const selectedUsuario = e.target.value.trim();
+  
+  const selectedEmployee = employeesWithAdditionalUser.find(
+    (employee) => employee.usuario === selectedUsuario
+  );
+
+  if (selectedEmployee) {
+    setEncargadoAct({
+      encargadoId: selectedEmployee._id,
+      encargadoNombre: `${selectedEmployee.nombre} ${selectedEmployee.apellido}`,
+      encargadoUsuario: selectedUsuario
+    });
+  }
+};
+
+  
 
   //cambiar el precio
   useEffect(() => {
@@ -147,11 +162,11 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
     setError(null);
     e.preventDefault();
     
+    // Accede correctamente a las propiedades del estado encargadoAct
     const encargado = {
-      //cambiar esto
-      encargadoId: usuario.id,
-      encargadoNombre: usuario.nombre,
-      encargadoUsuario: usuario.usuario,
+      encargadoId: encargadoAct.encargadoId,
+      encargadoNombre: encargadoAct.encargadoNombre,
+      encargadoUsuario: encargadoAct.encargadoUsuario,
     };
   
     try {
@@ -275,7 +290,7 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
               <div>
                 <label>Encargado</label>
                 {usuario.rol === 'administrador' ? (
-                  <select className="form-select" value={encargado} onChange={(e) => setEncargado(e.target.value)} required>
+                  <select className="form-select" value={encargado} onChange={handleEncargadoChange} required>
                     <option></option>
                     {employeesWithAdditionalUser.map((employee) => (
                       <option key={employee._id} value={employee.usuario}>

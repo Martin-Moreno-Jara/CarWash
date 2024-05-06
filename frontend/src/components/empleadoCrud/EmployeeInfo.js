@@ -13,6 +13,7 @@ const apiURL = process.env.REACT_APP_DEVURL;
 const EmployeeInfo = ({ id }) => {
   const { dispatch } = useEmployeeContext();
   const { showEdit, dispatch: dispatchEdit } = useEmployeeCrudContext();
+  const { showMore, dispatch: dispatchMore } = useEmployeeCrudContext();
   const { dispatch: dispatchIsSelected } = useSelectContext();
   const { usuario: loggedUser } = useAuthContext();
 
@@ -28,7 +29,15 @@ const EmployeeInfo = ({ id }) => {
   return (
     <span data-cell="acciones" className="row-actions">
       <div className="action-div showmore">
-        <span className="material-symbols-outlined">more_horiz</span>
+        <span 
+          className="material-symbols-outlined"
+          onClick={() => {
+            dispatchMore({ type: "SHOW_MORE_DIALOG", payload: !showMore });
+            dispatchIsSelected({ type: "SELECT_EMPLOYEE", payload: id });
+          }}
+          >
+          more_horiz
+        </span>
       </div>
 
       <div className="action-div edit">

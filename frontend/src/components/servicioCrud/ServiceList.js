@@ -112,8 +112,7 @@ const ServiceList = ({ openEditForm }) => {
       header: "Encargado",
       accessorFn: (row) =>
         `${row.encargado[0].encargadoUsuario} (${
-          row.encargado[0].encargadoNombre.split(" ")[0]
-        })`,
+          row.encargado[0].encargadoNombre.split(" ")[0]})`,
     },
     ...columns.slice(6),
   ];

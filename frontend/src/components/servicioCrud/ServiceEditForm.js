@@ -104,8 +104,6 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
   const employeesWithAdditionalUser = [additionalUser, ...employeeList];
 
 
-  
-
 
   //funciones para guardar los cambios en los estados
   const handleCliente = (e) => {
@@ -151,9 +149,9 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
     
     const encargado = {
       //cambiar esto
-      //encargadoId: usuario.id,
-      //encargadoNombre: usuario.nombre,
-      //encargadoUsuario: usuario.usuario,
+      encargadoId: usuario.id,
+      encargadoNombre: usuario.nombre,
+      encargadoUsuario: usuario.usuario,
     };
   
     try {

@@ -139,9 +139,11 @@ servicioSchema.statics.updateService = async function (
     });
     throw Error("Todos los campos obligatorios deben ser diligenciados");
   }
-  const existsSERVICE = await this.findOne({ placa });
+  const existsPlacaSERVICE = await this.findOne({ placa });
+  const existsTipoAutoSERVICE = await this.findOne({ tipoAuto });
   const newId = new mongoose.Types.ObjectId(id);
-  if (existsSERVICE && !existsSERVICE._id.equals(newId)) {
+
+  if (!existsPlacaSERVICE._id.equals(newId) && (existsTipoAutoSERVICE || existsPlacaSERVICE)) {
     await logModel.create({
       //TODO: cambiar madeby
       madeBy: "Yet no authentication",
@@ -150,9 +152,11 @@ servicioSchema.statics.updateService = async function (
       status: "FAILED",
     });
       //TODO: cambiar el throw
-    throw Error("El servicio hace cosas y no se que jaja");
+    throw Error("El vehículo ya tiene un servicio abierto");
   }
 
+  console.log(encargado);
+  
   const service = await this.findOneAndUpdate(
     { _id: id },
     {

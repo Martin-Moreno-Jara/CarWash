@@ -98,10 +98,11 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
   const [precio, setPrecio] = useState(editedService ? editedService.precio : "");
   const [encargado, setEncargado] = useState(editedService ? editedService.encargado[0].encargadoUsuario : "");
   const [encargadoAct, setEncargadoAct] = useState({
-    encargadoId: "",
-    encargadoNombre: "",
-    encargadoUsuario: ""
+    encargadoId: editedService ? editedService.encargado[0].encargadoId : "",
+    encargadoNombre: editedService ? editedService.encargado[0].encargadoNombre : "",
+    encargadoUsuario: editedService ? editedService.encargado[0].encargadoUsuario : ""
   });
+  
   const [detalles, setDetalles] = useState(editedService ? editedService.carInfo : "");
   const employeesWithAdditionalUser = [additionalUser, ...employeeList];
 
@@ -333,6 +334,7 @@ const handleEncargadoChange = (e) => {
           {error && <div className="error">{error}</div>}
         </div>
       )}
+      
     </>
   );
 };

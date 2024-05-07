@@ -139,11 +139,10 @@ servicioSchema.statics.updateService = async function (
     });
     throw Error("Todos los campos obligatorios deben ser diligenciados");
   }
-  const existsPlacaSERVICE = await this.findOne({ placa });
-  const existsTipoAutoSERVICE = await this.findOne({ tipoAuto });
+  const existsSERVICE = await this.findOne({ placa });
   const newId = new mongoose.Types.ObjectId(id);
 
-  if (!existsPlacaSERVICE._id.equals(newId) && (existsTipoAutoSERVICE || existsPlacaSERVICE)) {
+  if (existsSERVICE && !existsSERVICE._id.equals(newId)) {
     await logModel.create({
       //TODO: cambiar madeby
       madeBy: "Yet no authentication",

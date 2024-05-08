@@ -6,6 +6,7 @@ const {
   createService,
   patchService,
   deleteService,
+  completeService,
 } = require("../controllers/servicioCRUDController");
 const requireAuth = require("../middleware/requireAuth");
 
@@ -25,5 +26,8 @@ router.post("/", createService);
 router.patch("/:id", patchService);
 //eliminar servicio
 router.delete("/:id", deleteService);
+
+//Completar servicio
+router.patch("/complete/:id", completeService);
 
 module.exports = router;

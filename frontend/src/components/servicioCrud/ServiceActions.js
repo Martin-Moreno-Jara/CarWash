@@ -6,9 +6,11 @@ const ServiceActions = ({
   rowInfo,
   showConfirmation,
   setShowConfirmation,
+  setSelectedRow,
 }) => {
   const confirmation = () => {
-    setShowConfirmation(!showConfirmation);
+    setShowConfirmation(true);
+    setSelectedRow(rowInfo);
   };
 
   return (

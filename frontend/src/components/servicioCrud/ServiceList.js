@@ -14,6 +14,7 @@ import {
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useServiceContext } from "../../hooks/servicioHooks/useServiceContext";
 //COMPONENTS
+import ServiceReview from "./ServiceReview";
 //STYLESHEET
 import "../../stylesheets/ServiceList.css";
 import ServiceActions from "./ServiceActions";
@@ -30,6 +31,10 @@ const ServiceList = ({ openEditForm }) => {
   const { servicios, dispatch } = useServiceContext();
   //estado para mostrar loader
   const [isLoading, setIsLoading] = useState(null);
+
+  const [showReview, setShowReview] = useState(false);
+
+  const [selectedRow, setSelectedRow] = useState(null);
 
   //Traer los datos para la tabla
   useEffect(() => {
@@ -71,7 +76,7 @@ const ServiceList = ({ openEditForm }) => {
     if (usuario.rol === "empleado") {
       fetchServicesByEmployee();
     }
-  }, [usuario.id, usuario.rol, usuario.token, dispatch]);
+  }, [usuario.id, usuario.rol, usuario.token, usuario.estado, dispatch]);
 
   //configuraciones para la tabla
   const columns = [
@@ -109,6 +114,7 @@ const ServiceList = ({ openEditForm }) => {
           rowInfo={row.original}
           showConfirmation={showConfirmation}
           setShowConfirmation={setShowConfirmation}
+          setSelectedRow={setSelectedRow}
         />
       ),
     },
@@ -143,7 +149,10 @@ const ServiceList = ({ openEditForm }) => {
     onSortingChange: setSorting,
   });
   return (
-    <div className="empleadoLista-main relative-parent ">
+    <div
+      className={`empleadoLista-main relative-parent ${
+        showConfirmation ? "empleadoLista-main-noScroll" : ""
+      }`}>
       <input
         className="search-input"
         type="text"
@@ -186,17 +195,33 @@ const ServiceList = ({ openEditForm }) => {
             ))}
         </tbody>
         {showConfirmation && (
-          <div className="confirmation-window">
-            <p>¿Completar servicio?</p>
-            <div className="confirmation-btn">
-              <button
-                className="cancelar"
-                onClick={() => {
-                  setShowConfirmation(!showConfirmation);
-                }}>
-                Cancelar
-              </button>
-              <button className="completar">Completar</button>
+          <div className="back-div">
+            <div className="confirmation-window">
+              <p>¿Completar servicio?</p>
+              <div className="confirmation-btn">
+                <button
+                  className="cancelar"
+                  onClick={() => {
+                    setShowConfirmation(!showConfirmation);
+                  }}>
+                  Cancelar
+                </button>
+                <button
+                  className="completar"
+                  onClick={() => {
+                    setShowReview(!showReview);
+                  }}>
+                  Completar
+                </button>
+              </div>
+              {showReview && (
+                <ServiceReview
+                  showReview={showReview}
+                  setShowReview={setShowReview}
+                  setShowConfirm={setShowConfirmation}
+                  selectedRow={selectedRow}
+                />
+              )}
             </div>
           </div>
         )}

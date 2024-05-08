@@ -14,3 +14,41 @@ td {
 .estado-en-proceso {
   background: var(--estado-default);
 }
+.relative-parent {
+  position: relative;
+}
+
+.confirmation-window {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--cream-white);
+  top: 50%;
+  left: 50%;
+  padding: 1rem;
+  border: 1px solid var(--regal-blue);
+  border-radius: 0.25rem;
+}
+
+.confirmation-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.confirmation-btn button {
+  padding: 10px 20px;
+  margin: 0.25rem 0.125rem;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--regal-blue);
+  color: var(--cream-grey);
+  cursor: pointer;
+}
+.cancelar:hover {
+  background-color: var(--error);
+}
+.completar:hover {
+  background-color: var(--estado-terminado);
+}

@@ -25,12 +25,12 @@ const apiURL = process.env.REACT_APP_DEVURL;
 const ServiceList = ({ openEditForm }) => {
   //variable global del usuario y su dispatch (viene desde el contexto de autenticacion)
   const { usuario } = useAuthContext();
+  const [showConfirmation, setShowConfirmation] = useState(false);
   //variable que tiene la lista de servicios y su despatch
   const { servicios, dispatch } = useServiceContext();
-
   //estado para mostrar loader
   const [isLoading, setIsLoading] = useState(null);
-  
+
   //Traer los datos para la tabla
   useEffect(() => {
     setIsLoading(true);
@@ -103,8 +103,15 @@ const ServiceList = ({ openEditForm }) => {
     {
       header: "Acciones",
       accessorKey: "Acciones",
-      cell: ({ row }) => <ServiceActions onEdit={() => openEditForm(row.original)} />,
-    }
+      cell: ({ row }) => (
+        <ServiceActions
+          onEdit={() => openEditForm(row.original)}
+          rowInfo={row.original}
+          showConfirmation={showConfirmation}
+          setShowConfirmation={setShowConfirmation}
+        />
+      ),
+    },
   ];
   const adminColumns = [
     ...columns.slice(0, 6),
@@ -112,11 +119,12 @@ const ServiceList = ({ openEditForm }) => {
       header: "Encargado",
       accessorFn: (row) =>
         `${row.encargado[0].encargadoUsuario} (${
-          row.encargado[0].encargadoNombre.split(" ")[0]})`,
+          row.encargado[0].encargadoNombre.split(" ")[0]
+        })`,
     },
     ...columns.slice(6),
   ];
-  
+
   const [columnFilters, setColumnFilters] = useState("");
   const [sorting, setSorting] = useState([]);
   //Hook de la tabla
@@ -135,7 +143,7 @@ const ServiceList = ({ openEditForm }) => {
     onSortingChange: setSorting,
   });
   return (
-    <div className="empleadoLista-main">
+    <div className="empleadoLista-main relative-parent ">
       <input
         className="search-input"
         type="text"
@@ -177,12 +185,28 @@ const ServiceList = ({ openEditForm }) => {
               </tr>
             ))}
         </tbody>
+        {showConfirmation && (
+          <div className="confirmation-window">
+            <p>¿Completar servicio?</p>
+            <div className="confirmation-btn">
+              <button
+                className="cancelar"
+                onClick={() => {
+                  setShowConfirmation(!showConfirmation);
+                }}>
+                Cancelar
+              </button>
+              <button className="completar">Completar</button>
+            </div>
+          </div>
+        )}
       </table>
       {isLoading && (
         <div className="loading">
           <MoonLoader color="#1c143d" loading={isLoading} size={100} />
         </div>
       )}
+
       <button onClick={() => table.setPageIndex(0)}>Primera</button>
       <button
         onClick={() => {

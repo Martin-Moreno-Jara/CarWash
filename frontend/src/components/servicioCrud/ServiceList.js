@@ -22,7 +22,7 @@ const apiURL = process.env.REACT_APP_DEVURL;
 
 //**************************************************************
 
-const ServiceList = ({ openEditForm }) => {
+const ServiceList = ({ openEditForm, openMoreForm }) => {
   //variable global del usuario y su dispatch (viene desde el contexto de autenticacion)
   const { usuario } = useAuthContext();
   //variable que tiene la lista de servicios y su despatch
@@ -103,7 +103,11 @@ const ServiceList = ({ openEditForm }) => {
     {
       header: "Acciones",
       accessorKey: "Acciones",
-      cell: ({ row }) => <ServiceActions onEdit={() => openEditForm(row.original)} />,
+      cell: ({ row }) => 
+        <ServiceActions 
+          onEdit={() => openEditForm(row.original)} 
+          onMore={() => openMoreForm(row.original)} 
+        />,
     }
   ];
   const adminColumns = [

@@ -6,6 +6,7 @@ import ServiceAddForm from "../components/servicioCrud/ServiceAddForm";
 //COMPONENTS
 import ServiceList from "../components/servicioCrud/ServiceList";
 import ServiceEditForm from "../components/servicioCrud/ServiceEditForm";
+import ServiceMoreForm from "../components/servicioCrud/ServiceMoreForm";
 //STYLESHEET
 import "../stylesheets/CrudServicios.css";
 //ENV VARIABLES
@@ -15,6 +16,8 @@ const CrudServicios = () => {
   const [displayCreate, setDisplayCreate] = useState(false);
   const [displayEdit, setDisplayEdit] = useState(false);
   const [editedService, setEditService] = useState(null);
+  const [displayMore, setDisplayMore] = useState(false);
+  const [moreService, setMoreService] = useState(null);
 
   
 
@@ -25,6 +28,15 @@ const CrudServicios = () => {
 
   const closeEditForm = () => {
     setDisplayEdit(false);
+  };
+
+  const openMoreForm = (service) => {
+    setMoreService(service);
+    setDisplayMore(true);
+  };
+
+  const closeMoreForm = () => {
+    setDisplayMore(false);
   };
 
   return (
@@ -67,8 +79,17 @@ const CrudServicios = () => {
             />
           </div>
         )}
-        <div className={displayCreate || displayEdit ? "actual-list-none" : "actual-list"}>
-          <ServiceList openEditForm={openEditForm} />
+        {displayMore && (
+          <div className="div-background">
+            <ServiceMoreForm
+              moreOpen={displayMore}
+              moreClose={closeMoreForm}
+              moreService={moreService}
+            />
+          </div>
+        )}
+        <div className={displayCreate || displayEdit || displayMore ? "actual-list-none" : "actual-list"}>
+          <ServiceList openEditForm={openEditForm} openMoreForm={openMoreForm}/>
         </div>
       </div>
     </div>

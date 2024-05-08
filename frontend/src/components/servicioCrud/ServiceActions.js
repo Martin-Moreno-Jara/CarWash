@@ -1,9 +1,9 @@
 import React from "react";
 
-const ServiceActions = ({ onEdit }) => {
+const ServiceActions = ({ onEdit, onMore}) => {
   return (
     <span data-cell="acciones" className="row-actions">
-      <div className="action-div showmore">
+      <div className="action-div showmore" onClick={onMore}>
         <span className="material-symbols-outlined">more_horiz</span>
       </div>
 

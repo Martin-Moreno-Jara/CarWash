@@ -72,18 +72,20 @@
 
 .accept-button {
   background-color: #78F478; /* Fondo verde */
-  color: white; /* Texto blanco */
+  color: black; /* Texto blanco */
   border-radius: 5px; /* Bordes redondeados */
   padding: 10px 20px; /* Espaciado interno */
   border: none; /* Sin borde */
   cursor: pointer; /* Cambia el cursor al pasar por encima */
+  margin: 10px;
 }
 
 .reject-button {
   background-color: #EA576E; /* Fondo rojo */
-  color: white; /* Texto blanco */
+  color: black; /* Texto blanco */
   border-radius: 5px; /* Bordes redondeados */
   padding: 10px 20px; /* Espaciado interno */
   border: none; /* Sin borde */
   cursor: pointer; /* Cambia el cursor al pasar por encima */
+  margin: 10px;
 }

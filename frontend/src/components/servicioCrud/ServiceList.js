@@ -1,6 +1,6 @@
 //************************** IMPORTED
 //REACT HOOKS/IMPORTS
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import MoonLoader from "react-spinners/MoonLoader";
 import {
   useReactTable,
@@ -14,15 +14,16 @@ import {
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useServiceContext } from "../../hooks/servicioHooks/useServiceContext";
 //COMPONENTS
-import ServiceInfo from "./ServiceInfo";
+import ServiceActions from "./ServiceActions";
 //STYLESHEET
 import "../../stylesheets/ServiceList.css";
+import ServiceActions from "./ServiceActions";
 //ENV VARIABLES
 const apiURL = process.env.REACT_APP_DEVURL;
 
 //**************************************************************
 
-const ServiceList = () => {
+const ServiceList = ({ openEditForm, openMoreForm }) => {
   //variable global del usuario y su dispatch (viene desde el contexto de autenticacion)
   const { usuario } = useAuthContext();
   //variable que tiene la lista de servicios y su despatch
@@ -30,7 +31,7 @@ const ServiceList = () => {
 
   //estado para mostrar loader
   const [isLoading, setIsLoading] = useState(null);
-
+  
   //Traer los datos para la tabla
   useEffect(() => {
     setIsLoading(true);
@@ -95,16 +96,21 @@ const ServiceList = () => {
             row.original.estado === "Terminado"
               ? "estado-terminado"
               : "estado-en-proceso"
-          }
-        >
+          }>
           {row.original.estado}
         </div>
       ),
     },
-    { header: "Acciones", 
+    {
+      header: "Acciones",
       accessorKey: "Acciones",
-      cell: ({ row }) => <ServiceInfo id={row.original._id}/>,
-    },
+      cell: ({ row }) => 
+        <ServiceActions 
+          onEdit={() => openEditForm(row.original)} 
+          onMore={() => openMoreForm(row.original)} 
+          id={row.original._id}
+        />,
+    }
   ];
   const adminColumns = [
     ...columns.slice(0, 6),
@@ -112,12 +118,11 @@ const ServiceList = () => {
       header: "Encargado",
       accessorFn: (row) =>
         `${row.encargado[0].encargadoUsuario} (${
-          row.encargado[0].encargadoNombre.split(" ")[0]
-        })`,
+          row.encargado[0].encargadoNombre.split(" ")[0]})`,
     },
     ...columns.slice(6),
   ];
-
+  
   const [columnFilters, setColumnFilters] = useState("");
   const [sorting, setSorting] = useState([]);
   //Hook de la tabla
@@ -150,8 +155,7 @@ const ServiceList = () => {
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  onClick={header.column.getToggleSortingHandler()}
-                >
+                  onClick={header.column.getToggleSortingHandler()}>
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext()
@@ -166,6 +170,7 @@ const ServiceList = () => {
             </tr>
           ))}
         </thead>
+
         <tbody>
           {servicios &&
             table.getRowModel().rows.map((row) => (
@@ -188,15 +193,13 @@ const ServiceList = () => {
       <button
         onClick={() => {
           table.previousPage();
-        }}
-      >
+        }}>
         Anterior
       </button>
       <button
         onClick={() => {
           table.nextPage();
-        }}
-      >
+        }}>
         Siguiente
       </button>
       <button onClick={() => table.setPageIndex(table.getPageCount() - 1)}>

@@ -1,3 +1,5 @@
+import React from "react";
+
 //************************** IMPORTED
 //CUSTOM HOOKS
 import { useServiceContext } from "../../hooks/servicioHooks/useServiceContext";
@@ -8,10 +10,9 @@ import { useState } from 'react';
 import "../../stylesheets/ServiceInfo.css";
 //ENV VARIABLES
 const apiURL = process.env.REACT_APP_DEVURL;
-//**************************************************************
 
-const ServiceInfo = ({ id }) => {
-    const { dispatch } = useServiceContext();
+const ServiceActions = ({ onEdit, onMore, id}) => {
+  const { dispatch } = useServiceContext();
     const { usuario: loggedUser } = useAuthContext();
     const { enqueueSnackbar } = useSnackbar();
     const [isOpen, setIsOpen] = useState(false);
@@ -36,18 +37,15 @@ const ServiceInfo = ({ id }) => {
         enqueueSnackbar("Servicio eliminado correctamente", { variant: "success" });
       }
     };
-    
+
   return (
-    <td data-cell="acciones" className="row-actions">
-      <div className="action-div showmore">
+    <span data-cell="acciones" className="row-actions">
+      <div className="action-div showmore" onClick={onMore}>
         <span className="material-symbols-outlined">more_horiz</span>
       </div>
 
-      <div className="action-div edit">
-        <span
-          className="material-symbols-outlined">
-          edit
-        </span>
+      <div className="action-div edit" onClick={onEdit}> 
+        <span className="material-symbols-outlined">edit</span>
       </div>
 
       <div className="action-div delete" onClick={() => {setIsOpen(true)}}>
@@ -67,8 +65,10 @@ const ServiceInfo = ({ id }) => {
         </div>
       )}
 
-    </td>
+      <div className="action-div complete">
+        <span className="material-symbols-outlined">Done</span>
+      </div>
+    </span>
   );
 };
-
-export default ServiceInfo;
+export default ServiceActions;

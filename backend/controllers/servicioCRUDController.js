@@ -54,6 +54,16 @@ const getService = async (req, res) => {
   if (!servicio) {
     return res.status(400).json({ error: "Error buscando al servicio" });
   }
+  try {
+    await logModel.create({
+      madeBy: req.loggedUser.usuario,
+      action: "GET SERVICE",
+      action_detail: `Admin ${req.loggedUser.usuario} got empservice`,
+      status: "SUCCESSFUL",
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
   res.status(200).json(servicio);
 };
 

@@ -30,6 +30,16 @@ const getserviceByEmployee = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
+  try {
+    await logModel.create({
+      madeBy: req.loggedUser.usuario,
+      action: "GET SERVICE",
+      action_detail: `Admin ${req.loggedUser.usuario} got service`,
+      status: "SUCCESSFUL",
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 //controlador de mostrar un servicio
@@ -69,9 +79,9 @@ const createService = async (req, res) => {
 // const patchService = (req, res) => res.json({ msg: "editar servicio" });
 
 const patchService = async (req, res) => {
- 
   const { id } = req.params;
-  const { cliente, placa, tipoAuto, tipoServicio, precio, encargado, carInfo } = req.body;
+  const { cliente, placa, tipoAuto, tipoServicio, precio, encargado, carInfo } =
+    req.body;
 
   try {
     const servicioCambiado = await servicioModel.updateService(

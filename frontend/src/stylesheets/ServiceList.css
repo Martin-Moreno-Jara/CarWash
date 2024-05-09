@@ -1,3 +1,18 @@
+.serviceLista-main,
+.serviceLista-main-blur {
+  background: var(--formal-grey);
+  border: 1px solid var(--tuned-down-blue);
+  padding: 5px 15px;
+  /* backdrop-filter: blur(8px); */
+  min-width: calc(100% + 60px);
+  height: 70vh;
+  border-radius: 10px;
+  margin-left: -40px;
+  margin-bottom: 15px;
+  box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  overflow-y: scroll;
+}
 td {
   text-align: center;
 }

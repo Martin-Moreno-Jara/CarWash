@@ -13,7 +13,6 @@ import {
 //CUSTOM HOOKS
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useServiceContext } from "../../hooks/servicioHooks/useServiceContext";
-//COMPONENTS
 //STYLESHEET
 import "../../stylesheets/ServiceList.css";
 import ServiceActions from "./ServiceActions";
@@ -107,6 +106,7 @@ const ServiceList = ({ openEditForm, openMoreForm }) => {
         <ServiceActions 
           onEdit={() => openEditForm(row.original)} 
           onMore={() => openMoreForm(row.original)} 
+          id={row.original._id}
         />,
     }
   ];
@@ -139,7 +139,7 @@ const ServiceList = ({ openEditForm, openMoreForm }) => {
     onSortingChange: setSorting,
   });
   return (
-    <div className="empleadoLista-main">
+    <div className="serviceLista-main">
       <input
         className="search-input"
         type="text"

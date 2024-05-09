@@ -44,7 +44,18 @@ const getserviceByEmployee = async (req, res) => {
 
 //controlador de mostrar un servicio
 
-const getService = (req, res) => {};
+const getService = async (req, res) => {
+  const { id } = req.params;
+  const idValidation = mongoose.Types.ObjectId.isValid(id);
+  if (!idValidation) {
+    return res.status(400).json({ error: "id del servicio invalida" });
+  }
+  const servicio = await servicioModel.findById(id);
+  if (!servicio) {
+    return res.status(400).json({ error: "Error buscando al servicio" });
+  }
+  res.status(200).json(servicio);
+};
 
 //crear servicio
 const createService = async (req, res) => {

@@ -13,8 +13,6 @@ import {
 //CUSTOM HOOKS
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useServiceContext } from "../../hooks/servicioHooks/useServiceContext";
-//COMPONENTS
-import ServiceActions from "./ServiceActions";
 //STYLESHEET
 import "../../stylesheets/ServiceList.css";
 import ServiceActions from "./ServiceActions";

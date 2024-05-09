@@ -34,7 +34,7 @@ const getserviceByEmployee = async (req, res) => {
     await logModel.create({
       madeBy: req.loggedUser.usuario,
       action: "GET SERVICE",
-      action_detail: `Admin ${req.loggedUser.usuario} got service`,
+      action_detail: `User ${req.loggedUser.usuario} got service`,
       status: "SUCCESSFUL",
     });
   } catch (error) {
@@ -61,10 +61,9 @@ const createService = async (req, res) => {
       carInfo
     );
     await logModel.create({
-      //TODO: cambiar madeby
-      madeBy: "Yet no authentication",
+      madeBy: req.loggedUser.usuario,
       action: "CREATE SERVICE",
-      action_detail: `user USUARIO successfully created service`,
+      action_detail: `User ${req.loggedUser.usuario} successfully created service`,
       status: "SUCCESSFUL",
     });
     res.status(200).json(servicio);
@@ -76,12 +75,9 @@ const createService = async (req, res) => {
 
 //controlador de editar servicio
 
-// const patchService = (req, res) => res.json({ msg: "editar servicio" });
-
 const patchService = async (req, res) => {
   const { id } = req.params;
-  const { cliente, placa, tipoAuto, tipoServicio, precio, encargado, carInfo } =
-    req.body;
+  const { cliente, placa, tipoAuto, tipoServicio, precio, encargado, carInfo } = req.body;
 
   try {
     const servicioCambiado = await servicioModel.updateService(
@@ -92,13 +88,13 @@ const patchService = async (req, res) => {
       tipoServicio,
       precio,
       encargado,
-      carInfo
+      carInfo,
+      req.loggedUser.usuario
     );
     await logModel.create({
-      //TODO: cambiar madeby, action_detail
-      madeBy: "Yet no authentication",
+      madeBy: req.loggedUser.usuario,
       action: "UPDATE SERVICE",
-      action_detail: `Admin ${1} updated employee ${1}`,
+      action_detail: `User ${req.loggedUser.usuario} updated service for vehicle ${id}`,
       status: "SUCCESSFUL",
     });
     res.status(200).json(servicioCambiado);

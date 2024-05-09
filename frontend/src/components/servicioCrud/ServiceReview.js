@@ -38,7 +38,6 @@ const ServiceReview = ({
           />
         ))}
       </div>
-      <button>Enviar</button>
     </div>
   );
 };

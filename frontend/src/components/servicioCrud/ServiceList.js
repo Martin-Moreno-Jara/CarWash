@@ -14,6 +14,7 @@ import {
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useServiceContext } from "../../hooks/servicioHooks/useServiceContext";
 //COMPONENTS
+import ServiceInfo from "./ServiceInfo";
 //STYLESHEET
 import "../../stylesheets/ServiceList.css";
 //ENV VARIABLES
@@ -100,7 +101,10 @@ const ServiceList = () => {
         </div>
       ),
     },
-    { header: "Acciones", accessorKey: "acciones" },
+    { header: "Acciones", 
+      accessorKey: "Acciones",
+      cell: ({ row }) => <ServiceInfo id={row.original._id}/>,
+    },
   ];
   const adminColumns = [
     ...columns.slice(0, 6),
@@ -132,7 +136,7 @@ const ServiceList = () => {
     onSortingChange: setSorting,
   });
   return (
-    <div className="empleadoLista-main">
+    <div className="serviceLista-main">
       <input
         className="search-input"
         type="text"

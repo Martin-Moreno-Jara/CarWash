@@ -11,6 +11,12 @@ export const serviceReducer = (state, action) => {
       return { servicios: action.payload };
     case "ADD_SERVICE":
       return { servicios: [action.payload, ...state.servicios] };
+    case "DELETE_SERVICE":
+      return {
+        servicios: state.servicios.filter(
+          (servicio) => servicio._id !== action.payload._id
+        ),
+      };
     default:
       return state;
   }

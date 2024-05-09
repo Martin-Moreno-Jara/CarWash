@@ -1,0 +1,89 @@
+.row-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .row-actions::before {
+    content: "";
+  }
+  
+  .action-div {
+    display: flex;
+    padding: 0.1rem;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: #b6b4bbfd;
+    border-radius: 12px;
+    margin-right: 15px;
+  }
+  .delete {
+    margin-right: 0;
+  }
+  .edit:hover {
+    background-color: #b3ad44;
+    color: #fff;
+  }
+  
+  .showmore:hover {
+    background-color: rgb(101, 139, 141);
+    color: #fff;
+  }
+  .delete:hover {
+    background-color: rgb(155, 58, 58);
+    color: #fff;
+  }
+  @media (max-width: 1000px) {
+    .action-div {
+      margin-right: 18px;
+    }
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+    z-index: 999; /* Valor alto de z-index para que esté por encima de todo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-content {
+    text-align: center;
+  }
+
+  
+.content-container {
+  background-color: #f0f0f0; /* Color de fondo para mejorar la legibilidad */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.accept-button {
+  background-color: #78F478; /* Fondo verde */
+  color: white; /* Texto blanco */
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 10px 20px; /* Espaciado interno */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+
+.reject-button {
+  background-color: #EA576E; /* Fondo rojo */
+  color: white; /* Texto blanco */
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 10px 20px; /* Espaciado interno */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+}

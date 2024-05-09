@@ -1,8 +1,14 @@
+//************************** IMPORTED
+//CUSTOM HOOKS
+import { useEmployeeCrudContext } from "../hooks/empleadoHooks/useEmployeeCrudContext";
+//COMPONENTS
+import EmployeeFormAdd from "../components/empleadoCrud/EmployeeFormAdd";
+import EmployeeList from "../components/empleadoCrud/EmployeeList";
+import EmployeeFormEdit from "../components/empleadoCrud/EmployeeFormEdit";
+//STYLESHEET
 import "../stylesheets/CrudEmpleados.css";
-import EmployeeFormAdd from "../components/EmployeeFormAdd";
-import EmployeeList from "../components/EmployeeList";
-import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
-import EmployeeFormEdit from "../components/EmployeeFormEdit";
+//**************************************************************
+
 const CrudEmpleados = () => {
   const { show, showEdit, dispatch } = useEmployeeCrudContext();
   return (

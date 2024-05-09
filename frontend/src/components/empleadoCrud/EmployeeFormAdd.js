@@ -1,13 +1,22 @@
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
 import { useState } from "react";
-import { useEmployeeCrudContext } from "../hooks/useEmployeeCrudContext";
-import { useSignup } from "../hooks/useSignup";
 import MoonLoader from "react-spinners/MoonLoader";
-import "../stylesheets/EmployeeForm.css";
+import { useSnackbar } from "notistack";
+
+//CUSTOM HOOKS
+import { useSignup } from "../../hooks/usuarioHooks/useSignup";
+import { useEmployeeCrudContext } from "../../hooks/empleadoHooks/useEmployeeCrudContext";
+//STYLESHEET
+import "../../stylesheets/EmployeeForm.css";
+//**************************************************************
 
 const EmployeeFormAdd = () => {
   const { show, dispatch } = useEmployeeCrudContext();
-  const { signupEmployee, error, setError, isLoading } = useSignup();
+  const { signupEmployee, error, isLoading } = useSignup();
   const [showFormats, setShowFormats] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassConfirm, setShowPassConfirm] = useState(false);
 
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
@@ -43,33 +52,17 @@ const EmployeeFormAdd = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      nombre &&
-      apellido &&
-      telefono &&
-      cedula &&
-      direccion &&
-      usuario &&
-      contrasena &&
-      passConfirm
-    ) {
-      if (passConfirm !== contrasena) {
-        setError("Las contraseñas no coinciden");
-        return;
-      }
 
-      await signupEmployee(
-        nombre,
-        apellido,
-        telefono,
-        parseInt(cedula),
-        direccion,
-        usuario,
-        contrasena
-      );
-    } else {
-      setError("Todos los campos deben ser llenados");
-    }
+    await signupEmployee(
+      nombre,
+      apellido,
+      telefono,
+      parseInt(cedula),
+      direccion,
+      usuario,
+      contrasena,
+      passConfirm
+    );
   };
   return (
     <div className="main-container">
@@ -150,15 +143,46 @@ const EmployeeFormAdd = () => {
           </div>
           <div>
             <label>Nombre de Usuario</label>
-            <input type="text" onChange={handleusuario} />
+            <input type="text" onChange={handleusuario} autoComplete="off" />
           </div>
           <div>
-            <label>Contraseña</label>
-            <input type="password" onChange={handlecontrasena} />
+            <label>Contraseña </label>
+            <div className="password-field-div">
+              <input
+                className="password-field"
+                type={showPassword ? "text" : "password"}
+                onChange={handlecontrasena}
+                value={contrasena}
+                autoComplete="off"
+              />
+              <span
+                className="material-symbols-outlined see"
+                onClick={() => {
+                  setShowPassword(!showPassword);
+                }}
+              >
+                {showPassword ? "visibility" : "visibility_off"}
+              </span>
+            </div>
           </div>
           <div>
             <label>Confirmar Contraseña</label>
-            <input type="password" onChange={handlePassConfirm} />
+            <div className="password-field-div">
+              <input
+                className="password-field"
+                type={showPassConfirm ? "text" : "password"}
+                onChange={handlePassConfirm}
+                value={passConfirm}
+              />
+              <span
+                className="material-symbols-outlined see"
+                onClick={() => {
+                  setShowPassConfirm(!showPassConfirm);
+                }}
+              >
+                {showPassConfirm ? "visibility" : "visibility_off"}
+              </span>
+            </div>
           </div>
         </div>
         <button className="submit-btn" disabled={isLoading}>

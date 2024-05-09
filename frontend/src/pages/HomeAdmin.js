@@ -1,5 +1,10 @@
-import "../stylesheets/HomeAdmin.css";
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
 import { Link } from "react-router-dom";
+//STYLESHEET
+import "../stylesheets/HomeAdmin.css";
+//**************************************************************
+
 const HomeAdmin = () => {
   return (
     <div className="homeAdmin-main">
@@ -15,6 +20,10 @@ const HomeAdmin = () => {
         <div className="options-btns">
           <Link to="/admin/empleadoCrud">
             <div className="empleado-manage-btn">Gestionar Empleados</div>
+          </Link>
+
+          <Link to="/admin/servicioCrud">
+            <div className="empleado-manage-btn">Gestionar servicios</div>
           </Link>
         </div>
       </div>

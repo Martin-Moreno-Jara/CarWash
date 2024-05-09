@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
-const secureModel = require("../models/secureModel");
+const logModel = require("../models/logModel");
 
 const createToken = (_id, rol) => {
   return jwt.sign({ _id, rol }, process.env.SECRET_STRING, {
-    expiresIn: "1d",
+    expiresIn: "1y",
   });
 };
 //controlador de mostrar empleadoss
@@ -37,22 +37,6 @@ const getEmployee = async (req, res) => {
   res.status(200).json(employee);
 };
 
-//traer plain contrasena
-const getKey = async (req, res) => {
-  const { id } = req.params;
-  const idValidation = mongoose.Types.ObjectId.isValid(id);
-  if (!idValidation) {
-    return res.status(400).json({ error: "id de empleado invalida" });
-  }
-
-  const employee = await secureModel.findOne({ id });
-
-  if (!employee) {
-    return res.status(400).json({ error: "Error buscando al empleado" });
-  }
-  res.status(200).json(employee);
-};
-
 //controlador de crear empleado
 
 const createEmployee = async (req, res) => {
@@ -65,6 +49,7 @@ const createEmployee = async (req, res) => {
     rol,
     usuario,
     contrasena,
+    passConfirm,
   } = req.body;
   try {
     const usuarioCreado = await userModel.signup(
@@ -75,8 +60,17 @@ const createEmployee = async (req, res) => {
       telefono,
       rol,
       usuario,
-      contrasena
+      contrasena,
+      passConfirm,
+      req.loggedUser.usuario
     );
+    await logModel.create({
+      madeBy: req.loggedUser.usuario,
+      action: "CREATE EMPLOYEE",
+      action_detail: `Admin ${req.loggedUser.usuario} created employee ${usuario}`,
+      status: "SUCCESSFUL",
+    });
+
     res.status(200).json(usuarioCreado);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -87,20 +81,9 @@ const createEmployee = async (req, res) => {
 
 const patchEmployee = async (req, res) => {
   const { id } = req.params;
-  const { nombre, apellido, cedula, direccion, telefono, usuario, contrasena } =
-    req.body;
+  const { nombre, apellido, cedula, direccion, telefono, usuario } = req.body;
 
   try {
-    console.log(
-      id,
-      nombre,
-      apellido,
-      cedula,
-      direccion,
-      telefono,
-      usuario,
-      contrasena
-    );
     const empleadoCambiado = await userModel.updateEmployee(
       id,
       nombre,
@@ -109,10 +92,17 @@ const patchEmployee = async (req, res) => {
       direccion,
       telefono,
       usuario,
-      contrasena
+      req.loggedUser.usuario
     );
+    await logModel.create({
+      madeBy: req.loggedUser.usuario,
+      action: "UPDATE EMPLOYEE",
+      action_detail: `Admin ${req.loggedUser.usuario} updated employee ${usuario}`,
+      status: "SUCCESSFUL",
+    });
     res.status(200).json(empleadoCambiado);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ error: error.message });
   }
 };
@@ -129,14 +119,18 @@ const deleteEmployee = async (req, res) => {
     return res.status(400).json({ error: "id de empleado invalida" });
   }
   const deletion = await userModel.findOneAndDelete({ _id: id });
-  const keyDeletion = await secureModel.deleteOne({ id });
+  await logModel.create({
+    madeBy: req.loggedUser.usuario,
+    action: "DELETE EMPLOYEE",
+    action_detail: `Admin ${req.loggedUser.usuario} deleted employee ${deletion.usuario}`,
+    status: "SUCCESSFUL",
+  });
   res.status(200).json(deletion);
 };
 
 module.exports = {
   getEmployees,
   getEmployee,
-  getKey,
   createEmployee,
   patchEmployee,
   deleteEmployee,

@@ -2,20 +2,21 @@ const express = require("express");
 const {
   getEmployees,
   getEmployee,
-  getKey,
   createEmployee,
   deleteEmployee,
   patchEmployee,
 } = require("../controllers/empleadoCRUDController");
+const requireAuth = require("../middleware/requireAuth");
 
 const router = express.Router();
+//requerir estar logeado
+router.use(requireAuth);
 
 //traer todos los empleados
 router.get("/", getEmployees);
 //traer un empleado
 router.get("/:id", getEmployee);
 
-router.get("/key/:id", getKey);
 //crear empleado
 router.post("/signupEmployee", createEmployee);
 

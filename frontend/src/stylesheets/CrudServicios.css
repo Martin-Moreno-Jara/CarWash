@@ -1,0 +1,8 @@
+.crudServicios-main {
+  display: grid;
+  grid-template-areas: "sidebar lista";
+  grid-template-columns: 1fr 5fr;
+  background: var(--formal-grey);
+
+  height: 85vh;
+}

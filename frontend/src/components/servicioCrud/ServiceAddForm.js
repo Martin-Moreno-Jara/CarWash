@@ -102,13 +102,13 @@ const ServiceAddForm = ({ displaySelf, setDisplay }) => {
     setIsloading(true);
     setError(null);
     e.preventDefault();
-    console.log(usuario);
+    
     const encargado = {
       encargadoId: usuario.id,
       encargadoNombre: usuario.nombre,
       encargadoUsuario: usuario.usuario,
     };
-    console.log(encargado);
+
     const response = await fetch(`${apiURL}/api/servicioCRUD`, {
       method: "POST",
       headers: {

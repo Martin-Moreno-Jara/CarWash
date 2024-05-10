@@ -115,7 +115,7 @@ const patchService = async (req, res) => {
     await logModel.create({
       madeBy: req.loggedUser.usuario,
       action: "UPDATE SERVICE",
-      action_detail: `User ${req.loggedUser.usuario} updated service for vehicle ${id}`,
+      action_detail: `User ${req.loggedUser.usuario} updated service for vehicle "${placa}"`,
       status: "SUCCESSFUL",
     });
     res.status(200).json(servicioCambiado);

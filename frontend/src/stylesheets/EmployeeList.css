@@ -13,8 +13,9 @@
   overflow: hidden;
   overflow-y: scroll;
 }
-.empleadoLista-main {
-  backdrop-filter: blur(8px);
+
+.empleadoLista-main-noScroll {
+  overflow-y: hidden;
 }
 
 .empleadoLista-main::-webkit-scrollbar {

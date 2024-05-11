@@ -66,7 +66,37 @@ const createService = async (req, res) => {
 
 //controlador de editar servicio
 
-const patchService = (req, res) => res.json({ msg: "editar servicio" });
+// const patchService = (req, res) => res.json({ msg: "editar servicio" });
+
+const patchService = async (req, res) => {
+  const { id } = req.params;
+  const { cliente, placa, tipoAuto, tipoServicio, precio, encargado, carInfo } =
+    req.body;
+
+  try {
+    const servicioCambiado = await servicioModel.updateService(
+      id,
+      cliente,
+      placa,
+      tipoAuto,
+      tipoServicio,
+      precio,
+      encargado,
+      carInfo
+    );
+    await logModel.create({
+      //TODO: cambiar madeby, action_detail
+      madeBy: "Yet no authentication",
+      action: "UPDATE SERVICE",
+      action_detail: `Admin ${1} updated employee ${1}`,
+      status: "SUCCESSFUL",
+    });
+    res.status(200).json(servicioCambiado);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error.message });
+  }
+};
 
 //controlador de eliminar servicio
 
@@ -97,6 +127,55 @@ const deleteService = async (req, res) => {
   }
 };
 
+const completeService = async (req, res) => {
+  const { id } = req.params;
+  const { calificacion } = req.body;
+  console.log(calificacion);
+  if (!id) {
+    return res.status(400).json({ error: "No hay valor de id" });
+  }
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "id invalida" });
+  }
+  const existsSERVICE = await servicioModel.findOne({ _id: id });
+  if (!existsSERVICE) {
+    return res.status(400).json({ error: "Id no existe en app" });
+  }
+  if (existsSERVICE.estado === "Terminado") {
+    return res.status(400).json({ error: "Registro ya esta terminado" });
+  }
+  try {
+    const completedService = await servicioModel.findOneAndUpdate(
+      { _id: id },
+      { estado: "Terminado", calificacion }
+    );
+
+    if (!completedService) {
+      console.log(completedService);
+      return res
+        .status(404)
+        .json({ error: "No fue posible completar el servicio" });
+    }
+    await logModel.create({
+      madeBy: req.loggedUser.usuario,
+      action: "COMPLETE SERVICE",
+      action_detail: `Servicio ${id} successfuly completed`,
+      status: "SUCCESSFUL",
+    });
+    const updated = await servicioModel.findOne({ _id: id });
+    res.status(200).json(updated);
+  } catch (error) {
+    console.log(error.message);
+    await logModel.create({
+      madeBy: req.loggedUser.usuario,
+      action: "COMPLETE SERVICE",
+      action_detail: `Servicio ${id} FAILED to be completed`,
+      status: "FAILED",
+    });
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllServices,
   getserviceByEmployee,
@@ -104,4 +183,5 @@ module.exports = {
   createService,
   patchService,
   deleteService,
+  completeService,
 };

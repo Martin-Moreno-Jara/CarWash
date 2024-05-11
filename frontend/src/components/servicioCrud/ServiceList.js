@@ -1,6 +1,6 @@
 //************************** IMPORTED
 //REACT HOOKS/IMPORTS
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import MoonLoader from "react-spinners/MoonLoader";
 import {
   useReactTable,
@@ -14,6 +14,7 @@ import {
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useServiceContext } from "../../hooks/servicioHooks/useServiceContext";
 //COMPONENTS
+import ServiceReview from "./ServiceReview";
 //STYLESHEET
 import "../../stylesheets/ServiceList.css";
 import ServiceActions from "./ServiceActions";
@@ -22,14 +23,18 @@ const apiURL = process.env.REACT_APP_DEVURL;
 
 //**************************************************************
 
-const ServiceList = () => {
+const ServiceList = ({ openEditForm }) => {
   //variable global del usuario y su dispatch (viene desde el contexto de autenticacion)
   const { usuario } = useAuthContext();
+  const [showConfirmation, setShowConfirmation] = useState(false);
   //variable que tiene la lista de servicios y su despatch
   const { servicios, dispatch } = useServiceContext();
-
   //estado para mostrar loader
   const [isLoading, setIsLoading] = useState(null);
+
+  const [showReview, setShowReview] = useState(false);
+
+  const [selectedRow, setSelectedRow] = useState(null);
 
   //Traer los datos para la tabla
   useEffect(() => {
@@ -71,7 +76,7 @@ const ServiceList = () => {
     if (usuario.rol === "empleado") {
       fetchServicesByEmployee();
     }
-  }, [usuario.id, usuario.rol, usuario.token, dispatch]);
+  }, [usuario.id, usuario.rol, usuario.token, usuario.estado, dispatch]);
 
   //configuraciones para la tabla
   const columns = [
@@ -103,7 +108,15 @@ const ServiceList = () => {
     {
       header: "Acciones",
       accessorKey: "Acciones",
-      cell: ({ row }) => <ServiceActions />,
+      cell: ({ row }) => (
+        <ServiceActions
+          onEdit={() => openEditForm(row.original)}
+          rowInfo={row.original}
+          showConfirmation={showConfirmation}
+          setShowConfirmation={setShowConfirmation}
+          setSelectedRow={setSelectedRow}
+        />
+      ),
     },
   ];
   const adminColumns = [
@@ -136,7 +149,10 @@ const ServiceList = () => {
     onSortingChange: setSorting,
   });
   return (
-    <div className="empleadoLista-main">
+    <div
+      className={`empleadoLista-main relative-parent ${
+        showConfirmation ? "empleadoLista-main-noScroll" : ""
+      }`}>
       <input
         className="search-input"
         type="text"
@@ -165,6 +181,7 @@ const ServiceList = () => {
             </tr>
           ))}
         </thead>
+
         <tbody>
           {servicios &&
             table.getRowModel().rows.map((row) => (
@@ -177,28 +194,69 @@ const ServiceList = () => {
               </tr>
             ))}
         </tbody>
+        {showConfirmation && (
+          <div className="back-div">
+            <div className="confirmation-window">
+              <p>¿Completar servicio?</p>
+              <div className="confirmation-btn">
+                <button
+                  className="cancelar"
+                  onClick={() => {
+                    setShowConfirmation(!showConfirmation);
+                  }}>
+                  Cancelar
+                </button>
+                <button
+                  className="completar"
+                  onClick={() => {
+                    setShowReview(!showReview);
+                  }}>
+                  Completar
+                </button>
+              </div>
+              {showReview && (
+                <ServiceReview
+                  showReview={showReview}
+                  setShowReview={setShowReview}
+                  setShowConfirm={setShowConfirmation}
+                  selectedRow={selectedRow}
+                />
+              )}
+            </div>
+          </div>
+        )}
       </table>
       {isLoading && (
         <div className="loading">
           <MoonLoader color="#1c143d" loading={isLoading} size={100} />
         </div>
       )}
-      <button onClick={() => table.setPageIndex(0)}>Primera</button>
-      <button
-        onClick={() => {
-          table.previousPage();
-        }}>
-        Anterior
-      </button>
-      <button
-        onClick={() => {
-          table.nextPage();
-        }}>
-        Siguiente
-      </button>
-      <button onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
-        Última
-      </button>
+      <div className="pagination-div">
+        <button
+          className="pagination-btn"
+          onClick={() => table.setPageIndex(0)}>
+          Primera
+        </button>
+        <button
+          className="pagination-btn"
+          onClick={() => {
+            table.previousPage();
+          }}>
+          Anterior
+        </button>
+        <button
+          className="pagination-btn"
+          onClick={() => {
+            table.nextPage();
+          }}>
+          Siguiente
+        </button>
+        <button
+          className="pagination-btn"
+          onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
+          Última
+        </button>
+      </div>
     </div>
   );
 };

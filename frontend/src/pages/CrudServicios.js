@@ -5,6 +5,7 @@ import ServiceAddForm from "../components/servicioCrud/ServiceAddForm";
 //CUSTOM HOOKS
 //COMPONENTS
 import ServiceList from "../components/servicioCrud/ServiceList";
+import ServiceEditForm from "../components/servicioCrud/ServiceEditForm";
 //STYLESHEET
 import "../stylesheets/CrudServicios.css";
 //ENV VARIABLES
@@ -12,6 +13,19 @@ import "../stylesheets/CrudServicios.css";
 //**************************************************************
 const CrudServicios = () => {
   const [displayCreate, setDisplayCreate] = useState(false);
+  const [displayEdit, setDisplayEdit] = useState(false);
+  const [editedService, setEditService] = useState(null);
+
+  
+
+  const openEditForm = (service) => {
+    setEditService(service);
+    setDisplayEdit(true);
+  };
+
+  const closeEditForm = () => {
+    setDisplayEdit(false);
+  };
 
   return (
     <div className="crudServicios-main">
@@ -36,6 +50,15 @@ const CrudServicios = () => {
         </div>
       </div>
       <div className="div-list">
+        {displayEdit && (
+          <div className="div-background">
+            <ServiceEditForm
+              isOpen={displayEdit}
+              onClose={closeEditForm}
+              editedService={editedService}
+            />
+          </div>
+        )}
         {displayCreate && (
           <div className="div-background">
             <ServiceAddForm
@@ -44,8 +67,8 @@ const CrudServicios = () => {
             />
           </div>
         )}
-        <div className={displayCreate ? "actual-list-none" : "actual-list"}>
-          <ServiceList />
+        <div className={displayCreate || displayEdit ? "actual-list-none" : "actual-list"}>
+          <ServiceList openEditForm={openEditForm} />
         </div>
       </div>
     </div>

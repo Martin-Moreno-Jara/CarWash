@@ -16,8 +16,8 @@
   --vivid-orange: #f77a09;
   --background: #868698;
   --error: #e61c1c;
-  --estado-terminado: #87ce5bc3;
-  --estado-default: #2e6190ae;
+  --estado-terminado: rgba(89, 149, 52, 0.65);
+  --estado-default: rgba(46, 97, 144, 0.65);
 }
 
 body {

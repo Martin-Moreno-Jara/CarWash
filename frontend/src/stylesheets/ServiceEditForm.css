@@ -1,0 +1,49 @@
+/* ServiceEditForm.css */
+
+.main-container {
+    height: 80%;
+    width: 70%;
+    background-color: var(--cream-grey);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    overflow-y: scroll;
+  }
+  
+  .form-div {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-fields {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+  }
+  
+  .form-fields label {
+    font-weight: bold;
+  }
+  
+  .form-fields input, .form-fields select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .submit-btn {
+    align-self: flex-end;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--regal-blue);
+    color: var(--cream-grey);
+    cursor: pointer;
+  }
+  
+  .submit-btn:hover {
+    background-color: var(--tuned-down-blue);
+  }
+  

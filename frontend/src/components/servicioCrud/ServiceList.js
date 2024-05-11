@@ -16,6 +16,7 @@ import { useServiceContext } from "../../hooks/servicioHooks/useServiceContext";
 //COMPONENTS
 //STYLESHEET
 import "../../stylesheets/ServiceList.css";
+import ServiceActions from "./ServiceActions";
 //ENV VARIABLES
 const apiURL = process.env.REACT_APP_DEVURL;
 
@@ -94,13 +95,16 @@ const ServiceList = () => {
             row.original.estado === "Terminado"
               ? "estado-terminado"
               : "estado-en-proceso"
-          }
-        >
+          }>
           {row.original.estado}
         </div>
       ),
     },
-    { header: "Acciones", accessorKey: "acciones" },
+    {
+      header: "Acciones",
+      accessorKey: "Acciones",
+      cell: ({ row }) => <ServiceActions />,
+    },
   ];
   const adminColumns = [
     ...columns.slice(0, 6),
@@ -146,8 +150,7 @@ const ServiceList = () => {
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  onClick={header.column.getToggleSortingHandler()}
-                >
+                  onClick={header.column.getToggleSortingHandler()}>
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext()
@@ -184,15 +187,13 @@ const ServiceList = () => {
       <button
         onClick={() => {
           table.previousPage();
-        }}
-      >
+        }}>
         Anterior
       </button>
       <button
         onClick={() => {
           table.nextPage();
-        }}
-      >
+        }}>
         Siguiente
       </button>
       <button onClick={() => table.setPageIndex(table.getPageCount() - 1)}>

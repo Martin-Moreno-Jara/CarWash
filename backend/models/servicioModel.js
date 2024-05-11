@@ -127,12 +127,13 @@ servicioSchema.statics.updateService = async function (
   tipoServicio,
   precio,
   encargado,
-  carInfo
+  carInfo,
+  loggedUser
 ) {
   if (!cliente || !placa || !tipoAuto || !tipoServicio || !encargado) {
     await logModel.create({
       //TODO: cambiar madeby
-      madeBy: "Yet no authentication",
+      madeBy: loggedUser,
       action: "UPDATE SERVICE",
       action_detail: `Tried to update service, but not all required fields are filled`,
       status: "FAILED",
@@ -145,13 +146,13 @@ servicioSchema.statics.updateService = async function (
   if (existsSERVICE && !existsSERVICE._id.equals(newId)) {
     await logModel.create({
       //TODO: cambiar madeby
-      madeBy: "Yet no authentication",
+      madeBy: loggedUser,
       action: "UPDATE SERVICE",
-      action_detail: `Tried to update service, but new service.placa is already in process`,
+      action_detail: `Tried to update service, but new vehicle has a service already in process`,
       status: "FAILED",
     });
       //TODO: cambiar el throw
-    throw Error("El vehículo ya tiene un servicio abierto");
+    throw Error(`El vehículo "${placa}" ya tiene un servicio abierto`);
   }
 
   console.log(encargado);

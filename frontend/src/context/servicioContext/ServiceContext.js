@@ -11,9 +11,13 @@ export const serviceReducer = (state, action) => {
       return { servicios: action.payload };
     case "ADD_SERVICE":
       return { servicios: [action.payload, ...state.servicios] };
+    case "DELETE_SERVICE":
+      return {
+        servicios: state.servicios.filter(
+          (servicio) => servicio._id !== action.payload._id
+        ),
+      };
     case "UPDATE_SERVICE":
-      console.log("updating service");
-      //se supone que estipule el contexto para manipular los servicios
       const updatedIndex = state.servicios.findIndex(
         (servicio) => servicio._id === action.payload._id
       );

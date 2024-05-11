@@ -23,7 +23,7 @@ const apiURL = process.env.REACT_APP_DEVURL;
 
 //**************************************************************
 
-const ServiceList = ({ openEditForm }) => {
+const ServiceList = ({ openEditForm, openMoreForm }) => {
   //variable global del usuario y su dispatch (viene desde el contexto de autenticacion)
   const { usuario } = useAuthContext();
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -111,6 +111,9 @@ const ServiceList = ({ openEditForm }) => {
       cell: ({ row }) => (
         <ServiceActions
           onEdit={() => openEditForm(row.original)}
+          onMore={() => openMoreForm(row.original)}
+          id={row.original._id}
+          estado={row.original.estado}
           rowInfo={row.original}
           showConfirmation={showConfirmation}
           setShowConfirmation={setShowConfirmation}

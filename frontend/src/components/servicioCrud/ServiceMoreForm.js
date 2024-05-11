@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import MoonLoader from "react-spinners/MoonLoader";
 //CUSTOM HOOKS
-import { useServiceContext } from "../../hooks/servicioHooks/useServiceContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
 //COMPONENTS
 //STYLESHEET
@@ -12,11 +11,11 @@ import "../../stylesheets/ServiceEditForm.css";
 const apiURL = process.env.REACT_APP_DEVURL;
 //**************************************************************
 
-const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
+const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
   
   //variable global del usuario y su dispatch (viene desde el contexto de autenticacion)
   const { usuario } = useAuthContext();
-  const { dispatch } = useServiceContext();
+  
 
   //snackbar de notistack para mostrar mensaje de confirmacion
   const { enqueueSnackbar } = useSnackbar();
@@ -29,24 +28,7 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
     _id: "660b75a326e70fee3afe0740"
   };
 
-  //estados para manejar los inputs
-  const [cliente, setCliente] = useState(editedService ? editedService.cliente : "");
-  const [placa, setPlaca] = useState(editedService ? editedService.placa : "");
-  const [tipoAuto, setTipoAuto] = useState(editedService ? editedService.tipoAuto : "");
-  const [servicio, setServicio] = useState(editedService ? editedService.tipoServicio : "");
-  const [precio, setPrecio] = useState(editedService ? editedService.precio : "");
-  const [encargado, setEncargado] = useState(editedService ? editedService.encargado[0].encargadoUsuario : "");
-  const [encargadoAct, setEncargadoAct] = useState({
-    encargadoId: editedService ? editedService.encargado[0].encargadoId : "",
-    encargadoNombre: editedService ? editedService.encargado[0].encargadoNombre : "",
-    encargadoUsuario: editedService ? editedService.encargado[0].encargadoUsuario : ""
-  });
-  const [employeeList, setEmployeeList] = useState([]);
-  const [detalles, setDetalles] = useState(editedService ? editedService.carInfo : "");
-  const employeesWithAdditionalUser = [additionalUser, ...employeeList];
-
   //Estados para mostrar condicionalmente contenido
-  const [showFormats, setShowFormats] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
@@ -81,6 +63,9 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
     fetchTarifas();
   }, []);
 
+
+  const [employeeList, setEmployeeList] = useState([]);
+
   // Obtener la lista de empleados del backend
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -101,7 +86,23 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
       }
     };
     fetchEmployees();
-  }, []);
+  }, [usuario.token]);
+
+  //estados para manejar los inputs
+  const [cliente, setCliente] = useState(moreService ? moreService.cliente : "");
+  const [placa, setPlaca] = useState(moreService ? moreService.placa : "");
+  const [tipoAuto, setTipoAuto] = useState(moreService ? moreService.tipoAuto : "");
+  const [servicio, setServicio] = useState(moreService ? moreService.tipoServicio : "");
+  const [precio, setPrecio] = useState(moreService ? moreService.precio : "");
+  const [encargado, setEncargado] = useState(moreService ? moreService.encargado[0].encargadoUsuario : "");
+  const [encargadoAct, setEncargadoAct] = useState({
+    encargadoId: moreService ? moreService.encargado[0].encargadoId : "",
+    encargadoNombre: moreService ? moreService.encargado[0].encargadoNombre : "",
+    encargadoUsuario: moreService ? moreService.encargado[0].encargadoUsuario : ""
+  });
+  
+  const [detalles, setDetalles] = useState(moreService ? moreService.carInfo : "");
+  const employeesWithAdditionalUser = [additionalUser, ...employeeList];
 
   //funciones para guardar los cambios en los estados
   const handleCliente = (e) => {
@@ -156,7 +157,7 @@ const handleEncargadoChange = (e) => {
 
   
 
-  //funcion para controlar el envio del formulario con los datos actualizados
+  //funcion para controlar el envio del formulario
   const handleSubmit = async (e) => {
     setIsLoading(true);
     setError(null);
@@ -168,9 +169,10 @@ const handleEncargadoChange = (e) => {
       encargadoNombre: encargadoAct.encargadoNombre,
       encargadoUsuario: encargadoAct.encargadoUsuario,
     };
+  
     try {
-      const response = await fetch(`${apiURL}/api/servicioCRUD/${editedService._id}`, {
-        method: "PATCH",
+      const response = await fetch(`${apiURL}/api/servicioCRUD/${moreService._id}`, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${usuario.token}`,
@@ -192,11 +194,9 @@ const handleEncargadoChange = (e) => {
         throw new Error(json.error);
       }
   
-      // Actualizar el estado local con el servicio actualizado
-      dispatch({ type: "UPDATE_SERVICE", payload: json });
       setIsLoading(false);
       enqueueSnackbar("Servicio editado correctamente", { variant: "success" });
-      onClose(); // Cerrar el formulario después de la edición exitosa
+      moreClose(); // Cerrar el formulario después de la edición exitosa
     } catch (error) {
       setError(error.message);
       setIsLoading(false);
@@ -208,46 +208,21 @@ const handleEncargadoChange = (e) => {
 
   return (
     <>
-      {isOpen && (
+      {moreOpen && (
         <div className="main-container">
           <div className="closebtn">
             <span
               className="material-symbols-outlined"
               onClick={() => {
-                onClose(!isOpen);
+                moreClose(!moreOpen);
               }}
             >
               close
             </span>
           </div>
-          <h2>Edite el servicio</h2>
-          <div
-            className="show-formats"
-            onClick={() => {
-              setShowFormats(!showFormats);
-            }}
-          >
-            {showFormats ? "ocultar formatos" : "Mostrar formatos aceptados"}{" "}
-            <span className="material-symbols-outlined">
-              {showFormats ? "keyboard_arrow_up" : "keyboard_arrow_down"}
-            </span>
-          </div>
-          {showFormats && (
-            <div className="formatos">
-              <p>
-                El nombre del cliente solo acepta carácteres del alfabeto
-                español
-              </p>
-              <p>
-                La placa del auto debe estar en el formato colombiano, es decir,
-                tres letras seguidas de un espacio y luego tres números. Como se
-                aprecia en el ejemplo: <strong>ABC 123</strong>
-              </p>
-            </div>
-          )}
-
+          <h2>Información del servicio</h2>         
           <form className="form-div" onSubmit={handleSubmit}>
-            <div className="form-fields">
+            <div className="form-fieldsMoreService">
               <div>
                 <label>Cliente</label>
                 <input
@@ -255,6 +230,7 @@ const handleEncargadoChange = (e) => {
                   pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ ]+"
                   value={cliente}
                   onChange={handleCliente}
+                  readOnly
                 />
               </div>
               <div>
@@ -264,11 +240,12 @@ const handleEncargadoChange = (e) => {
                   pattern="[a-zA-Z]{3} [0-9]{3}"
                   value={placa}
                   onChange={handlePlaca}
+                  readOnly
                 />
               </div>
               <div>
                 <label>Tipo de auto</label>
-                <select className="form-select" value={tipoAuto} onChange={handleTipoAuto}>
+                <select className="form-select" value={tipoAuto} onChange={handleTipoAuto} disabled>
                   <option></option>
                   {autoOptions.map((option) => (
                     <option key={option.key}>{option.nombre}</option>
@@ -277,7 +254,7 @@ const handleEncargadoChange = (e) => {
               </div>
               <div>
                 <label>Tipo de servicio</label>
-                <select className="form-select" value={servicio} onChange={handleServicio}>
+                <select className="form-select" value={servicio} onChange={handleServicio} disabled>
                   <option></option>
                   {serviciosOptions.map((option) => (
                     <option key={option.key} content="hola">
@@ -286,7 +263,6 @@ const handleEncargadoChange = (e) => {
                   ))}
                 </select>
               </div>
-              
               <div>
                 <label>Encargado</label>
                 {usuario.rol === 'administrador' ? (
@@ -309,7 +285,7 @@ const handleEncargadoChange = (e) => {
               </div>
               <div>
                 <label>Detalles del auto</label>
-                <input type="text" value={detalles} onChange={handleDetalles} />
+                <input type="text" value={detalles} onChange={handleDetalles} readOnly/>
               </div>
               <div>
                 <label>Precio</label>
@@ -320,7 +296,6 @@ const handleEncargadoChange = (e) => {
                 </span>
               </div>
             </div>
-            <button className="submit-btn">Editar servicio</button>
           </form>
           {isLoading && (
             <div className="loading2">
@@ -336,4 +311,4 @@ const handleEncargadoChange = (e) => {
   );
 };
 
-export default ServiceEditForm;
+export default ServiceMoreForm;

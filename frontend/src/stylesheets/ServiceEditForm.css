@@ -32,6 +32,34 @@
     border: 1px solid #ccc;
     border-radius: 5px;
   }
+
+  .form-fieldsMoreService {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+  }
+  
+  .form-fieldsMoreService label {
+    font-weight: bold;
+  }
+
+  .form-fieldsMoreService input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ccc; 
+    color: rgb(0, 0, 0, 0.7);
+  }
+
+  .form-fieldsMoreService select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ccc; 
+    color: rgb(0, 0, 0);
+  }
   
   .submit-btn {
     align-self: flex-end;

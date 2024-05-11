@@ -17,6 +17,7 @@ const ServiceActions = ({
   onMore,
   id,
   estado,
+  rowInfo,
   showConfirmation,
   setShowConfirmation,
   setSelectedRow,
@@ -28,6 +29,10 @@ const ServiceActions = ({
   const [confirmar, setConfirmar] = useState(false);
   const [showCompletedError, setShowCompletedError] = useState(false);
 
+  const confirmation = () => {
+    setShowConfirmation(true);
+    setSelectedRow(rowInfo);
+  };
   const handleConfirm = async () => {
     handleDelete();
     setIsOpen(false);

@@ -29,6 +29,22 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
     _id: "660b75a326e70fee3afe0740"
   };
 
+  //estados para manejar los inputs
+  const [cliente, setCliente] = useState(editedService ? editedService.cliente : "");
+  const [placa, setPlaca] = useState(editedService ? editedService.placa : "");
+  const [tipoAuto, setTipoAuto] = useState(editedService ? editedService.tipoAuto : "");
+  const [servicio, setServicio] = useState(editedService ? editedService.tipoServicio : "");
+  const [precio, setPrecio] = useState(editedService ? editedService.precio : "");
+  const [encargado, setEncargado] = useState(editedService ? editedService.encargado[0].encargadoUsuario : "");
+  const [encargadoAct, setEncargadoAct] = useState({
+    encargadoId: editedService ? editedService.encargado[0].encargadoId : "",
+    encargadoNombre: editedService ? editedService.encargado[0].encargadoNombre : "",
+    encargadoUsuario: editedService ? editedService.encargado[0].encargadoUsuario : ""
+  });
+  const [employeeList, setEmployeeList] = useState([]);
+  const [detalles, setDetalles] = useState(editedService ? editedService.carInfo : "");
+  const employeesWithAdditionalUser = [additionalUser, ...employeeList];
+
   //Estados para mostrar condicionalmente contenido
   const [showFormats, setShowFormats] = useState(false);
   const [error, setError] = useState(null);
@@ -65,9 +81,6 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
     fetchTarifas();
   }, []);
 
-
-  const [employeeList, setEmployeeList] = useState([]);
-
   // Obtener la lista de empleados del backend
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -89,22 +102,6 @@ const ServiceEditForm = ({ isOpen, onClose, editedService }) => {
     };
     fetchEmployees();
   }, []);
-
-  //estados para manejar los inputs
-  const [cliente, setCliente] = useState(editedService ? editedService.cliente : "");
-  const [placa, setPlaca] = useState(editedService ? editedService.placa : "");
-  const [tipoAuto, setTipoAuto] = useState(editedService ? editedService.tipoAuto : "");
-  const [servicio, setServicio] = useState(editedService ? editedService.tipoServicio : "");
-  const [precio, setPrecio] = useState(editedService ? editedService.precio : "");
-  const [encargado, setEncargado] = useState(editedService ? editedService.encargado[0].encargadoUsuario : "");
-  const [encargadoAct, setEncargadoAct] = useState({
-    encargadoId: editedService ? editedService.encargado[0].encargadoId : "",
-    encargadoNombre: editedService ? editedService.encargado[0].encargadoNombre : "",
-    encargadoUsuario: editedService ? editedService.encargado[0].encargadoUsuario : ""
-  });
-  
-  const [detalles, setDetalles] = useState(editedService ? editedService.carInfo : "");
-  const employeesWithAdditionalUser = [additionalUser, ...employeeList];
 
   //funciones para guardar los cambios en los estados
   const handleCliente = (e) => {
@@ -159,7 +156,7 @@ const handleEncargadoChange = (e) => {
 
   
 
-  //funcion para controlar el envio del formulario
+  //funcion para controlar el envio del formulario con los datos actualizados
   const handleSubmit = async (e) => {
     setIsLoading(true);
     setError(null);
@@ -171,7 +168,6 @@ const handleEncargadoChange = (e) => {
       encargadoNombre: encargadoAct.encargadoNombre,
       encargadoUsuario: encargadoAct.encargadoUsuario,
     };
-  
     try {
       const response = await fetch(`${apiURL}/api/servicioCRUD/${editedService._id}`, {
         method: "PATCH",
@@ -290,10 +286,11 @@ const handleEncargadoChange = (e) => {
                   ))}
                 </select>
               </div>
+              
               <div>
                 <label>Encargado</label>
                 {usuario.rol === 'administrador' ? (
-                  <select className="form-select" value={encargado} onChange={handleEncargadoChange} required>
+                  <select className="form-select" value={encargado} onChange={handleEncargadoChange} required disabled>
                     <option></option>
                     {employeesWithAdditionalUser.map((employee) => (
                       <option key={employee._id} value={employee.usuario}>

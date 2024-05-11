@@ -107,6 +107,7 @@ const ServiceList = ({ openEditForm, openMoreForm }) => {
           onEdit={() => openEditForm(row.original)} 
           onMore={() => openMoreForm(row.original)} 
           id={row.original._id}
+          estado={row.original.estado}
         />,
     }
   ];

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import MoonLoader from "react-spinners/MoonLoader";
 //CUSTOM HOOKS
-import { useServiceContext } from "../../hooks/servicioHooks/useServiceContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
 //COMPONENTS
 //STYLESHEET
@@ -16,7 +15,7 @@ const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
   
   //variable global del usuario y su dispatch (viene desde el contexto de autenticacion)
   const { usuario } = useAuthContext();
-  const { dispatch } = useServiceContext();
+  
 
   //snackbar de notistack para mostrar mensaje de confirmacion
   const { enqueueSnackbar } = useSnackbar();
@@ -173,7 +172,7 @@ const handleEncargadoChange = (e) => {
   
     try {
       const response = await fetch(`${apiURL}/api/servicioCRUD/${moreService._id}`, {
-        method: "PATCH",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${usuario.token}`,
@@ -195,8 +194,6 @@ const handleEncargadoChange = (e) => {
         throw new Error(json.error);
       }
   
-      // Actualizar el estado local con el servicio actualizado
-      dispatch({ type: "UPDATE_SERVICE", payload: json });
       setIsLoading(false);
       enqueueSnackbar("Servicio editado correctamente", { variant: "success" });
       moreClose(); // Cerrar el formulario después de la edición exitosa

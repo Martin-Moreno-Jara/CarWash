@@ -19,12 +19,14 @@ const CrudServicios = () => {
   const [displayMore, setDisplayMore] = useState(false);
   const [moreService, setMoreService] = useState(null);
 
-  
 
   const openEditForm = (service) => {
-    setEditService(service);
-    setDisplayEdit(true);
+    if (service.estado !== "Terminado") {
+      setEditService(service);
+      setDisplayEdit(true);
+    }
   };
+  
 
   const closeEditForm = () => {
     setDisplayEdit(false);

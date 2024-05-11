@@ -11,16 +11,25 @@ import "../../stylesheets/ServiceInfo.css";
 //ENV VARIABLES
 const apiURL = process.env.REACT_APP_DEVURL;
 
-const ServiceActions = ({ onEdit, onMore, id}) => {
+const ServiceActions = ({ onEdit, onMore, id, estado }) => {
   const { dispatch } = useServiceContext();
     const { usuario: loggedUser } = useAuthContext();
     const { enqueueSnackbar } = useSnackbar();
     const [isOpen, setIsOpen] = useState(false);
     const [confirmar, setConfirmar] = useState(false);
+    const [showCompletedError, setShowCompletedError] = useState(false);
     
     const handleConfirm = async () => {
         handleDelete();
         setIsOpen(false);
+    };
+
+    const handleEdit = () => {
+      if (estado === "Terminado") {
+        setShowCompletedError(true);
+      } else {
+        onEdit(); // Llama a la función onEdit si el servicio no está completado
+      }
     };
 
     const handleDelete = async () => {
@@ -44,7 +53,7 @@ const ServiceActions = ({ onEdit, onMore, id}) => {
         <span className="material-symbols-outlined">more_horiz</span>
       </div>
 
-      <div className="action-div edit" onClick={onEdit}> 
+      <div className="action-div edit" onClick={(event) => {onEdit();handleEdit();}}> 
         <span className="material-symbols-outlined">edit</span>
       </div>
 
@@ -52,22 +61,35 @@ const ServiceActions = ({ onEdit, onMore, id}) => {
         <span className="material-symbols-outlined">delete</span>
       </div>
 
+      <div className="action-div complete">
+        <span className="material-symbols-outlined">Done</span>
+      </div>
+
       {isOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
             <div className="content-container">
-                <h2>Confirmar Eliminación</h2>
-                <p>¿Estás seguro de que quieres hacer esto?</p>
-                <button className="accept-button" onClick={handleConfirm}>Aceptar</button>
-                <button className="reject-button" onClick={() => {setIsOpen(false)}}>Cancelar</button>
+              <h2>Confirmar Eliminación</h2>
+              <p>¿Estás seguro de que quieres hacer esto?</p>
+              <button className="accept-button" onClick={handleConfirm}>Aceptar</button>
+              <button className="reject-button" onClick={() => {setIsOpen(false)}}>Cancelar</button>
+                
             </div>
           </div>
         </div>
       )}
 
-      <div className="action-div complete">
-        <span className="material-symbols-outlined">Done</span>
+      {showCompletedError && (
+        <div className="modal-overlay">
+        <div className="modal-content">
+          <div className="content-container">
+            <h2>Servicio completado</h2>
+            <p>El servicio ya ha sido completado y no se puede editar.</p>
+            <button className="accept-button" onClick={() => setShowCompletedError(false)}>Aceptar</button>
+          </div>
+        </div>
       </div>
+      )}
     </span>
   );
 };

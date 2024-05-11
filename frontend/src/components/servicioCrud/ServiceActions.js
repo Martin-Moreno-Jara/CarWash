@@ -12,7 +12,15 @@ import "../../stylesheets/ServiceInfo.css";
 //ENV VARIABLES
 const apiURL = process.env.REACT_APP_DEVURL;
 
-const ServiceActions = ({ onEdit, onMore, id, estado }) => {
+const ServiceActions = ({
+  onEdit,
+  onMore,
+  id,
+  estado,
+  showConfirmation,
+  setShowConfirmation,
+  setSelectedRow,
+}) => {
   const { dispatch } = useServiceContext();
   const { usuario: loggedUser } = useAuthContext();
   const { enqueueSnackbar } = useSnackbar();

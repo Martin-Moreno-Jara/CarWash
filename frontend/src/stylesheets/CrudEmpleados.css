@@ -2,11 +2,12 @@
   display: grid;
   grid-template-areas: "sidebar lista";
   grid-template-columns: 1fr 5fr;
-  background-image: linear-gradient(rgba(5, 7, 12, 0.6), rgba(5, 7, 12, 0.6)),
-    url(../images/crud_empleado.jpg);
+  background-image: linear-gradient(rgba(5, 7, 12, 0.5), rgba(5, 7, 12, 0.4)),
+    url(../images/background3.jpg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  /* background: #e9ebef; */
   height: 85vh;
 }
 .empleado-options {
@@ -20,6 +21,7 @@
 .actual-list {
   width: 85%;
   margin-bottom: 50px;
+  position: relative;
 }
 .actual-list-none {
   display: none;

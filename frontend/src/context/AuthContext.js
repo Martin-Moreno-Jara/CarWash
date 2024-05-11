@@ -1,4 +1,8 @@
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
 import { createContext, useReducer, useEffect } from "react";
+//**************************************************************
+
 export const AuthContext = createContext();
 
 export const authReducer = (state, action) => {
@@ -15,7 +19,6 @@ export const authReducer = (state, action) => {
 export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("usuario"));
-
     if (token) {
       dispatch({ type: "LOGIN", payload: token });
     }

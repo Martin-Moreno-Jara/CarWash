@@ -1,15 +1,19 @@
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import React, { useEffect } from "react";
-import "./App.css";
+//CUSTOM HOOKS
+import { useAuthContext } from "./hooks/useAuthContext";
+//COMPONENTS
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import HomeGeneral from "./pages/HomeGeneral";
 import Login from "./pages/Login";
-import { useAuthContext } from "./hooks/useAuthContext";
 import HomeAdmin from "./pages/HomeAdmin";
 import HomeEmpleado from "./pages/HomeEmpleado";
 import CrudEmpleados from "./pages/CrudEmpleados";
-import { EmployeeContextProvider } from "./context/EmployeeContext";
+import CrudServicios from "./pages/CrudServicios";
+//STYLESHEET
+//**************************************************************
 
 function App() {
   const { usuario } = useAuthContext();
@@ -71,6 +75,26 @@ function App() {
               element={
                 usuario && usuario.rol === "administrador" ? (
                   <CrudEmpleados />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/admin/servicioCrud"
+              element={
+                usuario && usuario.rol === "administrador" ? (
+                  <CrudServicios />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/empleado/servicioCrud"
+              element={
+                usuario && usuario.rol === "empleado" ? (
+                  <CrudServicios />
                 ) : (
                   <Navigate to="/" />
                 )

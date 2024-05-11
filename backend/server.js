@@ -4,6 +4,7 @@ const express = require("express");
 const userRoutes = require("./routes/user");
 const empleadoCRUDRoutes = require("./routes/empleadoCRUD");
 const servicioCRUDRoutes = require("./routes/servicioCRUD");
+const tarifasRoutes = require("./routes/tarifas");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 app.use("/api/user", userRoutes);
 app.use("/api/empleadoCRUD", empleadoCRUDRoutes);
 app.use("/api/servicioCRUD", servicioCRUDRoutes);
+app.use("/api/tarifas", tarifasRoutes);
 
 // db connection
 mongoose

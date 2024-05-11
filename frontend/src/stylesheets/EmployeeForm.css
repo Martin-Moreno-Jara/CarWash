@@ -52,6 +52,25 @@ input::-webkit-inner-spin-button {
   margin-right: 20px;
 }
 
+
+.form-fieldsMore {
+  width: auto;
+  display: grid;
+  grid-template-areas:
+    "nombre apellido"
+    "telefono cedula"
+    "direccion usuario"
+    "contra confir";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+.form-fieldsMore input {
+  width: 90%;
+  margin-right: 20px;
+  background-color: #ccc; 
+}
+
+
 .form-div {
   display: flex;
   flex-direction: column;

@@ -1,14 +1,22 @@
+//************************** IMPORTED
+//REACT HOOKS/IMPORTS
 import { useState } from "react";
-import { useEmployeeContext } from "../hooks/useEmployeeContext";
-import { useEmployeeCrudContext } from "./useEmployeeCrudContext";
-const apiURL = process.env.REACT_APP_DEPLOYURL;
+//CUSTOM HOOKS
+import { useAuthContext } from "../useAuthContext";
+import { useEmployeeContext } from "../empleadoHooks/useEmployeeContext";
+import { useEmployeeCrudContext } from "../empleadoHooks/useEmployeeCrudContext";
+//ENV VARIBLES
+const apiURL = process.env.REACT_APP_DEVURL;
+//**************************************************************
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
+  const { usuario: loggedUser } = useAuthContext();
 
   const { dispatch: dispatchCloseWindow, show } = useEmployeeCrudContext();
   const { dispatch } = useEmployeeContext();
+
   const signupEmployee = async (
     nombre,
     apellido,
@@ -16,13 +24,17 @@ export const useSignup = () => {
     cedula,
     direccion,
     usuario,
-    contrasena
+    contrasena,
+    passConfirm
   ) => {
     setError(null);
     setIsLoading(true);
     const response = await fetch(`${apiURL}/api/empleadoCRUD/signupEmployee`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${loggedUser.token}`,
+      },
       body: JSON.stringify({
         nombre,
         apellido,
@@ -31,6 +43,7 @@ export const useSignup = () => {
         direccion,
         usuario,
         contrasena,
+        passConfirm,
       }),
     });
     const json = await response.json();

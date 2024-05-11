@@ -48,23 +48,23 @@ const getService = async (req, res) => {
   const { id } = req.params;
   const idValidation = mongoose.Types.ObjectId.isValid(id);
   if (!idValidation) {
-    return res.status(400).json({ error: "id del servicio invalida" });
+    console.log(idValidation);
+    return res.status(400).json({ error: "id de empleado invalida" });
   }
-  const servicio = await servicioModel.findById(id);
-  if (!servicio) {
-    return res.status(400).json({ error: "Error buscando al servicio" });
+
+  const service = await servicioModel.findById(id);
+
+  if (!service) {
+    return res.status(400).json({ error: "Error buscando servicio" });
   }
-  try {
-    await logModel.create({
-      madeBy: req.loggedUser.usuario,
-      action: "GET SERVICE",
-      action_detail: `Admin ${req.loggedUser.usuario} got empservice`,
-      status: "SUCCESSFUL",
-    });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-  res.status(200).json(servicio);
+
+  await logModel.create({
+    madeBy: req.loggedUser.usuario,
+    action: "GET SERVICE",
+    action_detail: `user ${req.loggedUser.usuario} got service`,
+    status: "SUCCESSFUL",
+  });
+  res.status(200).json(service);
 };
 
 //crear servicio

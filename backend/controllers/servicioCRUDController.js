@@ -34,7 +34,28 @@ const getserviceByEmployee = async (req, res) => {
 
 //controlador de mostrar un servicio
 
-const getService = (req, res) => {};
+const getService = async (req, res) => {
+  const { id } = req.params;
+  const idValidation = mongoose.Types.ObjectId.isValid(id);
+  if (!idValidation) {
+    console.log(idValidation);
+    return res.status(400).json({ error: "id de empleado invalida" });
+  }
+
+  const service = await servicioModel.findById(id);
+
+  if (!service) {
+    return res.status(400).json({ error: "Error buscando servicio" });
+  }
+
+  await logModel.create({
+    madeBy: req.loggedUser.usuario,
+    action: "GET SERVICE",
+    action_detail: `user ${req.loggedUser.usuario} got service`,
+    status: "SUCCESSFUL",
+  });
+  res.status(200).json(service);
+};
 
 //crear servicio
 const createService = async (req, res) => {
@@ -69,9 +90,9 @@ const createService = async (req, res) => {
 // const patchService = (req, res) => res.json({ msg: "editar servicio" });
 
 const patchService = async (req, res) => {
- 
   const { id } = req.params;
-  const { cliente, placa, tipoAuto, tipoServicio, precio, encargado, carInfo } = req.body;
+  const { cliente, placa, tipoAuto, tipoServicio, precio, encargado, carInfo } =
+    req.body;
 
   try {
     const servicioCambiado = await servicioModel.updateService(

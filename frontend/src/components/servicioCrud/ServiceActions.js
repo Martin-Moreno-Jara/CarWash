@@ -30,12 +30,24 @@ const ServiceActions = ({
   const [showCompletedError, setShowCompletedError] = useState(false);
 
   const confirmation = () => {
-    setShowConfirmation(true);
-    setSelectedRow(rowInfo);
+    if (estado === "Terminado") {
+      setShowCompletedError(true);
+    } else {
+      setShowConfirmation(true);
+      setSelectedRow(rowInfo);
+    }
   };
   const handleConfirm = async () => {
     handleDelete();
     setIsOpen(false);
+  };
+
+  const handleFinishedService = () => {
+    if (estado === "Terminado") {
+      setShowCompletedError(true);
+    } else {
+      setIsOpen(true);
+    }
   };
 
   const handleEdit = () => {
@@ -78,11 +90,7 @@ const ServiceActions = ({
         <span className="material-symbols-outlined">edit</span>
       </div>
 
-      <div
-        className="action-div delete"
-        onClick={() => {
-          setIsOpen(true);
-        }}>
+      <div className="action-div delete" onClick={handleFinishedService}>
         <span className="material-symbols-outlined">delete</span>
       </div>
 
@@ -118,7 +126,7 @@ const ServiceActions = ({
           <div className="modal-content">
             <div className="content-container">
               <h2>Servicio completado</h2>
-              <p>El servicio ya ha sido completado y no se puede editar.</p>
+              <p>El servicio ya ha sido completado y no se puede modificar.</p>
               <button
                 className="accept-button"
                 onClick={() => setShowCompletedError(false)}>

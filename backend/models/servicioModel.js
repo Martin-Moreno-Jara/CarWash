@@ -143,16 +143,28 @@ servicioSchema.statics.updateService = async function (
   const existsSERVICE = await this.findOne({ placa });
   const newId = new mongoose.Types.ObjectId(id);
 
+  
+  console.log("--------------------------------------------------------------------")
+  console.log(newId);
+  console.log("--------------------------------------------------------------------")
+
+  const previousServices = await this.find({ placa });
+  previousServices.forEach((service) => {
+    
+  });
+
   if (existsSERVICE && !existsSERVICE._id.equals(newId)) {
-    await logModel.create({
-      //TODO: cambiar madeby
-      madeBy: loggedUser,
-      action: "UPDATE SERVICE",
-      action_detail: `Tried to update service, but new vehicle has a service already in process`,
-      status: "FAILED",
-    });
-      //TODO: cambiar el throw
-    throw Error(`El vehículo "${placa}" ya tiene un servicio abierto`);
+    if (existsSERVICE.estado === "En proceso") {
+      await logModel.create({
+        //TODO: cambiar madeby
+        madeBy: loggedUser,
+        action: "UPDATE SERVICE",
+        action_detail: `Tried to update service, but new vehicle has a service already in process`,
+        status: "FAILED",
+      });
+        //TODO: cambiar el throw
+      throw Error(`El vehículo "${placa}" ya tiene un servicio abierto`);
+    }
   }
 
   console.log(encargado);

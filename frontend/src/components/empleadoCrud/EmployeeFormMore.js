@@ -93,12 +93,10 @@ const EmployeeFormMore = () => {
         className="closebtn"
         onClick={() => {
           dispatch({ type: "SHOW_MORE_DIALOG", payload: !showMore });
-        }}
-      >
+        }}>
         <span className="material-symbols-outlined">close</span>
       </div>
       <h2>información del empleado</h2>
-    
 
       {loadingInfo && (
         <div className="loading2">
@@ -149,7 +147,12 @@ const EmployeeFormMore = () => {
           </div>
           <div>
             <label>Dirección</label>
-            <input type="text" onChange={handleDireccion} value={direccion} readOnly />      
+            <input
+              type="text"
+              onChange={handleDireccion}
+              value={direccion}
+              readOnly
+            />
           </div>
           <div>
             <label>Nombre de Usuario</label>

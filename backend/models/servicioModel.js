@@ -74,7 +74,8 @@ servicioSchema.statics.insertService = async function (
   tipoServicio,
   precio,
   encargado,
-  carInfo
+  carInfo,
+  loggedUser
 ) {
   if (
     !cliente ||
@@ -86,9 +87,9 @@ servicioSchema.statics.insertService = async function (
   ) {
     await logModel.create({
       //TODO: cambiar madeby
-      madeBy: "Yet no authentication",
+      madeBy: loggedUser,
       action: "CREATE SERVICE",
-      action_detail: `user USUARIO tried to create service, but didn't fill mandatory fields`,
+      action_detail: `user ${loggedUser} tried to create service, but didn't fill mandatory fields`,
       status: "FAILED",
     });
     throw Error("Diligencie los campos obligatorios");
@@ -98,9 +99,9 @@ servicioSchema.statics.insertService = async function (
     if (service.estado === "En proceso") {
       logModel.create({
         //TODO: cambiar madeby
-        madeBy: "Yet no authentication",
+        madeBy: loggedUser,
         action: "CREATE SERVICE",
-        action_detail: `user USUARIO tried to create service, but there's alreay an opened service with this car`,
+        action_detail: `user ${loggedUser} tried to create service, but there's alreay an opened service with this car`,
         status: "FAILED",
       });
       throw Error("Este carro ya tiene un servicio abierto.");
@@ -151,12 +152,12 @@ servicioSchema.statics.updateService = async function (
       action_detail: `Tried to update service, but new vehicle has a service already in process`,
       status: "FAILED",
     });
-      //TODO: cambiar el throw
+    //TODO: cambiar el throw
     throw Error(`El vehículo "${placa}" ya tiene un servicio abierto`);
   }
 
   console.log(encargado);
-  
+
   const service = await this.findOneAndUpdate(
     { _id: id },
     {
@@ -167,7 +168,7 @@ servicioSchema.statics.updateService = async function (
       tipoServicio,
       precio,
       encargado,
-      carInfo
+      carInfo,
     }
   );
   console.log(service);

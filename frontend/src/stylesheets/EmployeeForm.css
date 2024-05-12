@@ -52,7 +52,6 @@ input::-webkit-inner-spin-button {
   margin-right: 20px;
 }
 
-
 .form-fieldsMore {
   width: auto;
   display: grid;
@@ -67,9 +66,9 @@ input::-webkit-inner-spin-button {
 .form-fieldsMore input {
   width: 90%;
   margin-right: 20px;
-  background-color: #ccc; 
+  background-color: #ccc;
+  text-transform: capitalize;
 }
-
 
 .form-div {
   display: flex;

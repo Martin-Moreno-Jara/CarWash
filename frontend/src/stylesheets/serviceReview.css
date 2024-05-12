@@ -37,3 +37,14 @@
 .rev-option:hover {
   border: solid 1px var(--tuned-down-blue);
 }
+
+@media (max-width: 600px) {
+  .review-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .review-div {
+    width: 70%;
+  }
+}

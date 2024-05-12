@@ -33,8 +33,8 @@ const getserviceByEmployee = async (req, res) => {
   try {
     await logModel.create({
       madeBy: req.loggedUser.usuario,
-      action: "GET SERVICE",
-      action_detail: `User ${req.loggedUser.usuario} got service`,
+      action: "GET SERVICES BY EMPLOYEE",
+      action_detail: `User ${req.loggedUser.usuario} got all services created by them`,
       status: "SUCCESSFUL",
     });
   } catch (error) {
@@ -61,7 +61,7 @@ const getService = async (req, res) => {
   await logModel.create({
     madeBy: req.loggedUser.usuario,
     action: "GET SERVICE",
-    action_detail: `user ${req.loggedUser.usuario} got service`,
+    action_detail: `user ${req.loggedUser.usuario} got service for vehicle ${service.placa}`,
     status: "SUCCESSFUL",
   });
   res.status(200).json(service);
@@ -79,12 +79,13 @@ const createService = async (req, res) => {
       tipoServicio,
       precio,
       encargado,
-      carInfo
+      carInfo,
+      req.loggedUser.usuario
     );
     await logModel.create({
       madeBy: req.loggedUser.usuario,
       action: "CREATE SERVICE",
-      action_detail: `User ${req.loggedUser.usuario} successfully created service`,
+      action_detail: `User ${req.loggedUser.usuario} successfully created service ${servicio.placa}`,
       status: "SUCCESSFUL",
     });
     res.status(200).json(servicio);
@@ -116,7 +117,7 @@ const patchService = async (req, res) => {
     await logModel.create({
       madeBy: req.loggedUser.usuario,
       action: "UPDATE SERVICE",
-      action_detail: `User ${req.loggedUser.usuario} updated service for vehicle "${placa}"`,
+      action_detail: `User ${req.loggedUser.usuario} updated service ${servicioCambiado._id} for vehicle "${placa}"`,
       status: "SUCCESSFUL",
     });
     res.status(200).json(servicioCambiado);
@@ -145,7 +146,7 @@ const deleteService = async (req, res) => {
     await logModel.create({
       madeBy: req.loggedUser.usuario,
       action: "DELETE SERVICE",
-      action_detail: `Servicio ${id} eliminado de manera exitosa`,
+      action_detail: `Service ${id} for vehicle ${deleteService.placa} successfuly deleted`,
       status: "SUCCESSFUL",
     });
     res.status(200).json(deletedService);
@@ -187,7 +188,7 @@ const completeService = async (req, res) => {
     await logModel.create({
       madeBy: req.loggedUser.usuario,
       action: "COMPLETE SERVICE",
-      action_detail: `Servicio ${id} successfuly completed`,
+      action_detail: `Service ${id} for vehicle ${completedService.placa} successfuly completed`,
       status: "SUCCESSFUL",
     });
     const updated = await servicioModel.findOne({ _id: id });
@@ -197,7 +198,7 @@ const completeService = async (req, res) => {
     await logModel.create({
       madeBy: req.loggedUser.usuario,
       action: "COMPLETE SERVICE",
-      action_detail: `Servicio ${id} FAILED to be completed`,
+      action_detail: `Servicie ${id} FAILED to be completed`,
       status: "FAILED",
     });
     res.status(400).json({ error: error.message });

@@ -99,9 +99,8 @@ const createService = async (req, res) => {
 
 const patchService = async (req, res) => {
   const { id } = req.params;
-  const { cliente, placa, tipoAuto, tipoServicio, precio, encargado, carInfo } =
-    req.body;
-
+  const { cliente, placa, tipoAuto, tipoServicio, precio, encargado, carInfo } = req.body;
+    
   try {
     const servicioCambiado = await servicioModel.updateService(
       id,

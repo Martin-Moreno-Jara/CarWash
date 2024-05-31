@@ -74,7 +74,8 @@ servicioSchema.statics.insertService = async function (
   tipoServicio,
   precio,
   encargado,
-  carInfo
+  carInfo,
+  loggedUser
 ) {
   if (
     !cliente ||
@@ -86,9 +87,9 @@ servicioSchema.statics.insertService = async function (
   ) {
     await logModel.create({
       //TODO: cambiar madeby
-      madeBy: "Yet no authentication",
+      madeBy: loggedUser,
       action: "CREATE SERVICE",
-      action_detail: `user USUARIO tried to create service, but didn't fill mandatory fields`,
+      action_detail: `user ${loggedUser} tried to create service, but didn't fill mandatory fields`,
       status: "FAILED",
     });
     throw Error("Diligencie los campos obligatorios");
@@ -98,9 +99,9 @@ servicioSchema.statics.insertService = async function (
     if (service.estado === "En proceso") {
       logModel.create({
         //TODO: cambiar madeby
-        madeBy: "Yet no authentication",
+        madeBy: loggedUser,
         action: "CREATE SERVICE",
-        action_detail: `user USUARIO tried to create service, but there's alreay an opened service with this car`,
+        action_detail: `user ${loggedUser} tried to create service, but there's alreay an opened service with this car`,
         status: "FAILED",
       });
       throw Error("Este carro ya tiene un servicio abierto.");
@@ -143,20 +144,33 @@ servicioSchema.statics.updateService = async function (
   const existsSERVICE = await this.findOne({ placa });
   const newId = new mongoose.Types.ObjectId(id);
 
+  console.log(
+    "--------------------------------------------------------------------"
+  );
+  console.log(newId);
+  console.log(
+    "--------------------------------------------------------------------"
+  );
+
+  const previousServices = await this.find({ placa });
+  previousServices.forEach((service) => {});
+
   if (existsSERVICE && !existsSERVICE._id.equals(newId)) {
-    await logModel.create({
-      //TODO: cambiar madeby
-      madeBy: loggedUser,
-      action: "UPDATE SERVICE",
-      action_detail: `Tried to update service, but new vehicle has a service already in process`,
-      status: "FAILED",
-    });
+    if (existsSERVICE.estado === "En proceso") {
+      await logModel.create({
+        //TODO: cambiar madeby
+        madeBy: loggedUser,
+        action: "UPDATE SERVICE",
+        action_detail: `Tried to update service, but new vehicle has a service already in process`,
+        status: "FAILED",
+      });
       //TODO: cambiar el throw
-    throw Error(`El vehículo "${placa}" ya tiene un servicio abierto`);
+      throw Error(`El vehículo "${placa}" ya tiene un servicio abierto`);
+    }
   }
 
   console.log(encargado);
-  
+
   const service = await this.findOneAndUpdate(
     { _id: id },
     {
@@ -167,7 +181,7 @@ servicioSchema.statics.updateService = async function (
       tipoServicio,
       precio,
       encargado,
-      carInfo
+      carInfo,
     }
   );
   console.log(service);

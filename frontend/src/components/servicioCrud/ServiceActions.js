@@ -105,16 +105,16 @@ const ServiceActions = ({
           <div className="modal-content">
             <div className="content-container">
               <h2>Confirmar Eliminación</h2>
-              <p>¿Estás seguro de que quieres hacer esto?</p>
-              <button className="accept-button" onClick={handleConfirm}>
-                Aceptar
-              </button>
+              <p>¿Estás seguro de que quieres eliminar el servicio?</p>
               <button
                 className="reject-button"
                 onClick={() => {
                   setIsOpen(false);
                 }}>
                 Cancelar
+              </button>
+              <button className="accept-button" onClick={handleConfirm}>
+                Aceptar
               </button>
             </div>
           </div>

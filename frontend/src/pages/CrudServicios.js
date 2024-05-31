@@ -19,14 +19,12 @@ const CrudServicios = () => {
   const [displayMore, setDisplayMore] = useState(false);
   const [moreService, setMoreService] = useState(null);
 
-
   const openEditForm = (service) => {
     if (service.estado !== "Terminado") {
       setEditService(service);
       setDisplayEdit(true);
     }
   };
-  
 
   const closeEditForm = () => {
     setDisplayEdit(false);
@@ -43,7 +41,7 @@ const CrudServicios = () => {
 
   return (
     <div className="crudServicios-main">
-      <div className="empleado-options">
+      <div className="service-options">
         <div className="description">
           <h2>Modulo de gestión de servicios</h2>
           <p>
@@ -57,8 +55,7 @@ const CrudServicios = () => {
             className="empleado-manage-btn"
             onClick={() => {
               setDisplayCreate(!displayCreate);
-            }}
-          >
+            }}>
             Crear servicio
           </div>
         </div>
@@ -90,8 +87,16 @@ const CrudServicios = () => {
             />
           </div>
         )}
-        <div className={displayCreate || displayEdit || displayMore ? "actual-list-none" : "actual-list"}>
-          <ServiceList openEditForm={openEditForm} openMoreForm={openMoreForm}/>
+        <div
+          className={
+            displayCreate || displayEdit || displayMore
+              ? "actual-list-none"
+              : "actual-list"
+          }>
+          <ServiceList
+            openEditForm={openEditForm}
+            openMoreForm={openMoreForm}
+          />
         </div>
       </div>
     </div>

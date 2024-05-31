@@ -1,3 +1,11 @@
+.service-options {
+  color: var(--formal-grey);
+  background: var(--blackish-blue);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px;
+}
 .crudServicios-main {
   display: grid;
   grid-template-areas: "sidebar lista";
@@ -6,6 +14,56 @@
 
   height: 85vh;
 }
-
-
-
+@media (max-width: 1248px) {
+  .crudServicios-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .service-options {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    padding: 0;
+  }
+  .description {
+    margin: 0px 25px;
+  }
+  .options-btns {
+    margin-right: 15px;
+  }
+  .div-list {
+    width: 100%;
+  }
+  .div-background {
+    height: 71%;
+    align-items: flex-start;
+  }
+}
+@media (max-width: 580px) {
+  .service-options {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    padding: 0;
+  }
+  .empleado-options h2,
+  p {
+    font-size: 0.7em;
+  }
+  .empleado-options h2 {
+    font-size: 0.8em;
+  }
+  .empleado-manage-btn {
+    font-size: smaller;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 5px;
+  }
+  .div-background {
+    height: 68%;
+  }
+}

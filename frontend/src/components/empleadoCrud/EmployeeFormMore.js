@@ -62,10 +62,12 @@ const EmployeeFormMore = () => {
       if (!response.ok) {
         setLoadingInfo(false);
       }
-      console.log(json.usuario);
 
-      setNombre(json.nombre);
-      setApellido(json.apellido);
+      const nombreCapitalizado = json.nombre.charAt(0).toUpperCase() + json.nombre.slice(1);
+      const apellidoCapitalizado = json.apellido.charAt(0).toUpperCase() + json.apellido.slice(1);
+
+      setNombre(nombreCapitalizado);
+      setApellido(apellidoCapitalizado);
       setTelefono(json.telefono);
       setCedula(json.cedula);
       setdireccion(json.direccion);

@@ -1,4 +1,7 @@
-module.exports = (body) => {
+module.exports = (servicios, empleados) => {
+  const { numServicios, recaudo, servicePerCar, ranking } =
+    servicios | undefined;
+  const { serviceEmleado, recaudado, calificacion } = empleados | undefined;
   return `
   <!DOCTYPE html>
 <html lang="en">
@@ -62,114 +65,123 @@ module.exports = (body) => {
       </div>
     </section>
     <hr />
-    <section id="services-section">
-      <h3 class="subtitle">Reporte de servicios</h3>
-      <div class="service-info">
-        <ul>
-          <li>Recaudo:###</li>
-          <li>Total servicios:###</li>
-        </ul>
-        <table>
-          <thead>
-            <th>Servicios terminados</th>
-            <th>Servicios abiertos</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>##</td>
-              <td>##</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="car-and-services">
-        <table>
-          <thead>
-            <th></th>
-            <th>Servicio 1</th>
-            <th>Servicio 2</th>
-            <th>Servicio 3</th>
-            <th>Servicio 4</th>
-            <th>Servicio 5</th>
-            <th>Total</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Carro</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-            </tr>
-            <tr>
-              <td>Camioneta</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-            </tr>
-            <tr>
-              <td>Total</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="ranking-div">
-        <h4>Ranking de servicios</h4>
-        <ol>
-          <li>service 1</li>
-          <li>service 2</li>
-          <li>service 3</li>
-          <li>service 4</li>
-          <li>service 5</li>
-        </ol>
-      </div>
-    </section>
-    <hr />
-    <section id="reports-section">
-      <h3 class="subtitle">Reporte de empleados</h3>
-      <p>Número de empleados: ##</p>
-      <div class="employee-table">
-        <table>
-          <thead>
-            <th></th>
-            <th>n. servicios</th>
-            <th>Dinero recaudado</th>
-            <th>Calificacion</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Empleado 1</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-            </tr>
-            <tr>
-              <td>Empleado 2</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-            </tr>
-            <tr>
-              <td>Empleado 3</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-              <td>##(%)</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+    ${
+      servicios
+        ? `<section id="services-section">
+    <h3 class="subtitle">Reporte de servicios</h3>
+    <div class="service-info">
+      <ul>
+        <li>Recaudo:###</li>
+        <li>Total servicios:###</li>
+      </ul>
+      <table>
+        <thead>
+          <th>Servicios terminados</th>
+          <th>Servicios abiertos</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>##</td>
+            <td>##</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="car-and-services">
+      <table>
+        <thead>
+          <th></th>
+          <th>Servicio 1</th>
+          <th>Servicio 2</th>
+          <th>Servicio 3</th>
+          <th>Servicio 4</th>
+          <th>Servicio 5</th>
+          <th>Total</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Carro</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+          </tr>
+          <tr>
+            <td>Camioneta</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+          </tr>
+          <tr>
+            <td>Total</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="ranking-div">
+      <h4>Ranking de servicios</h4>
+      <ol>
+        <li>service 1</li>
+        <li>service 2</li>
+        <li>service 3</li>
+        <li>service 4</li>
+        <li>service 5</li>
+      </ol>
+    </div>
+  </section>
+  <hr />`
+        : ""
+    }
+    ${
+      empleados
+        ? `<section id="reports-section">
+    <h3 class="subtitle">Reporte de empleados</h3>
+    <p>Número de empleados: ##</p>
+    <div class="employee-table">
+      <table>
+        <thead>
+          <th></th>
+          <th>n. servicios</th>
+          <th>Dinero recaudado</th>
+          <th>Calificacion</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Empleado 1</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+          </tr>
+          <tr>
+            <td>Empleado 2</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+          </tr>
+          <tr>
+            <td>Empleado 3</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+            <td>##(%)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>`
+        : ""
+    }
+    
   </body>
 </html>
   

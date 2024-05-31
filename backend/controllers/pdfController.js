@@ -3,9 +3,9 @@ const path = require("path");
 const pdfTemplate = require("../documents/template");
 
 const createPDF = (req, res) => {
-  console.log("it enters");
+  const { servicios, empleados } = req.body;
   pdf
-    .create(pdfTemplate(req.body), {})
+    .create(pdfTemplate(servicios, empleados), {})
     .toFile(`controllers/report.pdf`, (err) => {
       if (err) {
         console.log(err.message);

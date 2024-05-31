@@ -1,0 +1,39 @@
+.review-div {
+  position: fixed;
+  z-index: 61;
+  background-color: var(--cream-white);
+  width: 30rem;
+  border-radius: 0.25rem;
+  padding: 0.5rem 0.75rem;
+}
+.close-span {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+.review-options {
+  margin: 2.5rem 0rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.rev-option {
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+  height: fit-content;
+  align-items: center;
+  border: 1px solid var(--background);
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.rev-option p {
+  text-align: center;
+}
+.rev-option:hover {
+  border: solid 1px var(--tuned-down-blue);
+}

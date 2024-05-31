@@ -2,6 +2,7 @@
 //REACT HOOKS/IMPORTS
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { SnackbarProvider } from "notistack";
 //CONTEXT PROVIDER
 import { AuthContextProvider } from "./context/AuthContext";
 import { EmployeeContextProvider } from "./context/empleadoContextos/EmployeeContext";
@@ -22,7 +23,9 @@ root.render(
         <ServiceContextProvider>
           <SelectContextProvider>
             <React.StrictMode>
-              <App />
+              <SnackbarProvider>
+                <App />
+              </SnackbarProvider>
             </React.StrictMode>
           </SelectContextProvider>
         </ServiceContextProvider>

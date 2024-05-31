@@ -32,6 +32,9 @@
 .delete {
   margin-right: 0;
 }
+.complete {
+  margin-left: 15px;
+}
 .edit:hover {
   background-color: #b3ad44;
   color: #fff;
@@ -43,6 +46,10 @@
 }
 .delete:hover {
   background-color: rgb(155, 58, 58);
+  color: #fff;
+}
+.complete:hover {
+  background-color: var(--estado-terminado);
   color: #fff;
 }
 @media (max-width: 1000px) {

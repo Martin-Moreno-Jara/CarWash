@@ -21,6 +21,7 @@
 .actual-list {
   width: 85%;
   margin-bottom: 50px;
+  position: relative;
 }
 .actual-list-none {
   display: none;

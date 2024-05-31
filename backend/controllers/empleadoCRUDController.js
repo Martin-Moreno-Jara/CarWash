@@ -34,6 +34,17 @@ const getEmployee = async (req, res) => {
   if (!employee) {
     return res.status(400).json({ error: "Error buscando al empleado" });
   }
+
+  try {
+    await logModel.create({
+      madeBy: req.loggedUser.usuario,
+      action: "GET EMPLOYEE",
+      action_detail: `Admin ${req.loggedUser.usuario} got employee`,
+      status: "SUCCESSFUL",
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
   res.status(200).json(employee);
 };
 

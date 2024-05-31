@@ -2,6 +2,8 @@
 //REACT HOOKS/IMPORTS
 import { useState } from "react";
 import MoonLoader from "react-spinners/MoonLoader";
+import { useSnackbar } from "notistack";
+
 //CUSTOM HOOKS
 import { useSignup } from "../../hooks/usuarioHooks/useSignup";
 import { useEmployeeCrudContext } from "../../hooks/empleadoHooks/useEmployeeCrudContext";

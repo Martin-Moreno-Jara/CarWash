@@ -1,0 +1,4 @@
+.confirmation-window {
+  position: fixed;
+  background: var(--cream-white);
+}

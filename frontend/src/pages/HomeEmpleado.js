@@ -11,10 +11,9 @@ const HomeEmpleado = () => {
       <div className="homeAdmin-info"></div>
       <div className="homeAdmin-options">
         <div className="options-text">
-          <h2>Bienvenido administrador</h2>
+          <h2>Bienvenido</h2>
           <p>
-            En esta pantalla podrá ver, crear editar, y en general hacer manejo
-            de los empleados del carwash. Además del control del negocio.
+            En esta pantalla podrá ver, crear y editar tus servicios. En general podras manejar todos tus servicios.
           </p>
         </div>
         <div className="options-btns">

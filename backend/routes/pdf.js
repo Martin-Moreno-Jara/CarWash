@@ -5,4 +5,4 @@ const { createPDF, fetchPDF } = require("../controllers/pdfController");
 router.post("/createPDF", createPDF);
 router.get("/fetchPDF", fetchPDF);
 
-module.exports = { router };
+module.exports = router;

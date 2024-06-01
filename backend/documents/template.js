@@ -1,4 +1,5 @@
-module.exports = (servicios, empleados) => {
+module.exports = (initDate, endDate, servicios, empleados) => {
+  const fechaHoy = new Date();
   const { numServicios, recaudo, servicePerCar, ranking } =
     servicios | undefined;
   const { serviceEmleado, recaudado, calificacion } = empleados | undefined;
@@ -58,7 +59,13 @@ module.exports = (servicios, empleados) => {
         <div class="header-text">
           <h1 class="main-title">REPORTE DEL NEGOCIO</h1>
           <h3 class="subtitle">CARWASH</h3>
-          <p class="normal-text">Desde 0/00/00 a 0/00/00</p>
+          <p class="normal-text">Generado el ${fechaHoy.getDate()}/${
+    fechaHoy.getMonth() + 1
+  }/${fechaHoy.getFullYear()}</p 2024-2-5>
+          <p class="normal-text">Reportando desde ${initDate.replaceAll(
+            "-",
+            "/"
+          )} hasta ${endDate.replaceAll("-", "/")}</p>
         </div>
 
         <img class="logo" src="https://picsum.photos/150/150" />
@@ -71,7 +78,8 @@ module.exports = (servicios, empleados) => {
     <h3 class="subtitle">Reporte de servicios</h3>
     <div class="service-info">
       <ul>
-        <li>Recaudo:###</li>
+      ${recaudo ? `<li>Recaudo: ${recaudo}</li>` : "No recaudo?"}
+        
         <li>Total servicios:###</li>
       </ul>
       <table>

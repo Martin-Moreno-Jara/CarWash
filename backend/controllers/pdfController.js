@@ -4,31 +4,44 @@ const pdfTemplate = require("../documents/template");
 const empleadoModel = require("../models/userModel");
 const servicioModel = require("../models/servicioModel");
 
-const searchServices = async (initDate, endDate) => {
+const searchServices = async (initDate, endDate, servicios) => {
+  let servicesReturn = {};
   const InitISO = new Date(initDate).toISOString();
   const endISO = new Date(endDate).toISOString();
-  try {
-    const search = await servicioModel.find({
-      createdAt: {
-        $gte: InitISO,
-        $lt: endISO,
-      },
-    });
-    console.log(search);
+  // try {
+  const search = await servicioModel.find({
+    createdAt: {
+      $gte: InitISO,
+      $lt: endISO,
+    },
+  });
+
+  if (servicios.recaudo) {
     const pricesa = search.map((priceInstance) => priceInstance.precio);
     const prices = pricesa.reduce((acc, price) => acc + price, 0);
     console.log(prices);
-    return { recaudo: prices };
-  } catch (error) {
-    console.log(error);
+    servicesReturn.recaudo = prices;
   }
+  if (servicios.numServicios) {
+    console.log("numservicios");
+    const numS = search.length;
+    servicesReturn.numServiciosTotal = numS;
+    const servicesAcabados = search.filter((ser) => ser.estado === "Terminado");
+    servicesReturn.numServiciosAcabados = servicesAcabados.length;
+    const servicesStill = search.filter((ser) => ser.estado === "En proceso");
+    servicesReturn.numServiciosStill = servicesStill.length;
+  }
+  return servicesReturn;
+  // } catch (error) {
+  //   console.log(error);
+  // }
 };
 
 const createPDF = async (req, res) => {
   const { initDate, endDate, servicios, empleados } = req.body;
-  const servicioss = searchServices(initDate, endDate) | undefined;
+  let serviceData = await searchServices(initDate, endDate, servicios);
   pdf
-    .create(pdfTemplate(initDate, endDate, servicios, empleados), {})
+    .create(pdfTemplate(initDate, endDate, serviceData, empleados), {})
     .toFile(`controllers/report.pdf`, (err) => {
       if (err) {
         console.log(err.message);

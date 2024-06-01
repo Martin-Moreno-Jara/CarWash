@@ -1,7 +1,15 @@
-module.exports = (initDate, endDate, servicios, empleados) => {
+module.exports = (initDate, endDate, serviceData, empleados) => {
   const fechaHoy = new Date();
-  const { numServicios, recaudo, servicePerCar, ranking } =
-    servicios | undefined;
+  console.log({ serviceData });
+  const {
+    numServiciosTotal,
+    numServiciosAcabados,
+    numServiciosStill,
+    recaudo,
+    servicePerCar,
+    ranking,
+  } = serviceData;
+  console.log(numServiciosTotal, numServiciosAcabados, numServiciosStill);
   const { serviceEmleado, recaudado, calificacion } = empleados | undefined;
   return `
   <!DOCTYPE html>
@@ -73,27 +81,35 @@ module.exports = (initDate, endDate, servicios, empleados) => {
     </section>
     <hr />
     ${
-      servicios
+      serviceData
         ? `<section id="services-section">
     <h3 class="subtitle">Reporte de servicios</h3>
     <div class="service-info">
       <ul>
       ${recaudo ? `<li>Recaudo: ${recaudo}</li>` : "No recaudo?"}
         
-        <li>Total servicios:###</li>
+        ${
+          numServiciosTotal
+            ? `<li>Total servicios:${numServiciosTotal}</li>`
+            : ""
+        }
       </ul>
-      <table>
-        <thead>
-          <th>Servicios terminados</th>
-          <th>Servicios abiertos</th>
-        </thead>
-        <tbody>
-          <tr>
-            <td>##</td>
-            <td>##</td>
-          </tr>
-        </tbody>
-      </table>
+      ${
+        numServiciosAcabados && numServiciosStill
+          ? `<table>
+      <thead>
+        <th>Servicios terminados</th>
+        <th>Servicios abiertos</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>${numServiciosAcabados}</td>
+          <td>${numServiciosStill}</td>
+        </tr>
+      </tbody>
+    </table>`
+          : ""
+      }
     </div>
     <div class="car-and-services">
       <table>

@@ -2,13 +2,14 @@ module.exports = (initDate, endDate, serviceData, empleados) => {
   const fechaHoy = new Date();
   console.log({ serviceData });
   const {
-    numServiciosTotal,
-    numServiciosAcabados,
-    numServiciosStill,
-    recaudo,
-    servicePerCar,
-    ranking,
-  } = serviceData;
+    numServiciosTotal = undefined,
+    numServiciosAcabados = undefined,
+    numServiciosStill = undefined,
+    recaudo = undefined,
+    servicePerCar = undefined,
+    ranking = undefined,
+  } = serviceData || {};
+
   console.log(numServiciosTotal, numServiciosAcabados, numServiciosStill);
   const { serviceEmleado, recaudado, calificacion } = empleados | undefined;
   return `

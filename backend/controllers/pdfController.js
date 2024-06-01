@@ -39,7 +39,12 @@ const searchServices = async (initDate, endDate, servicios) => {
 
 const createPDF = async (req, res) => {
   const { initDate, endDate, servicios, empleados } = req.body;
-  let serviceData = await searchServices(initDate, endDate, servicios);
+  let serviceData;
+  let employeeData;
+  if (servicios) {
+    serviceData = await searchServices(initDate, endDate, servicios);
+  }
+
   pdf
     .create(pdfTemplate(initDate, endDate, serviceData, empleados), {})
     .toFile(`controllers/report.pdf`, (err) => {

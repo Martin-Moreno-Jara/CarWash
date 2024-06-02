@@ -1,23 +1,20 @@
-//REACT HOOKS/IMPORTS
+// REACT HOOKS/IMPORTS
 import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import MoonLoader from "react-spinners/MoonLoader";
-//CUSTOM HOOKS
+// CUSTOM HOOKS
 import { useAuthContext } from "../../hooks/useAuthContext";
-//COMPONENTS
-//STYLESHEET
-import "../../stylesheets/ServiceEditForm.css";
-//ENV VARIABLES
+// STYLESHEET
+import "../../stylesheets/ServiceInfo.css";  // Asegúrate de que el archivo de estilos esté enlazado correctamente
+// ENV VARIABLES
 const apiURL = process.env.REACT_APP_DEVURL;
-//**************************************************************
 
 const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
-  
-  //variable global del usuario y su dispatch (viene desde el contexto de autenticacion)
-  const { usuario } = useAuthContext();
-  
 
-  //snackbar de notistack para mostrar mensaje de confirmacion
+  // Variable global del usuario y su dispatch (viene desde el contexto de autenticación)
+  const { usuario } = useAuthContext();
+
+  // Snackbar de notistack para mostrar mensaje de confirmación
   const { enqueueSnackbar } = useSnackbar();
 
   const additionalUser = {
@@ -28,11 +25,11 @@ const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
     _id: "660b75a326e70fee3afe0740"
   };
 
-  //Estados para mostrar condicionalmente contenido
+  // Estados para mostrar condicionalmente contenido
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
-  //opciones de autos para dropdown
+  // Opciones de autos para dropdown
   const autoOptions = [
     { nombre: "Carro", key: 1 },
     { nombre: "Camioneta", key: 2 },
@@ -40,7 +37,7 @@ const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
 
   const [tarifas, setTarifas] = useState([]);
 
-  //opciones de servicios para dropdown
+  // Opciones de servicios para dropdown
   const serviciosOptions = tarifas.map((tarifa) => ({
     nombre: tarifa.servicio,
     carro: tarifa.precio[0].carro,
@@ -48,7 +45,7 @@ const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
     key: tarifa._id,
   }));
 
-  //traer tipos de servicios para dropdown
+  // Traer tipos de servicios para dropdown
   useEffect(() => {
     const fetchTarifas = async () => {
       const response = await fetch(`${apiURL}/api/tarifas`);
@@ -62,7 +59,6 @@ const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
     };
     fetchTarifas();
   }, []);
-
 
   const [employeeList, setEmployeeList] = useState([]);
 
@@ -88,7 +84,7 @@ const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
     fetchEmployees();
   }, [usuario.token]);
 
-  //estados para manejar los inputs
+  // Estados para manejar los inputs
   const [cliente, setCliente] = useState(moreService ? moreService.cliente : "");
   const [placa, setPlaca] = useState(moreService ? moreService.placa : "");
   const [tipoAuto, setTipoAuto] = useState(moreService ? moreService.tipoAuto : "");
@@ -100,11 +96,11 @@ const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
     encargadoNombre: moreService ? moreService.encargado[0].encargadoNombre : "",
     encargadoUsuario: moreService ? moreService.encargado[0].encargadoUsuario : ""
   });
-  
+
   const [detalles, setDetalles] = useState(moreService ? moreService.carInfo : "");
   const employeesWithAdditionalUser = [additionalUser, ...employeeList];
 
-  //funciones para guardar los cambios en los estados
+  // Funciones para guardar los cambios en los estados
   const handleCliente = (e) => {
     setCliente(e.target.value);
   };
@@ -120,28 +116,27 @@ const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
   const handleDetalles = (e) => {
     setDetalles(e.target.value);
   };
+
   // Manejar cambio en el select de encargado
-const handleEncargadoChange = (e) => {
-  const selectedUsuario = e.target.value.trim();
-  
-  const selectedEmployee = employeesWithAdditionalUser.find(
-    (employee) => employee.usuario === selectedUsuario
-  );
+  const handleEncargadoChange = (e) => {
+    const selectedUsuario = e.target.value.trim();
 
-  if (selectedEmployee) {
-    setEncargadoAct({
-      encargadoId: selectedEmployee._id,
-      encargadoNombre: `${selectedEmployee.nombre} ${selectedEmployee.apellido}`,
-      encargadoUsuario: selectedUsuario
-    });
-  }
+    const selectedEmployee = employeesWithAdditionalUser.find(
+      (employee) => employee.usuario === selectedUsuario
+    );
 
-  setEncargado(selectedUsuario);
-};
+    if (selectedEmployee) {
+      setEncargadoAct({
+        encargadoId: selectedEmployee._id,
+        encargadoNombre: `${selectedEmployee.nombre} ${selectedEmployee.apellido}`,
+        encargadoUsuario: selectedUsuario
+      });
+    }
 
-  
+    setEncargado(selectedUsuario);
+  };
 
-  //cambiar el precio
+  // Cambiar el precio
   useEffect(() => {
     serviciosOptions.forEach((serviceOption) => {
       if (serviceOption.nombre === servicio) {
@@ -155,24 +150,21 @@ const handleEncargadoChange = (e) => {
     });
   }, [tipoAuto, servicio, serviciosOptions]);
 
-  
-
-  //funcion para controlar el envio del formulario
+  // Función para controlar el envío del formulario
   const handleSubmit = async (e) => {
     setIsLoading(true);
     setError(null);
     e.preventDefault();
-    
-    // Accede correctamente a las propiedades del estado encargadoAct
+
     const encargado = {
       encargadoId: encargadoAct.encargadoId,
       encargadoNombre: encargadoAct.encargadoNombre,
       encargadoUsuario: encargadoAct.encargadoUsuario,
     };
-  
+
     try {
       const response = await fetch(`${apiURL}/api/servicioCRUD/${moreService._id}`, {
-        method: "GET",
+        method: "PATCH", // Cambia el método a PATCH para actualizar el servicio
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${usuario.token}`,
@@ -187,13 +179,13 @@ const handleEncargadoChange = (e) => {
           carInfo: detalles
         }),
       });
-  
+
       const json = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(json.error);
       }
-  
+
       setIsLoading(false);
       enqueueSnackbar("Servicio editado correctamente", { variant: "success" });
       moreClose(); // Cerrar el formulario después de la edición exitosa
@@ -203,8 +195,41 @@ const handleEncargadoChange = (e) => {
       enqueueSnackbar("Error al editar servicio", { variant: "error" });
     }
   };
-  
-  
+
+  // Estado y función para manejar el despliegue del historial de actualizaciones
+  const [showHistory, setShowHistory] = useState(false);
+
+  // Datos simulados para el historial de actualizaciones
+  const updateHistory = [
+    {
+      date: "2023-01-01T12:00:00Z",
+      cliente: "Carlos Perez",
+      placa: "ABC1234",
+      tipoAuto: "Carro",
+      tipoServicio: "Cambio de aceite",
+      encargado: "raulJm",
+      detalles: "Motor 1.6, 4 puertas",
+      precio: 30000,
+      usuario: "raulJm"
+    },
+    {
+      date: "2023-02-15T15:30:00Z",
+      cliente: "Laura Gonzalez",
+      placa: "XYZ5678",
+      tipoAuto: "Camioneta",
+      tipoServicio: "Lavado completo",
+      encargado: "anaM",
+      detalles: "Camioneta 4x4, color rojo",
+      precio: 45000,
+      usuario: "Kiki"
+    }
+  ];
+
+  // Formato de fecha
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   return (
     <>
@@ -296,13 +321,45 @@ const handleEncargadoChange = (e) => {
                 </span>
               </div>
             </div>
+            
           </form>
           {isLoading && (
             <div className="loading2">
               <MoonLoader color="#1c143d" loading={isLoading} size={100} />
             </div>
           )}
-
+          <div className="show-history-container">
+            <div
+              className="show-history"
+              onClick={() => {
+                setShowHistory(!showHistory);
+              }}
+            >
+              <span className="history-text">
+                {showHistory ? "Ocultar historial" : "Mostrar historial de cambios"}
+              </span>
+              <span className="material-symbols-outlined">
+                {showHistory ? "keyboard_arrow_up" : "keyboard_arrow_down"}
+              </span>
+            </div>
+          </div>
+          {showHistory && (
+            <div className="history-container">
+              {updateHistory.map((update, index) => (
+                <div key={index} className="history-item">
+                  <p><strong>Fecha:</strong> {formatDate(update.date)}</p>
+                  <p><strong>Cliente:</strong> {update.cliente}</p>
+                  <p><strong>Placa:</strong> {update.placa}</p>
+                  <p><strong>Tipo de Auto:</strong> {update.tipoAuto}</p>
+                  <p><strong>Tipo de Servicio:</strong> {update.tipoServicio}</p>
+                  <p><strong>Encargado:</strong> {update.encargado}</p>
+                  <p><strong>Detalles del Auto:</strong> {update.detalles}</p>
+                  <p><strong>Precio:</strong> {update.precio}</p>
+                  <p><strong>Precio:</strong> {update.usuario}</p>
+                </div>
+              ))}
+            </div>
+          )}
           {error && <div className="error">{error}</div>}
         </div>
       )}

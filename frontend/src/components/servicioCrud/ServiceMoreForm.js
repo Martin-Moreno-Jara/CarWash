@@ -9,7 +9,32 @@ import "../../stylesheets/ServiceInfo.css";  // Asegúrate de que el archivo de 
 // ENV VARIABLES
 const apiURL = process.env.REACT_APP_DEVURL;
 
+
+
+
 const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
+
+  // Definición de la función formatDate
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+
+    const dateOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    };
+
+    const timeOptions = {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    };
+
+    const formattedDate = date.toLocaleDateString('es-ES', dateOptions);
+    const formattedTime = date.toLocaleTimeString('es-ES', timeOptions);
+
+    return `${formattedDate} a las ${formattedTime}`;
+  };
 
   // Variable global del usuario y su dispatch (viene desde el contexto de autenticación)
   const { usuario } = useAuthContext();
@@ -118,6 +143,9 @@ const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
     setDetalles(e.target.value);
   };
 
+  
+  
+
   // Manejar cambio en el select de encargado
   const handleEncargadoChange = (e) => {
     const selectedUsuario = e.target.value.trim();
@@ -199,12 +227,6 @@ const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
 
   // Estado y función para manejar el despliegue del historial de actualizaciones
   const [showHistory, setShowHistory] = useState(false);
-
-  // Formato de fecha
-  const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
 
   return (
     <>
@@ -320,21 +342,22 @@ const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
           </div>
           {showHistory && (
             <div className="history-container">
-              {historial.map((update, index) => (
+              {historial.slice().reverse().map((update, index) => (
                 <div key={index} className="history-item">
-                  <p><strong>Fecha de actualización:</strong> {formatDate(update.fecha)}</p>
+                  <p><strong>Fecha:</strong> {formatDate(update.fecha)}</p>
                   <p><strong>Cliente:</strong> {update.cliente}</p>
                   <p><strong>Placa:</strong> {update.placa}</p>
                   <p><strong>Tipo de Auto:</strong> {update.tipoAuto}</p>
                   <p><strong>Tipo de Servicio:</strong> {update.tipoServicio}</p>
-                  <p><strong>Encargado:</strong> {update.encargado.encargadoNombre}</p>
+                  <p><strong>Encargado:</strong> {update.encargado.encargadoNombre} ({update.encargado.encargadoUsuario})</p>
                   <p><strong>Detalles del Auto:</strong> {update.carInfo}</p>
                   <p><strong>Precio:</strong> {update.precio}</p>
-                  <p><strong>Modificado por:</strong> {update.usuario}</p>
+                  <p><strong>Usuario:</strong> {update.usuario}</p>
                 </div>
               ))}
             </div>
           )}
+
           {error && <div className="error">{error}</div>}
         </div>
       )}

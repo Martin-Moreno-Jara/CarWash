@@ -98,6 +98,7 @@ const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
   });
 
   const [detalles, setDetalles] = useState(moreService ? moreService.carInfo : "");
+  const [historial, setHistorial] = useState(moreService ? moreService.historial : []);
   const employeesWithAdditionalUser = [additionalUser, ...employeeList];
 
   // Funciones para guardar los cambios en los estados
@@ -202,7 +203,7 @@ const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
   // Datos simulados para el historial de actualizaciones
   const updateHistory = [
     {
-      date: "2023-01-01T12:00:00Z",
+      fecha: "2023-01-01T12:00:00Z",
       cliente: "Carlos Perez",
       placa: "ABC1234",
       tipoAuto: "Carro",
@@ -224,6 +225,11 @@ const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
       usuario: "Kiki"
     }
   ];
+
+  console.log("original");
+  console.log(moreService.historial);
+  console.log("guardado")
+  console.log(historial);
 
   // Formato de fecha
   const formatDate = (dateString) => {
@@ -345,21 +351,22 @@ const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
           </div>
           {showHistory && (
             <div className="history-container">
-              {updateHistory.map((update, index) => (
+              {historial.map((update, index) => (
                 <div key={index} className="history-item">
-                  <p><strong>Fecha:</strong> {formatDate(update.date)}</p>
+                  <p><strong>Fecha de actualización:</strong> {formatDate(update.fecha)}</p>
                   <p><strong>Cliente:</strong> {update.cliente}</p>
                   <p><strong>Placa:</strong> {update.placa}</p>
                   <p><strong>Tipo de Auto:</strong> {update.tipoAuto}</p>
                   <p><strong>Tipo de Servicio:</strong> {update.tipoServicio}</p>
-                  <p><strong>Encargado:</strong> {update.encargado}</p>
-                  <p><strong>Detalles del Auto:</strong> {update.detalles}</p>
+                  <p><strong>Encargado:</strong> {update.encargado.encargadoNombre}</p>
+                  <p><strong>Detalles del Auto:</strong> {update.carInfo}</p>
                   <p><strong>Precio:</strong> {update.precio}</p>
-                  <p><strong>Precio:</strong> {update.usuario}</p>
+                  <p><strong>Modificado por:</strong> {update.usuario}</p>
                 </div>
               ))}
             </div>
           )}
+
           {error && <div className="error">{error}</div>}
         </div>
       )}

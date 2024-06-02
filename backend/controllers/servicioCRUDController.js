@@ -72,6 +72,19 @@ const createService = async (req, res) => {
   const { cliente, placa, tipoAuto, tipoServicio, precio, encargado, carInfo } =
     req.body;
   try {
+
+    const historial = {
+      fecha: new Date(),
+      cliente,
+      placa,
+      tipoAuto,
+      tipoServicio,
+      precio,
+      encargado,
+      carInfo,
+      usuario: req.loggedUser.usuario,
+  };
+  
     const servicio = await servicioModel.insertService(
       cliente,
       placa,
@@ -80,7 +93,8 @@ const createService = async (req, res) => {
       precio,
       encargado,
       carInfo,
-      req.loggedUser.usuario
+      req.loggedUser.usuario,
+      historial
     );
     await logModel.create({
       madeBy: req.loggedUser.usuario,
@@ -102,6 +116,18 @@ const patchService = async (req, res) => {
   const { cliente, placa, tipoAuto, tipoServicio, precio, encargado, carInfo } = req.body;
     
   try {
+    const historial = {
+      fecha: new Date(),
+      cliente,
+      placa,
+      tipoAuto,
+      tipoServicio,
+      precio,
+      encargado,
+      carInfo,
+      usuario: req.loggedUser.usuario
+    };
+
     const servicioCambiado = await servicioModel.updateService(
       id,
       cliente,
@@ -111,7 +137,8 @@ const patchService = async (req, res) => {
       precio,
       encargado,
       carInfo,
-      req.loggedUser.usuario
+      req.loggedUser.usuario,
+      historial
     );
     await logModel.create({
       madeBy: req.loggedUser.usuario,

@@ -62,6 +62,10 @@ const servicioSchema = new Schema(
       type: Number,
       required: false,
     },
+    historial: {
+      type: [],
+      required: false,
+    },
   },
   { timestamps: true }
 );
@@ -75,7 +79,8 @@ servicioSchema.statics.insertService = async function (
   precio,
   encargado,
   carInfo,
-  loggedUser
+  loggedUser,
+  historial
 ) {
   if (
     !cliente ||
@@ -116,6 +121,7 @@ servicioSchema.statics.insertService = async function (
     precio,
     encargado,
     carInfo,
+    historial
   });
   return servicio;
 };
@@ -129,7 +135,8 @@ servicioSchema.statics.updateService = async function (
   precio,
   encargado,
   carInfo,
-  loggedUser
+  loggedUser,
+  historial
 ) {
   if (!cliente || !placa || !tipoAuto || !tipoServicio || !encargado) {
     await logModel.create({
@@ -143,14 +150,6 @@ servicioSchema.statics.updateService = async function (
   }
   const existsSERVICE = await this.findOne({ placa });
   const newId = new mongoose.Types.ObjectId(id);
-
-  console.log(
-    "--------------------------------------------------------------------"
-  );
-  console.log(newId);
-  console.log(
-    "--------------------------------------------------------------------"
-  );
 
   const previousServices = await this.find({ placa });
   previousServices.forEach((service) => {});
@@ -171,6 +170,8 @@ servicioSchema.statics.updateService = async function (
 
   console.log(encargado);
 
+  const newEntry = historial;
+
   const service = await this.findOneAndUpdate(
     { _id: id },
     {
@@ -182,8 +183,10 @@ servicioSchema.statics.updateService = async function (
       precio,
       encargado,
       carInfo,
+      $push: { historial: newEntry },
     }
   );
+  
   console.log(service);
   const updated = await this.findOne({ _id: id });
   return updated;

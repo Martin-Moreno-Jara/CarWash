@@ -200,44 +200,6 @@ const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
   // Estado y función para manejar el despliegue del historial de actualizaciones
   const [showHistory, setShowHistory] = useState(false);
 
-  // Datos simulados para el historial de actualizaciones
-  const updateHistory = [
-    {
-<<<<<<< HEAD
-      fecha: "2023-01-01T12:00:00Z",
-=======
-      date: "2023-01-01T12:00:00Z",
->>>>>>> a13ba1e8004e2776ea888d4b5bdba68e417a66ae
-      cliente: "Carlos Perez",
-      placa: "ABC1234",
-      tipoAuto: "Carro",
-      tipoServicio: "Cambio de aceite",
-      encargado: "raulJm",
-      detalles: "Motor 1.6, 4 puertas",
-      precio: 30000,
-      usuario: "raulJm"
-    },
-    {
-      date: "2023-02-15T15:30:00Z",
-      cliente: "Laura Gonzalez",
-      placa: "XYZ5678",
-      tipoAuto: "Camioneta",
-      tipoServicio: "Lavado completo",
-      encargado: "anaM",
-      detalles: "Camioneta 4x4, color rojo",
-      precio: 45000,
-      usuario: "Kiki"
-    }
-  ];
-
-<<<<<<< HEAD
-  console.log("original");
-  console.log(moreService.historial);
-  console.log("guardado")
-  console.log(historial);
-
-=======
->>>>>>> a13ba1e8004e2776ea888d4b5bdba68e417a66ae
   // Formato de fecha
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
@@ -358,38 +320,21 @@ const ServiceMoreForm = ({ moreOpen, moreClose, moreService }) => {
           </div>
           {showHistory && (
             <div className="history-container">
-<<<<<<< HEAD
               {historial.map((update, index) => (
                 <div key={index} className="history-item">
                   <p><strong>Fecha de actualización:</strong> {formatDate(update.fecha)}</p>
-=======
-              {updateHistory.map((update, index) => (
-                <div key={index} className="history-item">
-                  <p><strong>Fecha:</strong> {formatDate(update.date)}</p>
->>>>>>> a13ba1e8004e2776ea888d4b5bdba68e417a66ae
                   <p><strong>Cliente:</strong> {update.cliente}</p>
                   <p><strong>Placa:</strong> {update.placa}</p>
                   <p><strong>Tipo de Auto:</strong> {update.tipoAuto}</p>
                   <p><strong>Tipo de Servicio:</strong> {update.tipoServicio}</p>
-<<<<<<< HEAD
                   <p><strong>Encargado:</strong> {update.encargado.encargadoNombre}</p>
                   <p><strong>Detalles del Auto:</strong> {update.carInfo}</p>
                   <p><strong>Precio:</strong> {update.precio}</p>
                   <p><strong>Modificado por:</strong> {update.usuario}</p>
-=======
-                  <p><strong>Encargado:</strong> {update.encargado}</p>
-                  <p><strong>Detalles del Auto:</strong> {update.detalles}</p>
-                  <p><strong>Precio:</strong> {update.precio}</p>
-                  <p><strong>Precio:</strong> {update.usuario}</p>
->>>>>>> a13ba1e8004e2776ea888d4b5bdba68e417a66ae
                 </div>
               ))}
             </div>
           )}
-<<<<<<< HEAD
-
-=======
->>>>>>> a13ba1e8004e2776ea888d4b5bdba68e417a66ae
           {error && <div className="error">{error}</div>}
         </div>
       )}

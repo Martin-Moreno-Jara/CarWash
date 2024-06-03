@@ -20,11 +20,6 @@ module.exports = (initDate, endDate, serviceData, empleados) => {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Reporte</title>
     <style>
-      .header-div {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-      }
       .main-title {
         margin: 0rem 0.5rem;
         font-size: 3rem;
@@ -64,7 +59,7 @@ module.exports = (initDate, endDate, serviceData, empleados) => {
   </head>
   <body>
     <section id="header-section">
-      <div class="header-div">
+      <div style="height: 165px">
         <div class="header-text">
           <h1 class="main-title">REPORTE DEL NEGOCIO</h1>
           <h3 class="subtitle">CARWASH</h3>
@@ -76,8 +71,10 @@ module.exports = (initDate, endDate, serviceData, empleados) => {
             "/"
           )} hasta ${endDate.replaceAll("-", "/")}</p>
         </div>
-
-        <img class="logo" src="https://picsum.photos/150/150" />
+        <div style="width: 30%; position: relative; left: 80%; top: -155px">
+          <img class="logo" src="https://picsum.photos/150/150" />
+        </div>
+        
       </div>
     </section>
     <hr />
@@ -85,9 +82,9 @@ module.exports = (initDate, endDate, serviceData, empleados) => {
       serviceData
         ? `<section id="services-section">
     <h3 class="subtitle">Reporte de servicios</h3>
-    <div class="service-info">
-      <ul>
-      ${recaudo ? `<li>Recaudo: ${recaudo}</li>` : "No recaudo?"}
+    <div style="width: 40%">
+      <ul style="display: inline">
+      ${recaudo ? `<li>Recaudo: ${recaudo}</li>` : ""}
         
         ${
           numServiciosTotal
@@ -97,22 +94,26 @@ module.exports = (initDate, endDate, serviceData, empleados) => {
       </ul>
       ${
         numServiciosAcabados && numServiciosStill
-          ? `<table>
-      <thead>
-        <th>Servicios terminados</th>
-        <th>Servicios abiertos</th>
-      </thead>
-      <tbody>
-        <tr>
-          <td>${numServiciosAcabados}</td>
-          <td>${numServiciosStill}</td>
-        </tr>
-      </tbody>
-    </table>`
+          ? `
+          <div style="width: 40%; position: relative; left: 50%; bottom: 60px">
+            <table>
+              <thead>
+                <th>Servicios terminados</th>
+                <th>Servicios abiertos</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>${numServiciosAcabados}</td>
+                  <td>${numServiciosStill}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          `
           : ""
       }
     </div>
-    <div class="car-and-services">
+    <div style="position: relative; left: 20%">
       <table>
         <thead>
           <th></th>
@@ -173,7 +174,7 @@ module.exports = (initDate, endDate, serviceData, empleados) => {
         ? `<section id="reports-section">
     <h3 class="subtitle">Reporte de empleados</h3>
     <p>Número de empleados: ##</p>
-    <div class="employee-table">
+    <div style="position: relative; left: 20%">
       <table>
         <thead>
           <th></th>

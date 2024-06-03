@@ -12,6 +12,7 @@ import HomeAdmin from "./pages/HomeAdmin";
 import HomeEmpleado from "./pages/HomeEmpleado";
 import CrudEmpleados from "./pages/CrudEmpleados";
 import CrudServicios from "./pages/CrudServicios";
+import ChangePassword from "./pages/ChangePassword";
 //STYLESHEET
 //**************************************************************
 
@@ -50,6 +51,10 @@ function App() {
                 )
               }
             ></Route>
+            <Route
+              path="/change-password"
+              element={<ChangePassword />} 
+            />
             <Route
               path="/admin"
               element={

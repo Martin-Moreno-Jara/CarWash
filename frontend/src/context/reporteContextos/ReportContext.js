@@ -6,11 +6,11 @@ export const reportReducer = (state, action) => {
   switch (action.type) {
     case 'GENERATE':
       return { 
-        report: action.payload 
+        showGenerate: action.payload 
       }
     case 'VISUALIZE':
       return { 
-        report: action.payload
+        showVisualize: action.payload
       }
     default:
       return state
@@ -19,7 +19,7 @@ export const reportReducer = (state, action) => {
 
 export const ReportContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reportReducer, { 
-    report: null
+    showGenerate: true
   })
   
   return (

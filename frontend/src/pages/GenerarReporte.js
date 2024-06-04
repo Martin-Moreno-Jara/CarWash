@@ -11,8 +11,12 @@ import "../stylesheets/CrudEmpleados.css";
 //**************************************************************
 
 const GenerarReporte = () => {
-  const [showGenerate, setshowGenerate] = useState(true);
-  const [showVisualize, setshowVisualize] = useState(false);
+  const { showGenerate, dispatch } = useReportContext();
+  useEffect(() => {
+    dispatch({type: 'GENERATE', payload: true});
+ }, []);
+
+ console.log(showGenerate);
 
   return (
     <div className="crudEmpleados-main">
@@ -24,17 +28,18 @@ const GenerarReporte = () => {
           De igual forma, podrá seleccionar los apartados de interés.
           </p>
         </div>
-          <div className="options-btns">
-            <div
-              className="empleado-manage-btn"
-              onClick={() => {
-                setshowGenerate(!showGenerate);
-                setshowVisualize(!showVisualize);
-              }}
-            >
-              {showGenerate ? "Generar Reporte" : "Volver"}
-            </div>
-          </div>
+        {!showGenerate &&(
+         <div className="options-btns">
+         <div
+           className="empleado-manage-btn"
+           onClick={() => {
+             dispatch({type: 'GENERATE', payload: !showGenerate});
+           }}
+         >
+           Volver
+         </div>
+       </div> 
+        )}
       </div>
       {showGenerate && (
           <div className="div-list-dark">
@@ -43,7 +48,7 @@ const GenerarReporte = () => {
             </div>
           </div>
        )}
-       {showVisualize && (
+       {!showGenerate && (
           <div className="div-list-dark">
             <div className="div-background">
               <ReportVisualize/>

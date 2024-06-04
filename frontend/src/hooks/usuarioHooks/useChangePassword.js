@@ -6,11 +6,17 @@ export const useChangePassword = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const validatePassword = (password) => {
-    const passwordRequirements = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRequirements =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRequirements.test(password);
   };
 
-  const changePassword = async (usuario, contrasena, newPassword, confirmNewPassword) => {
+  const changePassword = async (
+    usuario,
+    contrasena,
+    nuevaContrasena,
+    confirmNewPassword
+  ) => {
     setIsLoading(true);
     setError(null);
 
@@ -19,21 +25,20 @@ export const useChangePassword = () => {
       return setError("El administrador no puede cambiar su contraseña");
     }
 
-    if (!validatePassword(newPassword)) {
+    if (!validatePassword(nuevaContrasena)) {
       setIsLoading(false);
       return setError("La nueva contraseña no cumple con los requisitos");
     }
 
-    if (newPassword !== confirmNewPassword) {
+    if (nuevaContrasena !== confirmNewPassword) {
       setIsLoading(false);
       return setError("Las nuevas contraseñas no coinciden");
     }
 
-
     const response = await fetch(`${apiURL}/api/user/change-password`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ usuario, contrasena, newPassword }),
+      body: JSON.stringify({ usuario, contrasena, nuevaContrasena }),
     });
     const json = await response.json();
 

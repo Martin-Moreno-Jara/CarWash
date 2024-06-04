@@ -45,6 +45,24 @@ const logoutUser = async (req, res) => {
   res.status(200).json({ msg: "unlogged" });
 };
 
+// Controlador para actualizar la contraseña
+const updatePassword = async (req, res) => {
+  const { usuario, contrasena, nuevaContrasena } = req.body;
+
+  try {
+    const updatedUser = await userModel.updatePassword(
+      usuario,
+      contrasena,
+      nuevaContrasena
+    );
+    res.status(200).json({
+      message: "Contraseña actualizada correctamente",
+      usuario: updatedUser.usuario,
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 //controlador de creación de usuarios
 
-module.exports = { loginUser, logoutUser };
+module.exports = { loginUser, logoutUser, updatePassword };

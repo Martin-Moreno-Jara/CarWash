@@ -251,5 +251,39 @@ userSchema.statics.updateEmployee = async function (
   const updated = await this.findOne({ _id: id });
   return updated;
 };
+userSchema.statics.updatePassword = async function (
+  usuario,
+  contrasena,
+  nuevaContrasena
+) {
+  if (!usuario || !contrasena || !nuevaContrasena) {
+    throw Error(
+      "Debe proporcionar el usuario y las contraseñas actuales y nuevas"
+    );
+  }
+
+  const user = await this.findOne({ usuario });
+  if (!user) {
+    throw Error("El usuario no existe");
+  }
+
+  const validacionPassword = await bcrypt.compare(contrasena, user.contrasena);
+  if (!validacionPassword) {
+    throw Error("La contraseña actual es incorrecta");
+  }
+
+  if (!validator.isStrongPassword(nuevaContrasena)) {
+    throw Error(
+      "La nueva contraseña es débil. Debe incluir mayúsculas, minúsculas, números y caracteres especiales."
+    );
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(nuevaContrasena, salt);
+
+  await this.updateOne({ usuario }, { contrasena: hashedPassword });
+
+  return "Contraseña actualizada exitosamente";
+};
 
 module.exports = mongoose.model("userModel", userSchema);

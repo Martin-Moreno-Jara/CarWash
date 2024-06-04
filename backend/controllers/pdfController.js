@@ -28,6 +28,10 @@ const searchServices = async (initDate, endDate, servicios) => {
         $lt: endISO,
       },
     });
+    const serviciosNames = await tarfiasModel
+      .find()
+      .select({ _id: 0, servicio: 1 })
+      .sort({ servicio: 1 });
     //SECCION RECAUDO
     if (servicios.recaudo) {
       const pricesa = search.map((priceInstance) => priceInstance.precio);
@@ -48,10 +52,6 @@ const searchServices = async (initDate, endDate, servicios) => {
     }
     //SECCION TABLA DE INFORMACION DE SERVICIO SEGUN CARRO
     if (servicios.servicesPerCar) {
-      const serviciosNames = await tarfiasModel
-        .find()
-        .select({ _id: 0, servicio: 1 })
-        .sort({ servicio: 1 });
       servicesReturn.servicesPerCar = {};
       servicesReturn.servicesPerCar.servicesNames = serviciosNames;
       const servicesCar = search.filter((ser) => ser.tipoAuto === "Carro");
@@ -70,6 +70,30 @@ const searchServices = async (initDate, endDate, servicios) => {
         serviciosNames,
         search
       );
+    }
+    if (servicios.ranking) {
+      console.log("ranking");
+      const promedioArray = [];
+      serviciosNames.forEach((ser) => {
+        const filter = search.filter(
+          (dat) => ser.servicio === dat.tipoServicio
+        );
+        const sumaCalificacion = filter.reduce((acc, nota) => {
+          if (!nota.calificacion) {
+            nota.calificacion = 0;
+          }
+          return acc + nota.calificacion;
+        }, 0);
+        const divisor = filter.length === 0 ? 1 : filter.length;
+        const promedio = parseFloat(sumaCalificacion / divisor);
+        console.log(ser.servicio, sumaCalificacion, promedio);
+        promedioArray.push({
+          servicio: ser.servicio,
+          times: filter.length,
+          promedio,
+        });
+      });
+      console.log(promedioArray);
     }
     return servicesReturn;
   } catch (error) {

@@ -46,7 +46,10 @@ const createPDF = async (req, res) => {
   }
 
   pdf
-    .create(pdfTemplate(initDate, endDate, serviceData, empleados), {})
+    .create(pdfTemplate(initDate, endDate, serviceData, empleados), {
+      type: "pdf",
+      timeout: "100000",
+    })
     .toFile(`controllers/report.pdf`, (err) => {
       if (err) {
         console.log(err.message);

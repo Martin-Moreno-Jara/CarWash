@@ -103,7 +103,7 @@ module.exports = (initDate, endDate, serviceData, empleados) => {
           )} hasta ${endDate.replaceAll("-", "/")}</p>
         </div>
         <div style="width: 30%; position: relative; left: 80%; top: -155px">
-          <img class="logo" src="https://picsum.photos/150/150" />
+          <img class="logo" src="https://i.imgur.com/9OKMWwr.jpg" />
         </div>
         
       </div>

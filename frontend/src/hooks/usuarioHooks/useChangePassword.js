@@ -3,6 +3,7 @@ const apiURL = process.env.REACT_APP_DEVURL;
 
 export const useChangePassword = () => {
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const validatePassword = (password) => {
@@ -48,8 +49,9 @@ export const useChangePassword = () => {
     } else {
       setIsLoading(false);
       setError(null);
+      setSuccess("Contraseña actualizada con éxito");
     }
   };
 
-  return { changePassword, error, isLoading };
+  return { changePassword, error, isLoading, success };
 };

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import MoonLoader from "react-spinners/MoonLoader";
-import { useChangePassword } from "../hooks/usuarioHooks/useChangePassword"; 
+import { useChangePassword } from "../hooks/usuarioHooks/useChangePassword";
 import "../stylesheets/Login.css";
 
 const ChangePassword = () => {
-  const { changePassword, error, isLoading } = useChangePassword();
+  const { changePassword, error, success, isLoading } = useChangePassword();
   const [nombreUsuario, setNombreUsuario] = useState("");
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -15,7 +15,6 @@ const ChangePassword = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [showRequirements, setShowRequirements] = useState(false);
-
 
   const handleNombreUsuario = (e) => {
     setNombreUsuario(e.target.value);
@@ -32,7 +31,12 @@ const ChangePassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await changePassword(nombreUsuario, password, newPassword, confirmNewPassword);
+    await changePassword(
+      nombreUsuario,
+      password,
+      newPassword,
+      confirmNewPassword
+    );
   };
 
   return (
@@ -47,73 +51,83 @@ const ChangePassword = () => {
           <input type="text" onChange={handleNombreUsuario} />
           <label>Contraseña</label>
           <div className="field-div">
-              <input
-                className="password-field"
-                type={showPassword ? "text" : "password"}
-                onChange={handlePassword}
-                value={password}
-                autoComplete="off"
-              />
-              <span
-                className="material-symbols-outlined see"
-                onClick={() => {
-                  setshowPassword(!showPassword);
-                }}
-              >
-                {showPassword ? "visibility" : "visibility_off"}
-              </span>
-            </div>
+            <input
+              className="password-field"
+              type={showPassword ? "text" : "password"}
+              onChange={handlePassword}
+              value={password}
+              autoComplete="off"
+            />
+            <span
+              className="material-symbols-outlined see"
+              onClick={() => {
+                setshowPassword(!showPassword);
+              }}
+            >
+              {showPassword ? "visibility" : "visibility_off"}
+            </span>
+          </div>
           <label>Nueva Contraseña</label>
           <div className="field-div">
-              <input
-                className="password-field"
-                type={showNewPassword ? "text" : "password"}
-                onChange={handleNewPassword}
-                value={newPassword}
-                autoComplete="off"
-              />
+            <input
+              className="password-field"
+              type={showNewPassword ? "text" : "password"}
+              onChange={handleNewPassword}
+              value={newPassword}
+              autoComplete="off"
+            />
+            <span
+              className="material-symbols-outlined see"
+              onClick={() => {
+                setshowNewPassword(!showNewPassword);
+              }}
+            >
+              {showNewPassword ? "visibility" : "visibility_off"}
+            </span>
+          </div>
+          <div className="password-requirements">
+            <p
+              onClick={() => setShowRequirements(!showRequirements)}
+              style={{ cursor: "pointer" }}
+            >
+              La contraseña debe cumplir
               <span
-                className="material-symbols-outlined see"
-                onClick={() => {
-                  setshowNewPassword(!showNewPassword);
+                className="material-symbols-outlined"
+                style={{
+                  marginLeft: "1px",
+                  verticalAlign: "middle",
+                  fontSize: "16px",
                 }}
               >
-                {showNewPassword ? "visibility" : "visibility_off"}
-              </span>
-            </div>
-            <div className="password-requirements">
-            <p onClick={() => setShowRequirements(!showRequirements)} style={{ cursor: "pointer" }}>
-              La contraseña debe cumplir
-              <span className="material-symbols-outlined" style={{ marginLeft: "1px", verticalAlign: "middle", fontSize: "16px" }}>
                 {showRequirements ? "expand_less" : "expand_more"}
               </span>
             </p>
             {showRequirements && (
               <ul>
                 <li>Mínimo una mayúscula y minúscula.</li>
-              	<li>Mínimo un número y carácter especial.</li>
-              	<li>Mínimo 8 caracteres.</li>
+                <li>Mínimo un número y carácter especial.</li>
+                <li>Mínimo 8 caracteres.</li>
               </ul>
             )}
           </div>
           <label>Confirmar Nueva Contraseña</label>
           <div className="field-div">
-              <input
-                className="password-field"
-                type={showConfirmPassword ? "text" : "password"}
-                onChange={handleConfirmNewPassword}
-                value={confirmNewPassword}
-                autoComplete="off"
-              />
-              <span
-                className="material-symbols-outlined see"
-                onClick={() => {
-                  setShowConfirmPassword(!showConfirmPassword);
-                }}
-              >
-                {showConfirmPassword ? "visibility" : "visibility_off"}
-              </span>
-            </div>
+            <input
+              className="password-field"
+              type={showConfirmPassword ? "text" : "password"}
+              onChange={handleConfirmNewPassword}
+              value={confirmNewPassword}
+              autoComplete="off"
+            />
+            <span
+              className="material-symbols-outlined see"
+              onClick={() => {
+                setShowConfirmPassword(!showConfirmPassword);
+              }}
+            >
+              {showConfirmPassword ? "visibility" : "visibility_off"}
+            </span>
+          </div>
         </div>
         <button className="change-password-btn" disabled={isLoading}>
           Cambiar Contraseña
@@ -124,6 +138,7 @@ const ChangePassword = () => {
           </div>
         )}
         {error && <div className="error">{error}</div>}
+        {success && <div className="success">{success}</div>}
       </form>
     </div>
   );

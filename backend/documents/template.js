@@ -1,16 +1,12 @@
 module.exports = (initDate, endDate, serviceData, empleados) => {
   const fechaHoy = new Date();
-  console.log({ serviceData });
   const {
-    numServiciosTotal = undefined,
-    numServiciosAcabados = undefined,
-    numServiciosStill = undefined,
+    numServicios = undefined,
     recaudo = undefined,
-    servicePerCar = undefined,
+    servicesPerCar = undefined,
     ranking = undefined,
   } = serviceData || {};
 
-  console.log(numServiciosTotal, numServiciosAcabados, numServiciosStill);
   const { serviceEmleado, recaudado, calificacion } = empleados | undefined;
   return `
   <!DOCTYPE html>
@@ -116,14 +112,10 @@ module.exports = (initDate, endDate, serviceData, empleados) => {
       <ul style="display: inline">
       ${recaudo ? `<li>Recaudo: ${recaudo}</li>` : ""}
         
-        ${
-          numServiciosTotal
-            ? `<li>Total servicios:${numServiciosTotal}</li>`
-            : ""
-        }
+        ${numServicios ? `<li>Total servicios:${numServicios.total}</li>` : ""}
       </ul>
       ${
-        numServiciosAcabados && numServiciosStill
+        numServicios.acabados && numServicios.still
           ? `
           <div style="width: 40%; position: relative; left: 50%; bottom: 60px">
             <table class="content-table">
@@ -133,8 +125,8 @@ module.exports = (initDate, endDate, serviceData, empleados) => {
               </thead>
               <tbody>
                 <tr>
-                  <td>${numServiciosAcabados}</td>
-                  <td>${numServiciosStill}</td>
+                  <td>${numServicios.acabados}</td>
+                  <td>${numServicios.still}</td>
                 </tr>
               </tbody>
             </table>
@@ -143,48 +135,61 @@ module.exports = (initDate, endDate, serviceData, empleados) => {
           : ""
       }
     </div>
-    <div style="position: relative; left: 20%">
-      <table class="content-table">
+    ${
+      servicesPerCar
+        ? `
+    <div style="position: relative; left: 5%">
+      <table class="content-table" style="
+      width: 60%;
+      font-size: 0.8rem;">
         <thead>
           <th></th>
-          <th>Servicio 1</th>
-          <th>Servicio 2</th>
-          <th>Servicio 3</th>
-          <th>Servicio 4</th>
-          <th>Servicio 5</th>
+          ${
+            servicesPerCar?.servicesNames
+              ? `${servicesPerCar.servicesNames
+                  .map((ser) => `<th>${ser.servicio}</th>`)
+                  .join("")}`
+              : ""
+          }
           <th>Total</th>
         </thead>
         <tbody>
           <tr>
             <td>Carro</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
+            ${
+              servicesPerCar?.carData
+                ? `${servicesPerCar.carData
+                    .map((data) => `<td>${data}</td>`)
+                    .join("")}`
+                : ""
+            }
           </tr>
           <tr>
             <td>Camioneta</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
+            ${
+              servicesPerCar?.camionetaData
+                ? `${servicesPerCar.camionetaData
+                    .map((data) => `<td>${data}</td>`)
+                    .join("")}`
+                : ""
+            }
           </tr>
           <tr>
             <td>Total</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
+            ${
+              servicesPerCar?.totalData
+                ? `${servicesPerCar.totalData
+                    .map((data) => `<td>${data}</td>`)
+                    .join("")}`
+                : ""
+            }
           </tr>
         </tbody>
       </table>
-    </div>
+    </div>`
+        : ""
+    }
+    
     <div class="ranking-div">
       <h4>Ranking de servicios</h4>
       <ol>

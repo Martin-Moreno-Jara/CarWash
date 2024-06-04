@@ -85,7 +85,7 @@ const searchServices = async (initDate, endDate, servicios) => {
           return acc + nota.calificacion;
         }, 0);
         const divisor = filter.length === 0 ? 1 : filter.length;
-        const promedio = parseFloat(sumaCalificacion / divisor);
+        const promedio = parseFloat(sumaCalificacion / divisor).toFixed(1);
         console.log(ser.servicio, sumaCalificacion, promedio);
         promedioArray.push({
           servicio: ser.servicio,
@@ -93,7 +93,10 @@ const searchServices = async (initDate, endDate, servicios) => {
           promedio,
         });
       });
-      console.log(promedioArray);
+      promedioArray.sort((a, b) => {
+        return b.promedio - a.promedio;
+      });
+      servicesReturn.ranking = promedioArray;
     }
     return servicesReturn;
   } catch (error) {

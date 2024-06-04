@@ -190,16 +190,23 @@ module.exports = (initDate, endDate, serviceData, empleados) => {
         : ""
     }
     
+    ${
+      ranking
+        ? `
     <div class="ranking-div">
-      <h4>Ranking de servicios</h4>
-      <ol>
-        <li>service 1</li>
-        <li>service 2</li>
-        <li>service 3</li>
-        <li>service 4</li>
-        <li>service 5</li>
-      </ol>
-    </div>
+    <h4>Ranking de servicios</h4>
+    <ol>
+    ${ranking
+      .map(
+        (rank) =>
+          ` <li>${rank.servicio} <span style="font-weight:bold">(${rank.promedio})</span> </li>`
+      )
+      .join("")}
+    </ol>
+  </div>`
+        : ""
+    }
+    
   </section>
   <hr />`
         : ""

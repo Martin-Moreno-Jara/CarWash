@@ -132,3 +132,6 @@ button {
     font-size: 0.91em;
   }
 }
+input[type="text"] {
+  text-transform: none;
+}

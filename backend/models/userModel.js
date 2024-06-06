@@ -42,6 +42,11 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    primeraVez: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
   },
   { timestamps: true }
 );

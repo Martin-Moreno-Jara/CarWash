@@ -64,5 +64,22 @@ const updatePassword = async (req, res) => {
   }
 };
 //controlador de creación de usuarios
+const getUsuarioByUser = async (req, res) => {
+  const { user } = req.params;
+  console.log("Usuario recibido en params:", user); // Depuración: imprimir el parámetro recibido
 
-module.exports = { loginUser, logoutUser, updatePassword };
+  try {
+    const usuario = await userModel.findOne({ usuario: user });
+    console.log("Usuario encontrado en DB:", usuario); // Depuración: imprimir el resultado de la consulta
+
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+    res.status(200).json(usuario);
+  } catch (error) {
+    console.error("Error durante la búsqueda en DB:", error); // Depuración: imprimir el error
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports = { loginUser, logoutUser, updatePassword, getUsuarioByUser };

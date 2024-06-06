@@ -63,8 +63,10 @@ const EmployeeFormMore = () => {
         setLoadingInfo(false);
       }
 
-      const nombreCapitalizado = json.nombre.charAt(0).toUpperCase() + json.nombre.slice(1);
-      const apellidoCapitalizado = json.apellido.charAt(0).toUpperCase() + json.apellido.slice(1);
+      const nombreCapitalizado =
+        json.nombre.charAt(0).toUpperCase() + json.nombre.slice(1);
+      const apellidoCapitalizado =
+        json.apellido.charAt(0).toUpperCase() + json.apellido.slice(1);
 
       setNombre(nombreCapitalizado);
       setApellido(apellidoCapitalizado);
@@ -93,7 +95,8 @@ const EmployeeFormMore = () => {
         className="closebtn"
         onClick={() => {
           dispatch({ type: "SHOW_MORE_DIALOG", payload: !showMore });
-        }}>
+        }}
+      >
         <span className="material-symbols-outlined">close</span>
       </div>
       <h2>información del empleado</h2>

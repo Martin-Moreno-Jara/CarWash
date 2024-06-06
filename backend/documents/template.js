@@ -194,7 +194,7 @@ module.exports = (initDate, endDate, serviceData, empleados) => {
       ranking
         ? `
     <div class="ranking-div">
-    <h4>Ranking de servicios</h4>
+    <h4>Ranking de servicios </h4>
     <ol>
     ${ranking
       .map(

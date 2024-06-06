@@ -290,5 +290,28 @@ userSchema.statics.updatePassword = async function (
 
   return "Contraseña actualizada exitosamente";
 };
+userSchema.statics.actualizarPrimeraVez = async function (usuario) {
+  if (!usuario) {
+    throw Error("Debe proporcionar el usuario");
+  }
+
+  const user = await this.findOne({ usuario });
+  if (!user) {
+    throw Error("El usuario no existe");
+  }
+
+  // Verificar si el usuario ya ha cambiado su atributo 'primeraVez'
+  if (!user.primeraVez) {
+    return "El atributo 'primeraVez' ya está establecido en false";
+  }
+
+  // Actualizar el atributo 'primeraVez' a false
+  user.primeraVez = false;
+
+  // Guardar los cambios en la base de datos
+  await user.save();
+
+  return "El atributo 'primeraVez' ha sido actualizado a false exitosamente";
+};
 
 module.exports = mongoose.model("userModel", userSchema);

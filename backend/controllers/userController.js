@@ -81,5 +81,24 @@ const getUsuarioByUser = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+const actualizarPrimeraVez = async (req, res) => {
+  const { usuario } = req.body;
+  console.log("Usuario en body:", usuario);
+  try {
+    const updatedUser = await userModel.actualizarPrimeraVez(usuario);
+    res.status(200).json({
+      message: "primeraVEz actualizada correctamente",
+      usuario: updatedUser.usuario,
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
-module.exports = { loginUser, logoutUser, updatePassword, getUsuarioByUser };
+module.exports = {
+  loginUser,
+  logoutUser,
+  updatePassword,
+  getUsuarioByUser,
+  actualizarPrimeraVez,
+};

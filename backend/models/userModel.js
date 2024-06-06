@@ -251,6 +251,7 @@ userSchema.statics.updateEmployee = async function (
   const updated = await this.findOne({ _id: id });
   return updated;
 };
+
 userSchema.statics.updatePassword = async function (
   usuario,
   contrasena,

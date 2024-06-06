@@ -4,6 +4,7 @@ const pdfTemplate = require("../documents/template");
 const empleadoModel = require("../models/userModel");
 const servicioModel = require("../models/servicioModel");
 const tarfiasModel = require("../models/tarifasModel");
+const mongoose = require("mongoose");
 
 const calcDataCells = (servicesList, vehicleData) => {
   const returnData = [];
@@ -86,7 +87,7 @@ const searchServices = async (initDate, endDate, servicios) => {
         }, 0);
         const divisor = filter.length === 0 ? 1 : filter.length;
         const promedio = parseFloat(sumaCalificacion / divisor).toFixed(1);
-        console.log(ser.servicio, sumaCalificacion, promedio);
+        // console.log(ser.servicio, sumaCalificacion, promedio);
         promedioArray.push({
           servicio: ser.servicio,
           times: filter.length,
@@ -103,6 +104,66 @@ const searchServices = async (initDate, endDate, servicios) => {
     console.log(error);
   }
 };
+const searchEmployees = async (initDate, endDate, empleados) => {
+  let employeesReturn = {};
+  employeesReturn.eachEmployee = [];
+  const InitISO = new Date(initDate).toISOString();
+
+  const endISO = new Date(endDate).toISOString();
+
+  const employees = await empleadoModel.find().sort({ _id: -1 });
+
+  if (empleados.numEmpleados) {
+    employeesReturn.numEmpleados = employees.length;
+  }
+
+  for (let i = 0; i < employees.length; i++) {
+    const empleadoData = {};
+    empleadoData.empleadoName = `${employees[i].nombre} ${employees[i].apellido}`;
+
+    const search = await servicioModel.find({
+      createdAt: {
+        $gte: InitISO,
+        $lt: endISO,
+      },
+      "encargado.encargadoId": new mongoose.Types.ObjectId(employees[i]._id), // Filter by employee
+    });
+
+    const serviciosNames = await tarfiasModel
+      .find()
+      .select({ _id: 0, servicio: 1 })
+      .sort({ servicio: 1 });
+
+    //SECCION RECAUDO
+    if (empleados.recaudoEmpleado) {
+      const pricesa = search.map((priceInstance) => priceInstance.precio);
+      const prices = pricesa.reduce((acc, price) => acc + price, 0);
+      empleadoData.recaudoEmpleado = prices;
+    }
+
+    //SECCION NUMERO DE SERVICIOS
+    if (empleados.numServiciosEmpleado) {
+      const numS = search.length;
+      empleadoData.numServiciosEmpleado = numS;
+    }
+
+    // RANKING
+    if (empleados.calificacion) {
+      const sumaCalificacion = search.reduce((acc, nota) => {
+        if (!nota.calificacion) {
+          nota.calificacion = 0;
+        }
+        return acc + nota.calificacion;
+      }, 0);
+      const divisor = search.length === 0 ? 1 : search.length;
+      const promedio = parseFloat(sumaCalificacion / divisor).toFixed(1);
+      empleadoData.calificacion = promedio;
+    }
+    employeesReturn.eachEmployee.push(empleadoData);
+  }
+
+  return employeesReturn;
+};
 
 const createPDF = async (req, res) => {
   const { initDate, endDate, servicios, empleados } = req.body;
@@ -111,9 +172,13 @@ const createPDF = async (req, res) => {
   if (servicios) {
     serviceData = await searchServices(initDate, endDate, servicios);
   }
+  if (empleados) {
+    employeeData = await searchEmployees(initDate, endDate, empleados);
+  }
+  console.log(employeeData);
 
   pdf
-    .create(pdfTemplate(initDate, endDate, serviceData, empleados), {
+    .create(pdfTemplate(initDate, endDate, serviceData, employeeData), {
       type: "pdf",
       timeout: "100000",
     })

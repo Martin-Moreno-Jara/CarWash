@@ -7,7 +7,12 @@ module.exports = (initDate, endDate, serviceData, empleados) => {
     ranking = undefined,
   } = serviceData || {};
 
-  const { serviceEmleado, recaudado, calificacion } = empleados | undefined;
+  const {
+    numEmpleados = undefined,
+    numServiciosEmpleado = undefined,
+    recaudoEmpleado = undefined,
+    calificacion = undefined,
+  } = empleados || {};
   return `
   <!DOCTYPE html>
 <html lang="en">

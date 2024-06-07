@@ -1,6 +1,8 @@
 module.exports = (initDate, endDate, serviceData, employeeData) => {
   const fechaHoy = new Date();
-  const totalEmpleados = employeeData.totalEmpleados;
+  //const totalEmpleados = employeeData.totalEmpleados;
+  const totalEmpleados = employeeData.eachEmployee.length;
+  const nombreEmpleado = employeeData.eachEmployee.map((empleado) => empleado.nombre);
   const {
     numServicios = undefined,
     recaudo = undefined,
@@ -10,18 +12,18 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
 
   const {
     numEmpleados = undefined,
-    numServiciosEmpleado = undefined,
-    recaudoEmpleado = undefined,
-    calificacion = undefined,
+    numServiciosEmpleado = true,
+    recaudoEmpleado = true,
+    calificacion = true,
   } = employeeData || {};
 
-  const generateEmployeeRows = (num, numServiciosEmpleado, recaudoEmpleado, calificacion) => {
+  const generateEmployeeRows = (num, numServiciosEmpleado, recaudoEmpleado, calificacion, employeeData) => {
     let rows = "";
     for (let i = 0; i < num; i++) {
-      rows += `<tr><td>Empleado ${i + 1}</td>`;
-      if (numServiciosEmpleado) rows += `<td>n. servicios</td>`;
-      if (recaudoEmpleado) rows += `<td>Dinero recaudado</td>`;
-      if (calificacion) rows += `<td>calificacion</td>`;
+      rows += `<tr><td>${employeeData.eachEmployee[i].empleadoName}</td>`;
+      if (numServiciosEmpleado) rows += `<td>${employeeData.eachEmployee[i].numServiciosEmpleado}</td>`;
+      if (recaudoEmpleado) rows += `<td>${employeeData.eachEmployee[i].recaudoEmpleado}</td>`;
+      if (calificacion) rows += `<td>${employeeData.eachEmployee[i].calificacion}</td>`;
       rows += `</tr>`;
     }
     return rows;
@@ -245,7 +247,7 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
     </tr>
   </thead>
   <tbody>
-    ${generateEmployeeRows(totalEmpleados, numServiciosEmpleado, recaudoEmpleado, calificacion)}
+    ${generateEmployeeRows(totalEmpleados, numServiciosEmpleado, recaudoEmpleado, calificacion, employeeData)}
   </tbody>
 </table>
     </div>

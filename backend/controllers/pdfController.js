@@ -113,16 +113,16 @@ const searchEmployees = async (initDate, endDate, empleados) => {
 
   const employees = await empleadoModel.find().sort({ _id: -1 });
 
-  
+/* 
   employeesReturn.totalEmpleados = employees.length;
 
   if (empleados.numEmpleados) {
     employeesReturn.numEmpleados = employeesReturn.totalEmpleados;
   }
-
-  /*if (empleados.numEmpleados) {
+*/
+  if (empleados.numEmpleados) {
     employeesReturn.numEmpleados = employees.length;
-  } */
+  }
 
   for (let i = 0; i < employees.length; i++) {
     const empleadoData = {};

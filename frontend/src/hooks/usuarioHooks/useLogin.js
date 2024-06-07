@@ -24,7 +24,7 @@ export const useLogin = () => {
     setError(null);
 
     const isFirstTimeUser = await checkFirstTimeUser(usuario);
-    if (isFirstTimeUser && usuario !== "raulJm") {
+    if (isFirstTimeUser && usuario!==  "raulJm") {
       setIsLoading(false);
       setFirstTimeUser(true);
       return;
@@ -41,6 +41,7 @@ export const useLogin = () => {
     if (!response.ok) {
       setIsLoading(false);
       setError(json.error);
+      setFirstTimeUser(false);
     }
     if (response.ok) {
       setIsLoading(false);

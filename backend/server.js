@@ -7,6 +7,7 @@ const servicioCRUDRoutes = require("./routes/servicioCRUD");
 const tarifasRoutes = require("./routes/tarifas");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const reporteRoutes = require("./routes/reporte");
 //const pdf = require("html-pdf");
 
 const app = express();
@@ -27,7 +28,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/empleadoCRUD", empleadoCRUDRoutes);
 app.use("/api/servicioCRUD", servicioCRUDRoutes);
 app.use("/api/tarifas", tarifasRoutes);
-
+app.use("/api/reporte", reporteRoutes);
 
 // db connection
 mongoose

@@ -171,3 +171,13 @@ input {
   border: 2px solid;
   border-radius: 5px;
 }
+
+.warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  text-align: center;
+}

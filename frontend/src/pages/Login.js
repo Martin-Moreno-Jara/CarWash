@@ -10,7 +10,7 @@ import "../stylesheets/Login.css";
 //**************************************************************
 
 const Login = () => {
-  const { login, error, isLoading } = useLogin();
+  const { login, error, isLoading, firstTimeUser } = useLogin();
   const [nombreUsuario, setNombreUsuario] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setshowPassword] = useState(false);
@@ -24,7 +24,6 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(nombreUsuario, password);
     await login(nombreUsuario, password);
   };
 
@@ -66,6 +65,9 @@ const Login = () => {
           </div>
         )}
         {error && <div className="error">{error}</div>}
+        {firstTimeUser && (
+          <div className="warning">Primera vez que inicia sesión, por favor cambie su contraseña.</div>
+        )}
         <Link to="/change-password">Cambiar de contraseña</Link>
       </form>
     </div>

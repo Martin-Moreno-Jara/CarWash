@@ -12,6 +12,19 @@ export const useChangePassword = () => {
     return passwordRequirements.test(password);
   };
 
+  const actualizarPrimeraVez = async (usuario) => {
+    const response = await fetch(`${apiURL}/api/user/update-first-time`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ usuario }),
+    });
+    const json = await response.json();
+    if (!response.ok) {
+      throw new Error(json.error);
+    }
+    return json.message;
+  };
+
   const changePassword = async (
     usuario,
     contrasena,
@@ -47,6 +60,7 @@ export const useChangePassword = () => {
       setIsLoading(false);
       setError(json.error);
     } else {
+      await actualizarPrimeraVez(usuario);
       setIsLoading(false);
       setError(null);
       setSuccess("Contraseña actualizada con éxito");

@@ -1,5 +1,6 @@
-module.exports = (initDate, endDate, serviceData, empleados) => {
+module.exports = (initDate, endDate, serviceData, employeeData) => {
   const fechaHoy = new Date();
+  const totalEmpleados = employeeData.totalEmpleados;
   const {
     numServicios = undefined,
     recaudo = undefined,
@@ -12,7 +13,19 @@ module.exports = (initDate, endDate, serviceData, empleados) => {
     numServiciosEmpleado = undefined,
     recaudoEmpleado = undefined,
     calificacion = undefined,
-  } = empleados || {};
+  } = employeeData || {};
+
+  const generateEmployeeRows = (num, numServiciosEmpleado, recaudoEmpleado, calificacion) => {
+    let rows = "";
+    for (let i = 0; i < num; i++) {
+      rows += `<tr><td>Empleado ${i + 1}</td>`;
+      if (numServiciosEmpleado) rows += `<td>n. servicios</td>`;
+      if (recaudoEmpleado) rows += `<td>Dinero recaudado</td>`;
+      if (calificacion) rows += `<td>calificacion</td>`;
+      rows += `</tr>`;
+    }
+    return rows;
+  };
   return `
   <!DOCTYPE html>
 <html lang="en">
@@ -217,46 +230,29 @@ module.exports = (initDate, endDate, serviceData, empleados) => {
         : ""
     }
     ${
-      empleados
+      employeeData
         ? `<section id="reports-section">
     <h3 class="titles-text">Reporte de empleados</h3>
-    <p>Número de empleados: ##</p>
+    ${numEmpleados ? `<p>Número de empleados: ${numEmpleados}` : ""}</p>
     <div style="position: relative; left: 20%">
       <table class="content-table">
-        <thead>
-          <th></th>
-          <th>n. servicios</th>
-          <th>Dinero recaudado</th>
-          <th>Calificacion</th>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Empleado 1</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-          </tr>
-          <tr>
-            <td>Empleado 2</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-          </tr>
-          <tr>
-            <td>Empleado 3</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-            <td>##(%)</td>
-          </tr>
-        </tbody>
-      </table>
+  <thead>
+    <tr>
+      <th>Empleado</th>
+      ${numServiciosEmpleado ? `<th>n. servicios</th>` : ""}
+      ${recaudoEmpleado ? `<th>Dinero recaudado</th>` : ""}
+      ${calificacion ? `<th>Calificacion</th>` : ""}
+    </tr>
+  </thead>
+  <tbody>
+    ${generateEmployeeRows(totalEmpleados, numServiciosEmpleado, recaudoEmpleado, calificacion)}
+  </tbody>
+</table>
     </div>
   </section>`
         : ""
     }
-    
   </body>
 </html>
-  
-    `;
+  `;
 };

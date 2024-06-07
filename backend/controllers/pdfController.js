@@ -113,7 +113,7 @@ const searchEmployees = async (initDate, endDate, empleados) => {
 
   const employees = await empleadoModel.find().sort({ _id: -1 });
 
-/* 
+  /* 
   employeesReturn.totalEmpleados = employees.length;
 
   if (empleados.numEmpleados) {
@@ -146,16 +146,19 @@ const searchEmployees = async (initDate, endDate, empleados) => {
       const pricesa = search.map((priceInstance) => priceInstance.precio);
       const prices = pricesa.reduce((acc, price) => acc + price, 0);
       empleadoData.recaudoEmpleado = prices;
+      employeesReturn.displayRecaudo = true;
     }
 
     //SECCION NUMERO DE SERVICIOS
     if (empleados.numServiciosEmpleado) {
       const numS = search.length;
       empleadoData.numServiciosEmpleado = numS;
+      employeesReturn.displayNumServicios = true;
     }
 
     // RANKING
     if (empleados.calificacion) {
+      employeesReturn.displayCalificacion = true;
       const sumaCalificacion = search.reduce((acc, nota) => {
         if (!nota.calificacion) {
           nota.calificacion = 0;

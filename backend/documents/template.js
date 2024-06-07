@@ -1,8 +1,5 @@
 module.exports = (initDate, endDate, serviceData, employeeData) => {
   const fechaHoy = new Date();
-  //const totalEmpleados = employeeData.totalEmpleados;
-  const totalEmpleados = employeeData.eachEmployee.length;
-  const nombreEmpleado = employeeData.eachEmployee.map((empleado) => empleado.nombre);
   const {
     numServicios = undefined,
     recaudo = undefined,
@@ -13,28 +10,14 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
   const {
     numEmpleados = undefined,
     eachEmployee = undefined,
-    numServiciosEmpleado = true,
-    recaudoEmpleado = true,
-    calificacion = true,
+    numServiciosEmpleado = undefined,
+    recaudoEmpleado = undefined,
+    calificacion = undefined,
+    displayCalificacion = undefined,
+    displayRecaudo = undefined,
+    displayNumServicios = undefined,
   } = employeeData || {};
 
-  const generateEmployeeRows = (
-    num,
-    numServiciosEmpleado,
-    recaudoEmpleado,
-    calificacion
-  ) => {
-  const generateEmployeeRows = (num, numServiciosEmpleado, recaudoEmpleado, calificacion, employeeData) => {
-    let rows = "";
-    for (let i = 0; i < num; i++) {
-      rows += `<tr><td>${employeeData.eachEmployee[i].empleadoName}</td>`;
-      if (numServiciosEmpleado) rows += `<td>${employeeData.eachEmployee[i].numServiciosEmpleado}</td>`;
-      if (recaudoEmpleado) rows += `<td>${employeeData.eachEmployee[i].recaudoEmpleado}</td>`;
-      if (calificacion) rows += `<td>${employeeData.eachEmployee[i].calificacion}</td>`;
-      rows += `</tr>`;
-    }
-    return rows;
-  };
   return `
   <!DOCTYPE html>
 <html lang="en">
@@ -248,9 +231,11 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
   <thead>
     <tr>
       <th>Empleado</th>
-      ${numServiciosEmpleado ? `<th>n. servicios</th>` : ""}
-      ${recaudoEmpleado ? `<th>Dinero recaudado</th>` : ""}
-      ${calificacion ? `<th>Calificacion</th>` : ""}
+
+      ${displayNumServicios ? `<th>n. servicios</th>` : ""}
+      ${displayRecaudo ? `<th>Dinero recaudado</th>` : ""}
+      ${displayCalificacion ? `<th>Calificacion</th>` : ""}
+
     </tr>
   </thead>
   <tbody>
@@ -258,15 +243,14 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
       .map(
         (data) =>
           `<tr>
-        <td>${data.empleadoName}</td>
-        <td>${data.recaudoEmpleado}</td>
-        <td>${data.numServiciosEmpleado}</td>
-        <td>${data.calificacion}</td>
-      
+            <td>${data.empleadoName}</td>
+        ${displayNumServicios ? `<td>${data.numServiciosEmpleado}</td>` : ""}
+        ${displayRecaudo ? ` <td>${data.recaudoEmpleado}</td>` : ""}
+        ${displayCalificacion ? ` <td>${data.calificacion}</td>` : ""}
       </tr>`
       )
       .join("")}
-    ${generateEmployeeRows(totalEmpleados, numServiciosEmpleado, recaudoEmpleado, calificacion, employeeData)}
+  
   </tbody>
 </table>
     </div>

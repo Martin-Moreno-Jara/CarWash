@@ -10,12 +10,18 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
 
   const {
     numEmpleados = undefined,
+    eachEmployee = undefined,
     numServiciosEmpleado = undefined,
     recaudoEmpleado = undefined,
     calificacion = undefined,
   } = employeeData || {};
 
-  const generateEmployeeRows = (num, numServiciosEmpleado, recaudoEmpleado, calificacion) => {
+  const generateEmployeeRows = (
+    num,
+    numServiciosEmpleado,
+    recaudoEmpleado,
+    calificacion
+  ) => {
     let rows = "";
     for (let i = 0; i < num; i++) {
       rows += `<tr><td>Empleado ${i + 1}</td>`;
@@ -245,7 +251,18 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
     </tr>
   </thead>
   <tbody>
-    ${generateEmployeeRows(totalEmpleados, numServiciosEmpleado, recaudoEmpleado, calificacion)}
+    ${eachEmployee
+      .map(
+        (data) =>
+          `<tr>
+        <td>${data.empleadoName}</td>
+        <td>${data.recaudoEmpleado}</td>
+        <td>${data.numServiciosEmpleado}</td>
+        <td>${data.calificacion}</td>
+      
+      </tr>`
+      )
+      .join("")}
   </tbody>
 </table>
     </div>

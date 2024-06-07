@@ -59,6 +59,12 @@ const updatePassword = async (req, res) => {
       message: "Contraseña actualizada correctamente",
       usuario: updatedUser.usuario,
     });
+    await logModel.create({
+      madeBy: usuario,
+      action: "Updated Password",
+      action_detail: `${usuario} updated password`,
+      status: "SUCCESSFUL",
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

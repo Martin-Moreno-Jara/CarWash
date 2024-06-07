@@ -1,0 +1,85 @@
+.main-container-report {
+  height: 70vh;
+  width: 70%;
+  background-color: rgba(231, 249, 255, 1);
+  padding: 10px 50px 50px 50px;
+  border-radius: 5px;
+  box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.show-formats-report {
+  position: relative;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  margin-bottom: 20px;
+  width: fit-content;
+}
+
+.formatos-report {
+  font-size: 0.94em;
+  border: 1px solid var(--tuned-down-blue);
+  padding: 5px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+.form-div-report {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 100px
+}
+
+.form-fields-report {
+  width: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.checklist-checkbox {
+  display: none; /* Oculta el input de tipo checkbox predeterminado */
+}
+
+.checkbox-custom {
+  width: 15px; /* Diámetro del círculo */
+  height: 15px; /* Diámetro del círculo */
+  border-radius: 50%; /* Hace que el elemento sea circular */
+  border: 2px solid #112339; /* Borde del círculo */
+  position: relative;
+  margin-right: 5px;
+}
+
+.checkbox-custom::after {
+  content: ""; /* Contenido generado */
+  display: block;
+  width: 10px; /* Tamaño del punto central */
+  height: 10px; /* Tamaño del punto central */
+  border-radius: 50%; /* Hace que el elemento sea circular */
+  background-color: #112339; /* Color del punto central */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centra el punto central */
+  opacity: 0; /* Oculta el punto central por defecto */
+}
+
+.checklist-checkbox:checked + .checkbox-custom::after {
+  opacity: 1; /* Muestra el punto central cuando la checkbox está seleccionada */
+}
+
+

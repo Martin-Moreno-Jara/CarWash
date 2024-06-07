@@ -23,8 +23,13 @@ const HomeAdmin = () => {
           </Link>
 
           <Link to="/admin/servicioCrud">
-            <div className="empleado-manage-btn">Gestionar servicios</div>
+            <div className="empleado-manage-btn">Gestionar Servicios</div>
           </Link>
+
+          <Link to="/admin/generarReporte">
+            <div className="empleado-manage-btn">Generar Reporte</div>
+          </Link>
+
         </div>
       </div>
     </div>

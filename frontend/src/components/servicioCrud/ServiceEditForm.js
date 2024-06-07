@@ -290,7 +290,7 @@ const handleEncargadoChange = (e) => {
               <div>
                 <label>Encargado</label>
                 {usuario.rol === 'administrador' ? (
-                  <select className="form-select" value={encargado} onChange={handleEncargadoChange} required disabled>
+                  <select className="form-select" value={encargado} onChange={handleEncargadoChange} required>
                     <option></option>
                     {employeesWithAdditionalUser.map((employee) => (
                       <option key={employee._id} value={employee.usuario}>

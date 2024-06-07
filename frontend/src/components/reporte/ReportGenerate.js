@@ -12,12 +12,11 @@ const apiURL = process.env.REACT_APP_DEVURL;
 
 const ReporteGenerate = () => {
   const { showGenerate, dispatch } = useReportContext();
-  const [fechainicio, setFechaInicio] = useState("");
-  const [fechafin, setFechaFin] = useState("");
+  const [fechainicio, setFechaInicio] = useState(null);
+  const [fechafin, setFechaFin] = useState(null);
   const [serviciosterminados, setServiciosTerminados] = useState(false);
   const [dinerorecaudado, setDineroRecaudado] = useState(false);
   const [serviciosprestados, setServiciosPrestados] = useState(false);
-  const [proporciontiposautos, setProporcionTiposAutos] = useState(false);
   const [calificacionservicios, setCalificacionServicios] = useState(false);
   const [empservicioscompletados, setEmpServiciosCompletados] = useState(false);
   const [empdinerorecaudado, setEmpDineroRecaudado] = useState(false);
@@ -25,6 +24,7 @@ const ReporteGenerate = () => {
     useState(false);
   const [error, setError] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
   const [showServices, setShowServices] = useState(false);
   const [showEmployees, setShowEmployees] = useState(false);
 
@@ -32,7 +32,8 @@ const ReporteGenerate = () => {
     setFechaInicio(e.target.value);
     if (fechafin && new Date(e.target.value) > new Date(fechafin)) {
       setError("La fecha de inicio no puede ser posterior a la fecha de fin");
-    } else {
+    } 
+    else {
       setError("");
     }
   };
@@ -40,7 +41,8 @@ const ReporteGenerate = () => {
     setFechaFin(e.target.value);
     if (fechainicio && new Date(e.target.value) < new Date(fechainicio)) {
       setError("La fecha de fin no puede ser anterior a la fecha de inicio");
-    } else {
+    }
+    else {
       setError("");
     }
   };
@@ -52,9 +54,6 @@ const ReporteGenerate = () => {
   };
   const handleServiciosPrestados = (e) => {
     setServiciosPrestados(e.target.value);
-  };
-  const handleProporcionTiposAutos = (e) => {
-    setProporcionTiposAutos(e.target.value);
   };
   const handleCalificacionServicios = (e) => {
     setCalificacionServicios(e.target.value);
@@ -70,36 +69,42 @@ const ReporteGenerate = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!error) {
-      const servicios = {
-        recaudo: dinerorecaudado,
-        numServicios: serviciosterminados,
-        servicesPerCar: serviciosprestados,
-        ranking: calificacionservicios,
-      };
-      const empleados = {
-        numEmpleados: true,
-        numServiciosEmpleado: empservicioscompletados,
-        recaudoEmpleado: empdinerorecaudado,
-        calificacion: empcalificacionservicios,
-      };
-      const sendData = await fetch(`${apiURL}/api/reporte/CreatePDF`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          initDate: fechainicio,
-          endDate: fechafin,
-          servicios,
-          empleados,
-        }),
-      });
-      const sendResponse = await sendData.json();
-      console.log(sendResponse);
-
-      console.log("Formulario enviado");
-      dispatch({ type: "VISUALIZE", payload: !showGenerate });
-    } else {
+    if(!fechainicio || !fechafin){
+      setError("Ninguna de las fechas puede estar vacía");
       setIsOpen(true);
+    }
+    else{
+      if (!error) {
+        setIsOpen2(true);
+        const servicios = {
+          recaudo: dinerorecaudado,
+          numServicios: serviciosterminados,
+          servicesPerCar: serviciosprestados,
+          ranking: calificacionservicios,
+        };
+        const empleados = {
+          numEmpleados: true,
+          numServiciosEmpleado: empservicioscompletados,
+          recaudoEmpleado: empdinerorecaudado,
+          calificacion: empcalificacionservicios,
+        };
+        const sendData = await fetch(`${apiURL}/api/reporte/CreatePDF`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            initDate: fechainicio,
+            endDate: fechafin,
+            servicios,
+            empleados,
+          }),
+        });
+        const sendResponse = await sendData.json();
+        console.log(sendResponse);
+        setIsOpen2(false);
+        dispatch({ type: "VISUALIZE", payload: !showGenerate });
+      } else {
+        setIsOpen(true);
+      }
     }
   };
 
@@ -155,7 +160,7 @@ const ReporteGenerate = () => {
                     onChange={handleDineroRecaudado}
                   />
                   <span className="checkbox-custom"></span>
-                  Dinero recuadado
+                  Dinero recaudado
                 </label>
                 <label className="checklist-item">
                   <input
@@ -165,15 +170,6 @@ const ReporteGenerate = () => {
                   />
                   <span className="checkbox-custom"></span>
                   Tipos de servicios prestados
-                </label>
-                <label className="checklist-item">
-                  <input
-                    type="checkbox"
-                    className="checklist-checkbox"
-                    onChange={handleProporcionTiposAutos}
-                  />
-                  <span className="checkbox-custom"></span>
-                  Proporción de tipos de autos
                 </label>
                 <label className="checklist-item">
                   <input
@@ -248,6 +244,15 @@ const ReporteGenerate = () => {
                 }}>
                 Regresar
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {isOpen2 && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="content-container">
+              <h2>Cargando...</h2>
             </div>
           </div>
         </div>

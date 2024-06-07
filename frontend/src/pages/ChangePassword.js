@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MoonLoader from "react-spinners/MoonLoader";
 import { useChangePassword } from "../hooks/usuarioHooks/useChangePassword";
 import "../stylesheets/Login.css";
@@ -38,6 +38,15 @@ const ChangePassword = () => {
       confirmNewPassword
     );
   };
+
+  useEffect(() => {
+    if (success) {
+      setNombreUsuario("");
+      setPassword("");
+      setNewPassword("");
+      setConfirmNewPassword("");
+    }
+  }, [success]);
 
   return (
     <div className="overall-container">

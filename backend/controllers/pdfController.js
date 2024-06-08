@@ -6,6 +6,7 @@ const servicioModel = require("../models/servicioModel");
 const tarfiasModel = require("../models/tarifasModel");
 const mongoose = require("mongoose");
 const logModel = require("../models/logModel");
+const fs = require("fs");
 
 const calcDataCells = (servicesList, vehicleData) => {
   const returnData = [];
@@ -186,31 +187,37 @@ const createPDF = async (req, res) => {
   if (empleados) {
     employeeData = await searchEmployees(initDate, endDate, empleados);
   }
-  console.log(employeeData);
 
   pdf
     .create(pdfTemplate(initDate, endDate, serviceData, employeeData), {
       type: "pdf",
       timeout: "100000",
     })
-    .toFile(`controllers/report.pdf`, async (err) => {
+    .toFile(`controllers/report.pdf`, (err) => {
       if (err) {
-        await logModel.create({
-          madeBy: req.loggedUser.usuario,
-          action: "GENERATE REPORT",
-          action_detail: `Admin ${req.loggedUser.usuario} tried to generate report`,
-          status: "FAILED",
-        });
-        res.status(400).json({ err });
+        return res.status(400).json({ err });
       }
-      await logModel.create({
-        madeBy: req.loggedUser.usuario,
-        action: "GENERATE REPORT",
-        action_detail: `Admin ${req.loggedUser.usuario} Generated report`,
-        status: "SUCCESSFUL",
-      });
-      res.status(200).json({ mgs: "success " });
     });
+  await logModel.create({
+    madeBy: req.loggedUser.usuario,
+    action: "GENERATE REPORT",
+    action_detail: `Admin ${req.loggedUser.usuario} Generated report`,
+    status: "SUCCESSFUL",
+  });
+  res.status(200).json({ mgs: "success " });
+};
+
+const checkDocument = () => {
+  const docPath = path.join(__dirname, "report.pdf");
+  try {
+    if (fs.existsSync(docPath)) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const fetchPDF = async (req, res) => {
@@ -221,6 +228,12 @@ const fetchPDF = async (req, res) => {
       action_detail: `Admin ${req.loggedUser.usuario} fetched report`,
       status: "SUCCESSFUL",
     });
+    let check = false;
+
+    while (!check) {
+      check = checkDocument();
+      console.log(check);
+    }
     res.sendFile(path.join(__dirname, "report.pdf"));
   } catch (err) {
     await logModel.create({

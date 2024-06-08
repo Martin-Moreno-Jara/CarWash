@@ -28,6 +28,7 @@ const ReporteGenerate = () => {
   const [isOpen2, setIsOpen2] = useState(false);
   const [showServices, setShowServices] = useState(false);
   const [showEmployees, setShowEmployees] = useState(false);
+  const [isReport, setIsReport] = useState(false);
   const { usuario: loggedUser } = useAuthContext();
 
   const handleFechaInicio = (e) => {
@@ -101,13 +102,18 @@ const ReporteGenerate = () => {
           }),
         });
         const sendResponse = await sendData.json();
-        console.log(sendResponse);
-        setIsOpen2(false);
-        dispatch({ type: "VISUALIZE", payload: !showGenerate });
+        if (sendData.ok) {
+          setIsReport(!isReport);
+          console.log(sendResponse);
+        }
       } else {
         setIsOpen(true);
       }
     }
+  };
+  const handleVisualize = () => {
+    setIsOpen2(false);
+    dispatch({ type: "VISUALIZE", payload: !showGenerate });
   };
 
   return (
@@ -231,6 +237,12 @@ const ReporteGenerate = () => {
         </div>
         <button className="submit-btn" type="submit">
           Generar Reporte
+        </button>
+        <button
+          className="submit-btn"
+          disabled={!isReport}
+          onClick={handleVisualize}>
+          Visualizar Reporte
         </button>
       </form>
       {isOpen && (

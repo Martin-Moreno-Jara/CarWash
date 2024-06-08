@@ -195,7 +195,8 @@ const createPDF = async (req, res) => {
     })
     .toFile(`controllers/report.pdf`, (err) => {
       if (err) {
-        return res.status(400).json({ err });
+        res.status(400).json({ err });
+        return;
       }
     });
   await logModel.create({

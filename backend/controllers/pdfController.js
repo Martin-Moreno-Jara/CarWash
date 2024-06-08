@@ -186,31 +186,24 @@ const createPDF = async (req, res) => {
   if (empleados) {
     employeeData = await searchEmployees(initDate, endDate, empleados);
   }
-  console.log(employeeData);
 
   pdf
     .create(pdfTemplate(initDate, endDate, serviceData, employeeData), {
       type: "pdf",
       timeout: "100000",
     })
-    .toFile(`controllers/report.pdf`, async (err) => {
+    .toFile(`controllers/report.pdf`, (err) => {
       if (err) {
-        await logModel.create({
-          madeBy: req.loggedUser.usuario,
-          action: "GENERATE REPORT",
-          action_detail: `Admin ${req.loggedUser.usuario} tried to generate report`,
-          status: "FAILED",
-        });
-        res.status(400).json({ err });
+        return res.status(400).json({ err });
       }
-      await logModel.create({
-        madeBy: req.loggedUser.usuario,
-        action: "GENERATE REPORT",
-        action_detail: `Admin ${req.loggedUser.usuario} Generated report`,
-        status: "SUCCESSFUL",
-      });
-      res.status(200).json({ mgs: "success " });
     });
+  await logModel.create({
+    madeBy: req.loggedUser.usuario,
+    action: "GENERATE REPORT",
+    action_detail: `Admin ${req.loggedUser.usuario} Generated report`,
+    status: "SUCCESSFUL",
+  });
+  res.status(200).json({ mgs: "success " });
 };
 
 const fetchPDF = async (req, res) => {

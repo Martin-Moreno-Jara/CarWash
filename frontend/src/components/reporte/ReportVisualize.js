@@ -1,5 +1,4 @@
 //************************** IMPORTED
-import { saveAs } from "file-saver";
 //REACT HOOKS/IMPORTS
 import { useState } from "react";
 import { useEffect } from "react";
@@ -11,47 +10,31 @@ const apiURL = process.env.REACT_APP_DEVURL;
 //**************************************************************
 
 const ReportVisualize = () => {
-  const [blobPDF, setBlobPdf] = useState(null);
-  useEffect(() => {
-    obtenerPDF();
-  }, []);
   const { usuario: loggedUser } = useAuthContext();
 
-  const obtenerPDF = async () => {
-    const getPDF = await fetch(`${apiURL}/api/reporte/fetchPDF`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${loggedUser.token}`,
-      },
-    });
-    if (!getPDF.ok) {
-      const getPDF_response = await getPDF.json();
-      console.log(`error: ${getPDF_response}`);
-    }
+  const [blobPDF, setBlobPdf] = useState(null);
 
-    if (getPDF.ok) {
-      const blob = await getPDF.blob();
-      setBlobPdf(blob);
-    }
-  };
+  useEffect(() => {
+    const obtenerPDF = async () => {
+      const getPDF = await fetch(`${apiURL}/api/reporte/fetchPDF`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${loggedUser.token}`,
+        },
+      });
+      if (!getPDF.ok) {
+        const getPDF_response = await getPDF.json();
+        console.log(`error: ${getPDF_response}`);
+      }
 
-  const handleDownload = async () => {
-    if (blobPDF) {
-      saveAs(blobPDF, "report.pdf");
-    }
-  };
+      if (getPDF.ok) {
+        const blob = await getPDF.blob();
+        setBlobPdf(blob);
+      }
+    };
 
-  const handlePrint = () => {
-    if (blobPDF) {
-      const pdfUrl = URL.createObjectURL(blobPDF);
-      const printWindow = window.open(pdfUrl);
-      printWindow.onload = () => {
-        printWindow.print();
-      };
-    } else {
-      console.warn("PDF no disponible para imprimir.");
-    }
-  };
+    obtenerPDF();
+  }, [loggedUser.token]);
 
   return (
     <div className="main-container-report">

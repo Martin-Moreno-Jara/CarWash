@@ -125,7 +125,7 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
         ${numServicios ? `<li>Total servicios:${numServicios.total}</li>` : ""}
       </ul>
       ${
-        numServicios.acabados && numServicios.still
+        numServicios
           ? `
           <div style="width: 40%; position: relative; left: 50%; bottom: 60px">
             <table class="content-table">

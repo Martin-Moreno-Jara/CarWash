@@ -25,9 +25,7 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
     <meta charset="UTF-8" />
     <title>Reporte</title>
     <style>
-    html {
-      zoom: 0.55;
-    }
+
     body {
       margin: 0;
       padding: 0;
@@ -37,6 +35,7 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
       background-color: #112339;
       color: white;
       width:100%;
+      padding:1rem, 2.5rem;
     }
     .titles-text {
       color: #112339;
@@ -98,61 +97,59 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
   </head>
   <body>
     <section class="header-section">
-      <div style="height: 200px; width:100%;">
+      <div style="height: 200px; width:100%; padding:10px 15px;">
         <div class="header-text">
           <h1 class="main-title">REPORTE DEL NEGOCIO</h1>
           <h3 class="subtitle">CARWASH</h3>
-          <p class="normal-text">Generado el ${fechaHoy.getDate()}/${
+          <p class="normal-text">Generado el <strong>${fechaHoy.getFullYear()}/${
     fechaHoy.getMonth() + 1
-  }/${fechaHoy.getFullYear()}</p 2024-2-5>
-          <p class="normal-text">Reportando desde ${initDate.replaceAll(
+  }/${fechaHoy.getDate()}</strong></p>
+          <p class="normal-text">Reportando desde <strong>${initDate.replaceAll(
             "-",
             "/"
-          )} hasta ${endDate.replaceAll("-", "/")}</p>
+          )}</strong> hasta <strong>${endDate.replaceAll("-", "/")}</strong></p>
         </div>
         <div style="width: 30%; position: relative; left: 80%; top: -155px">
           <img class="logo" src="https://i.imgur.com/9OKMWwr.jpg" />
-        </div>
-        
+        </div>  
       </div>
     </section>
     ${
       serviceData
-        ? `<section id="services-section">
-    <h3 class="titles-text">Reporte de servicios</h3>
-    <div style="width: 40%">
-      <ul style="display: inline">
-      ${recaudo ? `<li>Recaudo: ${recaudo}</li>` : ""}
-        
-        ${numServicios ? `<li>Total servicios:${numServicios.total}</li>` : ""}
-      </ul>
+        ? `
+    <section id="services-section">
+      <h3 class="titles-text">Reporte de servicios</h3>
+      <div style="padding:5px 15px">
       ${
         numServicios
-          ? `
-          <div style="width: 40%; position: relative; left: 50%; bottom: 60px">
-            <table class="content-table">
-              <thead>
-                <th>Servicios terminados</th>
-                <th>Servicios abiertos</th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>${numServicios.acabados}</td>
-                  <td>${numServicios.still}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          `
+          ? `<div style="display:inline-block;">
+        <h4>Distribución servicio/estado</h4>
+        <p> Total servicios: ${numServicios.total}</p>
+        <p>Servicios terminados: ${numServicios.acabados}</p>
+        <p>Servicios abiertos: ${numServicios.still}</p>
+       </div>`
           : ""
       }
+
+      ${
+        recaudo
+          ? `<div style="display:inline-block; margin-left:100px;">
+          <h4>Dinero recaudado</h4>
+          <span>Recaudo: $ ${new Intl.NumberFormat().format(recaudo)}</span>
+          </div>`
+          : ""
+      }
+        
+        
     </div>
     ${
       servicesPerCar
-        ? `
-    <div style="position: relative; left: 5%">
+        ? ` 
+        <h4 style="padding:5px 15px;">Distribución servicio/vehículo</h4>
+    <div style="position: relative; left: 5%; padding:5px 15px;">
+    
       <table class="content-table" style="
-      width: 60%;
+      width: 85%;
       font-size: 0.8rem;">
         <thead>
           <th></th>
@@ -171,7 +168,9 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
             ${
               servicesPerCar?.carData
                 ? `${servicesPerCar.carData
-                    .map((data) => `<td>${data}</td>`)
+                    .map(
+                      (data) => `<td style="text-align:center;">${data}</td>`
+                    )
                     .join("")}`
                 : ""
             }
@@ -181,7 +180,9 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
             ${
               servicesPerCar?.camionetaData
                 ? `${servicesPerCar.camionetaData
-                    .map((data) => `<td>${data}</td>`)
+                    .map(
+                      (data) => `<td style="text-align:center;">${data}</td>`
+                    )
                     .join("")}`
                 : ""
             }
@@ -191,7 +192,9 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
             ${
               servicesPerCar?.totalData
                 ? `${servicesPerCar.totalData
-                    .map((data) => `<td>${data}</td>`)
+                    .map(
+                      (data) => `<td style="text-align:center;">${data}</td>`
+                    )
                     .join("")}`
                 : ""
             }
@@ -206,12 +209,12 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
       ranking
         ? `
     <div class="ranking-div">
-    <h4>Ranking de servicios </h4>
+    <h4 style="padding:5px 15px;">Ranking de servicios según calificación</h4>
     <ol>
     ${ranking
       .map(
         (rank) =>
-          ` <li>${rank.servicio} <span style="font-weight:bold">(${rank.promedio})</span> </li>`
+          ` <li>${rank.servicio} <span style="font-weight:bold;padding:15px ">(${rank.promedio})</span> </li>`
       )
       .join("")}
     </ol>
@@ -227,7 +230,11 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
       employeeData
         ? `<section id="reports-section">
     <h3 class="titles-text">Reporte de empleados</h3>
-    ${numEmpleados ? `<p>Número de empleados: ${numEmpleados}` : ""}</p>
+    ${
+      numEmpleados
+        ? `<p style="padding:5px 15px;">Número de empleados: ${numEmpleados}`
+        : ""
+    }</p>
     <div style="position: relative; left: 20%">
       <table class="content-table">
   <thead>
@@ -247,7 +254,13 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
           `<tr>
             <td>${data.empleadoName}</td>
         ${displayNumServicios ? `<td>${data.numServiciosEmpleado}</td>` : ""}
-        ${displayRecaudo ? ` <td>${data.recaudoEmpleado}</td>` : ""}
+        ${
+          displayRecaudo
+            ? ` <td>$ ${new Intl.NumberFormat().format(
+                data.recaudoEmpleado
+              )}</td>`
+            : ""
+        }
         ${displayCalificacion ? ` <td>${data.calificacion}</td>` : ""}
       </tr>`
       )

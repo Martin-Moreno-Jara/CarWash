@@ -25,7 +25,9 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
     <meta charset="UTF-8" />
     <title>Reporte</title>
     <style>
-
+    html{
+    zoom:0.55
+    }
     body {
       margin: 0;
       padding: 0;

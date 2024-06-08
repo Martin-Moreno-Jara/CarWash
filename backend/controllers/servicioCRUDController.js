@@ -13,6 +13,7 @@ const getAllServices = async (req, res) => {
   }
 };
 
+// obtener servicios filtrando por empleado
 const getserviceByEmployee = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -42,8 +43,7 @@ const getserviceByEmployee = async (req, res) => {
   }
 };
 
-//controlador de mostrar un servicio
-
+// controlador de mostrar un servicio
 const getService = async (req, res) => {
   const { id } = req.params;
   const idValidation = mongoose.Types.ObjectId.isValid(id);
@@ -67,11 +67,24 @@ const getService = async (req, res) => {
   res.status(200).json(service);
 };
 
-//crear servicio
+// controlador de crear servicio
 const createService = async (req, res) => {
   const { cliente, placa, tipoAuto, tipoServicio, precio, encargado, carInfo } =
     req.body;
   try {
+
+    const historial = {
+      fecha: new Date(),
+      cliente,
+      placa,
+      tipoAuto,
+      tipoServicio,
+      precio,
+      encargado,
+      carInfo,
+      usuario: req.loggedUser.usuario,
+  };
+  
     const servicio = await servicioModel.insertService(
       cliente,
       placa,
@@ -80,7 +93,8 @@ const createService = async (req, res) => {
       precio,
       encargado,
       carInfo,
-      req.loggedUser.usuario
+      req.loggedUser.usuario,
+      historial
     );
     await logModel.create({
       madeBy: req.loggedUser.usuario,
@@ -95,13 +109,24 @@ const createService = async (req, res) => {
   }
 };
 
-//controlador de editar servicio
-
+// controlador de editar servicio
 const patchService = async (req, res) => {
   const { id } = req.params;
   const { cliente, placa, tipoAuto, tipoServicio, precio, encargado, carInfo } = req.body;
     
   try {
+    const historial = {
+      fecha: new Date(),
+      cliente,
+      placa,
+      tipoAuto,
+      tipoServicio,
+      precio,
+      encargado,
+      carInfo,
+      usuario: req.loggedUser.usuario
+    };
+
     const servicioCambiado = await servicioModel.updateService(
       id,
       cliente,
@@ -111,7 +136,8 @@ const patchService = async (req, res) => {
       precio,
       encargado,
       carInfo,
-      req.loggedUser.usuario
+      req.loggedUser.usuario,
+      historial
     );
     await logModel.create({
       madeBy: req.loggedUser.usuario,
@@ -126,8 +152,7 @@ const patchService = async (req, res) => {
   }
 };
 
-//controlador de eliminar servicio
-
+// controlador de eliminar servicio
 const deleteService = async (req, res) => {
   //res.json({ msg: "eliminar servicio" });
   try {

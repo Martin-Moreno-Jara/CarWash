@@ -200,7 +200,13 @@ const createPDF = async (req, res) => {
         },
       })
       .toFile(`controllers/report.pdf`, (err) => {
-        console.log(err);
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("sin errores en crear pdf");
+        }
+
+        return;
       });
     await logModel.create({
       madeBy: req.loggedUser.usuario,

@@ -103,16 +103,19 @@ const ReporteGenerate = () => {
         });
         const sendResponse = await sendData.json();
         if (sendData.ok) {
-          setIsReport(!isReport);
-          console.log(sendResponse);
+          console.log("send data is ok");
         }
+
+        setIsOpen2(false);
+        console.log(isOpen2);
+        setIsReport(!isReport);
+        console.log(sendResponse);
       } else {
         setIsOpen(true);
       }
     }
   };
   const handleVisualize = () => {
-    setIsOpen2(false);
     dispatch({ type: "VISUALIZE", payload: !showGenerate });
   };
 

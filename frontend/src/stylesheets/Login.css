@@ -165,7 +165,7 @@ input {
 .success {
   color: rgb(255, 255, 255);
   margin-top: 10px;
-  background-color: #48e990;
+  background-color: var(--estado-terminado);
   padding: 15px 10px;
   margin: 20px;
   border: 2px solid;

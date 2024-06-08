@@ -5,6 +5,7 @@ const empleadoModel = require("../models/userModel");
 const servicioModel = require("../models/servicioModel");
 const tarfiasModel = require("../models/tarifasModel");
 const mongoose = require("mongoose");
+const logModel = require("../models/logModel");
 
 const calcDataCells = (servicesList, vehicleData) => {
   const returnData = [];
@@ -192,19 +193,42 @@ const createPDF = async (req, res) => {
       type: "pdf",
       timeout: "100000",
     })
-    .toFile(`controllers/report.pdf`, (err) => {
+    .toFile(`controllers/report.pdf`, async (err) => {
       if (err) {
-        console.log(err.message);
+        await logModel.create({
+          madeBy: req.loggedUser.usuario,
+          action: "GENERATE REPORT",
+          action_detail: `Admin ${req.loggedUser.usuario} tried to generate report`,
+          status: "FAILED",
+        });
         res.status(400).json({ err });
       }
+      await logModel.create({
+        madeBy: req.loggedUser.usuario,
+        action: "GENERATE REPORT",
+        action_detail: `Admin ${req.loggedUser.usuario} Generated report`,
+        status: "SUCCESSFUL",
+      });
       res.status(200).json({ mgs: "success " });
     });
 };
 
-const fetchPDF = (req, res) => {
+const fetchPDF = async (req, res) => {
   try {
+    await logModel.create({
+      madeBy: req.loggedUser.usuario,
+      action: "FETCH REPORT",
+      action_detail: `Admin ${req.loggedUser.usuario} fetched report`,
+      status: "SUCCESSFUL",
+    });
     res.sendFile(path.join(__dirname, "report.pdf"));
   } catch (err) {
+    await logModel.create({
+      madeBy: req.loggedUser.usuario,
+      action: "FETCH REPORT",
+      action_detail: `Admin ${req.loggedUser.usuario} tried to fetch report`,
+      status: "FAILED",
+    });
     res.json({ error: err.message });
   }
 };

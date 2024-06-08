@@ -6,6 +6,7 @@ import { useReportContext } from "../../hooks/reporteHooks/useReportContext";
 
 //STYLESHEET
 import "../../stylesheets/ReportGenerate.css";
+import { useAuthContext } from "../../hooks/useAuthContext";
 const apiURL = process.env.REACT_APP_DEVURL;
 
 //**************************************************************
@@ -27,13 +28,13 @@ const ReporteGenerate = () => {
   const [isOpen2, setIsOpen2] = useState(false);
   const [showServices, setShowServices] = useState(false);
   const [showEmployees, setShowEmployees] = useState(false);
+  const { usuario: loggedUser } = useAuthContext();
 
   const handleFechaInicio = (e) => {
     setFechaInicio(e.target.value);
     if (fechafin && new Date(e.target.value) > new Date(fechafin)) {
       setError("La fecha de inicio no puede ser posterior a la fecha de fin");
-    } 
-    else {
+    } else {
       setError("");
     }
   };
@@ -41,8 +42,7 @@ const ReporteGenerate = () => {
     setFechaFin(e.target.value);
     if (fechainicio && new Date(e.target.value) < new Date(fechainicio)) {
       setError("La fecha de fin no puede ser anterior a la fecha de inicio");
-    }
-    else {
+    } else {
       setError("");
     }
   };
@@ -69,11 +69,10 @@ const ReporteGenerate = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if(!fechainicio || !fechafin){
+    if (!fechainicio || !fechafin) {
       setError("Ninguna de las fechas puede estar vacía");
       setIsOpen(true);
-    }
-    else{
+    } else {
       if (!error) {
         setIsOpen2(true);
         const servicios = {
@@ -90,7 +89,10 @@ const ReporteGenerate = () => {
         };
         const sendData = await fetch(`${apiURL}/api/reporte/CreatePDF`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${loggedUser.token}`,
+          },
           body: JSON.stringify({
             initDate: fechainicio,
             endDate: fechafin,

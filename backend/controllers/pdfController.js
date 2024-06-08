@@ -194,7 +194,9 @@ const createPDF = async (req, res) => {
         type: "pdf",
         timeout: "100000",
       })
-      .toFile(`controllers/report.pdf`);
+      .toFile(`controllers/report.pdf`, (err) => {
+        console.log(err);
+      });
     await logModel.create({
       madeBy: req.loggedUser.usuario,
       action: "GENERATE REPORT",

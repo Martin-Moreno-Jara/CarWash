@@ -12,6 +12,7 @@ import HomeAdmin from "./pages/HomeAdmin";
 import HomeEmpleado from "./pages/HomeEmpleado";
 import CrudEmpleados from "./pages/CrudEmpleados";
 import CrudServicios from "./pages/CrudServicios";
+import GenerarReporte from "./pages/GenerarReporte";
 import ChangePassword from "./pages/ChangePassword";
 //STYLESHEET
 //**************************************************************
@@ -49,12 +50,8 @@ function App() {
                 ) : (
                   <Navigate to="/empleado" />
                 )
-              }
-            ></Route>
-            <Route
-              path="/change-password"
-              element={<ChangePassword />} 
-            />
+              }></Route>
+            <Route path="/change-password" element={<ChangePassword />} />
             <Route
               path="/admin"
               element={
@@ -100,6 +97,16 @@ function App() {
               element={
                 usuario && usuario.rol === "empleado" ? (
                   <CrudServicios />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/admin/generarReporte"
+              element={
+                usuario && usuario.rol === "administrador" ? (
+                  <GenerarReporte />
                 ) : (
                   <Navigate to="/" />
                 )

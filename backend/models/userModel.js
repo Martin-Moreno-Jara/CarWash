@@ -42,6 +42,11 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    primeraVez: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
   },
   { timestamps: true }
 );
@@ -250,6 +255,64 @@ userSchema.statics.updateEmployee = async function (
   console.log(user);
   const updated = await this.findOne({ _id: id });
   return updated;
+};
+
+userSchema.statics.updatePassword = async function (
+  usuario,
+  contrasena,
+  nuevaContrasena
+) {
+  if (!usuario || !contrasena || !nuevaContrasena) {
+    throw Error(
+      "Debe proporcionar el usuario y las contraseñas actuales y nuevas"
+    );
+  }
+
+  const user = await this.findOne({ usuario });
+  if (!user) {
+    throw Error("El usuario no existe");
+  }
+
+  const validacionPassword = await bcrypt.compare(contrasena, user.contrasena);
+  if (!validacionPassword) {
+    throw Error("La contraseña actual es incorrecta");
+  }
+
+  if (!validator.isStrongPassword(nuevaContrasena)) {
+    throw Error(
+      "La nueva contraseña es débil. Debe incluir mayúsculas, minúsculas, números y caracteres especiales."
+    );
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(nuevaContrasena, salt);
+
+  await this.updateOne({ usuario }, { contrasena: hashedPassword });
+
+  return "Contraseña actualizada exitosamente";
+};
+userSchema.statics.actualizarPrimeraVez = async function (usuario) {
+  if (!usuario) {
+    throw Error("Debe proporcionar el usuario");
+  }
+
+  const user = await this.findOne({ usuario });
+  if (!user) {
+    throw Error("El usuario no existe");
+  }
+
+  // Verificar si el usuario ya ha cambiado su atributo 'primeraVez'
+  if (!user.primeraVez) {
+    return "El atributo 'primeraVez' ya está establecido en false";
+  }
+
+  // Actualizar el atributo 'primeraVez' a false
+  user.primeraVez = false;
+
+  // Guardar los cambios en la base de datos
+  await user.save();
+
+  return "El atributo 'primeraVez' ha sido actualizado a false exitosamente";
 };
 
 module.exports = mongoose.model("userModel", userSchema);

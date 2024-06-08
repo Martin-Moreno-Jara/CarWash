@@ -2,6 +2,7 @@
 //REACT HOOKS/IMPORTS
 import { useState } from "react";
 import MoonLoader from "react-spinners/MoonLoader";
+import { Link } from "react-router-dom";
 //CUSTOM HOOKS
 import { useLogin } from "../hooks/usuarioHooks/useLogin";
 //STYLESHEET
@@ -9,9 +10,10 @@ import "../stylesheets/Login.css";
 //**************************************************************
 
 const Login = () => {
-  const { login, error, isLoading } = useLogin();
+  const { login, error, isLoading, firstTimeUser } = useLogin();
   const [nombreUsuario, setNombreUsuario] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setshowPassword] = useState(false);
 
   const handleNombreUsuario = (e) => {
     setNombreUsuario(e.target.value);
@@ -22,7 +24,6 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(nombreUsuario, password);
     await login(nombreUsuario, password);
   };
 
@@ -37,7 +38,23 @@ const Login = () => {
           <label>Nombre de usuario</label>
           <input type="text" onChange={handleNombreUsuario} />
           <label>Contraseña</label>
-          <input type="password" onChange={handlePassword} />
+          <div className="field-div">
+              <input
+                className="password-field"
+                type={showPassword ? "text" : "password"}
+                onChange={handlePassword}
+                value={password}
+                autoComplete="off"
+              />
+              <span
+                className="material-symbols-outlined see"
+                onClick={() => {
+                  setshowPassword(!showPassword);
+                }}
+              >
+                {showPassword ? "visibility" : "visibility_off"}
+              </span>
+            </div>
         </div>
         <button className="login-btn" disabled={isLoading}>
           Iniciar Sesión
@@ -48,6 +65,10 @@ const Login = () => {
           </div>
         )}
         {error && <div className="error">{error}</div>}
+        {firstTimeUser && (
+          <div className="warning">Primera vez que inicia sesión, por favor cambie su contraseña.</div>
+        )}
+        <Link to="/change-password">Cambiar de contraseña</Link>
       </form>
     </div>
   );

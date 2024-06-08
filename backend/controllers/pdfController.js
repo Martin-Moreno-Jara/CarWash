@@ -6,6 +6,7 @@ const servicioModel = require("../models/servicioModel");
 const tarfiasModel = require("../models/tarifasModel");
 const mongoose = require("mongoose");
 const logModel = require("../models/logModel");
+const fs = require("fs");
 
 const calcDataCells = (servicesList, vehicleData) => {
   const returnData = [];
@@ -206,6 +207,19 @@ const createPDF = async (req, res) => {
   res.status(200).json({ mgs: "success " });
 };
 
+const checkDocument = () => {
+  const docPath = path.join(__dirname, "report.pdf");
+  try {
+    if (fs.existsSync(docPath)) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const fetchPDF = async (req, res) => {
   try {
     await logModel.create({
@@ -214,6 +228,12 @@ const fetchPDF = async (req, res) => {
       action_detail: `Admin ${req.loggedUser.usuario} fetched report`,
       status: "SUCCESSFUL",
     });
+    let check = false;
+
+    while (!check) {
+      check = checkDocument();
+      console.log(check);
+    }
     res.sendFile(path.join(__dirname, "report.pdf"));
   } catch (err) {
     await logModel.create({

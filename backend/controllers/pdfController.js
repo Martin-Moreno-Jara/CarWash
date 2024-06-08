@@ -193,6 +193,7 @@ const createPDF = async (req, res) => {
       .create(pdfTemplate(initDate, endDate, serviceData, employeeData), {
         type: "pdf",
         timeout: "100000",
+        format: "Letter",
         childProcessOptions: {
           env: {
             OPENSSL_CONF: "/dev/null",

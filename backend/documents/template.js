@@ -23,7 +23,6 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Reporte</title>
     <style>
     body {

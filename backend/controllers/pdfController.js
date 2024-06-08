@@ -188,24 +188,23 @@ const createPDF = async (req, res) => {
     employeeData = await searchEmployees(initDate, endDate, empleados);
   }
 
-  pdf
-    .create(pdfTemplate(initDate, endDate, serviceData, employeeData), {
-      type: "pdf",
-      timeout: "100000",
-    })
-    .toFile(`controllers/report.pdf`, (err) => {
-      if (err) {
-        res.status(400).json({ err });
-        return;
-      }
+  try {
+    pdf
+      .create(pdfTemplate(initDate, endDate, serviceData, employeeData), {
+        type: "pdf",
+        timeout: "100000",
+      })
+      .toFile(`controllers/report.pdf`);
+    await logModel.create({
+      madeBy: req.loggedUser.usuario,
+      action: "GENERATE REPORT",
+      action_detail: `Admin ${req.loggedUser.usuario} Generated report`,
+      status: "SUCCESSFUL",
     });
-  await logModel.create({
-    madeBy: req.loggedUser.usuario,
-    action: "GENERATE REPORT",
-    action_detail: `Admin ${req.loggedUser.usuario} Generated report`,
-    status: "SUCCESSFUL",
-  });
-  res.status(200).json({ mgs: "success " });
+    res.status(200).json({ mgs: `File created at ${__dirname}/report.pdf` });
+  } catch (err) {
+    res.status(400).json({ err });
+  }
 };
 
 const checkDocument = () => {

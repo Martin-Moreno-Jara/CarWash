@@ -44,6 +44,11 @@ export const useChangePassword = () => {
       return setError("La nueva contraseña no cumple con los requisitos");
     }
 
+    if (contrasena === nuevaContrasena) {
+      setIsLoading(false);
+      return setError("Las nueva contraseña es igual a la anterior");
+    }
+
     if (nuevaContrasena !== confirmNewPassword) {
       setIsLoading(false);
       return setError("Las nuevas contraseñas no coinciden");

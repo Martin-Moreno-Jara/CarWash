@@ -223,7 +223,7 @@ const ReporteGenerate = () => {
                     onChange={handleEmpDineroRecaudado}
                   />
                   <span className="checkbox-custom"></span>
-                  Cantidad de dinero recuadada
+                  Cantidad de dinero recuadado
                 </label>
                 <label className="checklist-item">
                   <input

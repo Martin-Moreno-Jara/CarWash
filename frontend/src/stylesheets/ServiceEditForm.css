@@ -1,77 +1,86 @@
 /* ServiceEditForm.css */
 
 .main-container {
-    height: 80%;
-    width: 70%;
-    background-color: var(--cream-grey);
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    overflow-y: scroll;
-  }
-  
-  .form-div {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-fields {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
-  }
-  
-  .form-fields label {
-    font-weight: bold;
-  }
-  
-  .form-fields input, .form-fields select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+  height: 80%;
+  width: 70%;
+  background-color: var(--cream-grey);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  overflow-y: scroll;
+}
 
-  .form-fieldsMoreService {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
-  }
-  
-  .form-fieldsMoreService label {
-    font-weight: bold;
-  }
+.form-div {
+  display: flex;
+  flex-direction: column;
+}
 
-  .form-fieldsMoreService input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #ccc; 
-    color: rgb(0, 0, 0, 0.7);
-  }
+.form-fields {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
 
-  .form-fieldsMoreService select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #ccc; 
-    color: rgb(0, 0, 0);
-  }
-  
-  .submit-btn {
-    align-self: flex-end;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: var(--regal-blue);
-    color: var(--cream-grey);
-    cursor: pointer;
-  }
-  
-  .submit-btn:hover {
-    background-color: var(--tuned-down-blue);
-  }
-  
+.form-fields label {
+  font-weight: bold;
+}
+
+.form-fields input,
+.form-fields select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-fieldsMoreService {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+
+.form-fieldsMoreService label {
+  font-weight: bold;
+}
+
+.form-fieldsMoreService input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #ccc;
+  color: rgb(0, 0, 0, 0.7);
+}
+
+.form-fieldsMoreService select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #ccc;
+  color: rgb(0, 0, 0);
+}
+
+.submit-btn,
+.disabled-btn {
+  align-self: flex-end;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  width: fit-content;
+  background-color: var(--regal-blue);
+  color: var(--cream-grey);
+  margin: 1.7rem 1.8rem 0rem 0rem;
+  cursor: pointer;
+}
+.disabled-btn {
+  background-color: #dcdc;
+  color: #000000a7;
+
+  cursor: auto;
+}
+
+.submit-btn:hover {
+  background-color: var(--tuned-down-blue);
+}

@@ -242,7 +242,7 @@ const ReporteGenerate = () => {
           Generar Reporte
         </button>
         <button
-          className="submit-btn"
+          className={isReport ? "submit-btn" : "disabled-btn"}
           disabled={!isReport}
           onClick={handleVisualize}>
           Visualizar Reporte

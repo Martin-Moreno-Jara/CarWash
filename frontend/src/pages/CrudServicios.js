@@ -43,10 +43,10 @@ const CrudServicios = () => {
     <div className="crudServicios-main">
       <div className="service-options">
         <div className="description">
-          <h2>Modulo de gestión de servicios</h2>
+          <h2>Módulo de gestión de servicios</h2>
           <p>
             Podrá ver la lista de servicios del negocio, crear servicios,
-            editarlos y actualizar su estado
+            editarlos y actualizar su estado.
           </p>
         </div>
 
@@ -56,7 +56,7 @@ const CrudServicios = () => {
             onClick={() => {
               setDisplayCreate(!displayCreate);
             }}>
-            Crear servicio
+            Crear Servicio
           </div>
         </div>
       </div>

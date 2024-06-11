@@ -52,13 +52,13 @@ const ChangePassword = () => {
     <div className="overall-container">
       <form className="form-container" onSubmit={handleSubmit}>
         <div className="instruction-div">
-          <h2>Cambiar Contraseña</h2>
+          <h2>Cambiar contraseña</h2>
           <p>Ingrese las credenciales y la nueva contraseña</p>
         </div>
         <div className="fields">
           <label>Nombre de usuario</label>
           <input type="text" onChange={handleNombreUsuario} />
-          <label>Contraseña</label>
+          <label>Contraseña actual</label>
           <div className="field-div">
             <input
               className="password-field"
@@ -76,7 +76,7 @@ const ChangePassword = () => {
               {showPassword ? "visibility" : "visibility_off"}
             </span>
           </div>
-          <label>Nueva Contraseña</label>
+          <label>Contraseña nueva</label>
           <div className="field-div">
             <input
               className="password-field"
@@ -114,12 +114,12 @@ const ChangePassword = () => {
             {showRequirements && (
               <ul>
                 <li>Mínimo una mayúscula y minúscula.</li>
-                <li>Mínimo un número y carácter especial.</li>
+                <li>Mínimo un número y un carácter especial.</li>
                 <li>Mínimo 8 caracteres.</li>
               </ul>
-            )}
+            )}  
           </div>
-          <label>Confirmar Nueva Contraseña</label>
+          <label>Confirmar contraseña nueva</label>
           <div className="field-div">
             <input
               className="password-field"

@@ -14,9 +14,11 @@ export const useLogin = () => {
   const [firstTimeUser, setFirstTimeUser] = useState(false);
 
   const checkFirstTimeUser = async (usuario) => {
-    const response = await fetch(`${apiURL}/api/user/${usuario}`);
-    const json = await response.json();
-    return json.primeraVez;
+    if (usuario) {
+      const response = await fetch(`${apiURL}/api/user/${usuario}`);
+      const json = await response.json();
+      return json.primeraVez;
+    }
   };
 
   const login = async (usuario, contrasena) => {
@@ -24,7 +26,7 @@ export const useLogin = () => {
     setError(null);
 
     const isFirstTimeUser = await checkFirstTimeUser(usuario);
-    if (isFirstTimeUser && usuario!==  "raulJm") {
+    if (isFirstTimeUser && usuario !== "raulJm") {
       setIsLoading(false);
       setFirstTimeUser(true);
       return;
@@ -36,7 +38,6 @@ export const useLogin = () => {
       body: JSON.stringify({ usuario, contrasena }),
     });
     const json = await response.json();
-    
 
     if (!response.ok) {
       setIsLoading(false);

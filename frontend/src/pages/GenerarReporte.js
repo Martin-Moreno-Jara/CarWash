@@ -24,8 +24,8 @@ const GenerarReporte = () => {
         <div className="description">
           <h2>Módulo de reporte de rendimiento</h2>
           <p>
-            Podrá generar un informe del rendimiento del autolavado. De igual
-            forma, podrá seleccionar los apartados de interés.
+            Podrá generar un informe del rendimiento del autolavado y, 
+            además, seleccionar los apartados de interés.
           </p>
         </div>
         {!showGenerate && (

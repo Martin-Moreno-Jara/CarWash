@@ -206,7 +206,7 @@ userSchema.statics.updateEmployee = async function (
       action_detail: `Tried to update employee, but not all fields are filled`,
       status: "FAILED",
     });
-    throw Error("Todos los campos deben ser diligenciados");
+    throw Error("Todos los campos deben ser diligenciados.");
   }
   const existsUsuario = await this.findOne({ usuario });
   const newId = new mongoose.Types.ObjectId(id);
@@ -217,7 +217,7 @@ userSchema.statics.updateEmployee = async function (
       action_detail: `Tried to update employee, but new username is already in use`,
       status: "FAILED",
     });
-    throw Error("El usuario ya existe");
+    throw Error("El usuario ya existe.");
   }
   const existsCedula = await this.findOne({ cedula });
   if (existsCedula && !existsCedula._id.equals(newId)) {
@@ -227,7 +227,7 @@ userSchema.statics.updateEmployee = async function (
       action_detail: `Tried to update employee, but new document is already in use`,
       status: "FAILED",
     });
-    throw Error("La cedula no puede estar repetida");
+    throw Error("La cédula no puede estar repetida.");
   }
 
   const existsTelefono = await this.findOne({ telefono });
@@ -238,7 +238,7 @@ userSchema.statics.updateEmployee = async function (
       action_detail: `Tried to update employee, but new cellphone number is already in use`,
       status: "FAILED",
     });
-    throw Error("El telefono no puede estar repetido");
+    throw Error("El teléfono no puede estar repetido.");
   }
 
   const user = await this.findOneAndUpdate(
@@ -264,7 +264,7 @@ userSchema.statics.updatePassword = async function (
 ) {
   if (!usuario || !contrasena || !nuevaContrasena) {
     throw Error(
-      "Debe proporcionar el usuario y las contraseñas actuales y nuevas"
+      "Debe proporcionar el usuario y las contraseñas actuales y nuevas."
     );
   }
 

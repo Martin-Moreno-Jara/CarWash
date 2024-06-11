@@ -39,22 +39,22 @@ const Login = () => {
           <input type="text" onChange={handleNombreUsuario} />
           <label>Contraseña</label>
           <div className="field-div">
-              <input
-                className="password-field"
-                type={showPassword ? "text" : "password"}
-                onChange={handlePassword}
-                value={password}
-                autoComplete="off"
-              />
-              <span
-                className="material-symbols-outlined see"
-                onClick={() => {
-                  setshowPassword(!showPassword);
-                }}
-              >
-                {showPassword ? "visibility" : "visibility_off"}
-              </span>
-            </div>
+            <input
+              className="password-field"
+              type={showPassword ? "text" : "password"}
+              onChange={handlePassword}
+              value={password}
+              autoComplete="off"
+            />
+            <span
+              className="material-symbols-outlined see"
+              onClick={() => {
+                setshowPassword(!showPassword);
+              }}
+            >
+              {showPassword ? "visibility" : "visibility_off"}
+            </span>
+          </div>
         </div>
         <button className="login-btn" disabled={isLoading}>
           Iniciar Sesión
@@ -66,9 +66,11 @@ const Login = () => {
         )}
         {error && <div className="error">{error}</div>}
         {firstTimeUser && (
-          <div className="warning">Primera vez que inicia sesión, por favor cambie su contraseña.</div>
+          <div className="warning">
+            Primera vez que inicia sesión, por favor cambie su contraseña.
+          </div>
         )}
-        <Link to="/change-password">Cambiar de contraseña</Link>
+        <Link to="/change-password">Cambiar contraseña</Link>
       </form>
     </div>
   );

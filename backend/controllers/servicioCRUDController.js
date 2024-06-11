@@ -49,7 +49,7 @@ const getService = async (req, res) => {
   const idValidation = mongoose.Types.ObjectId.isValid(id);
   if (!idValidation) {
     console.log(idValidation);
-    return res.status(400).json({ error: "id de empleado invalida" });
+    return res.status(400).json({ error: "Id de empleado invalida" });
   }
 
   const service = await servicioModel.findById(id);
@@ -161,7 +161,7 @@ const deleteService = async (req, res) => {
       return res.status(400).json({ error: "No hay valor de id" });
     }
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ error: "id invalida" });
+      return res.status(400).json({ error: "Id invalida" });
     }
     const deletedService = await servicioModel.findByIdAndDelete(id);
     if (!deletedService) {
@@ -188,14 +188,14 @@ const completeService = async (req, res) => {
     return res.status(400).json({ error: "No hay valor de id" });
   }
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ error: "id invalida" });
+    return res.status(400).json({ error: "Id invalida" });
   }
   const existsSERVICE = await servicioModel.findOne({ _id: id });
   if (!existsSERVICE) {
     return res.status(400).json({ error: "Id no existe en app" });
   }
   if (existsSERVICE.estado === "Terminado") {
-    return res.status(400).json({ error: "Registro ya esta terminado" });
+    return res.status(400).json({ error: "Registro ya está terminado" });
   }
   try {
     const completedService = await servicioModel.findOneAndUpdate(

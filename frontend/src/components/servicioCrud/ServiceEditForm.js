@@ -220,7 +220,7 @@ const handleEncargadoChange = (e) => {
               close
             </span>
           </div>
-          <h2>Edite el servicio</h2>
+          <h2>Editar el servicio</h2>
           <div
             className="show-formats"
             onClick={() => {

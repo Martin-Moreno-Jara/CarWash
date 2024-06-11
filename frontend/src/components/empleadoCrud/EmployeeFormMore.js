@@ -109,7 +109,7 @@ const EmployeeFormMore = () => {
       <form className="form-div" onSubmit={handleSubmit}>
         <div className="form-fieldsMore">
           <div>
-            <label>Nombre</label>
+            <label>Nombre(s)</label>
             <input
               type="text"
               pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ ]+"
@@ -119,7 +119,7 @@ const EmployeeFormMore = () => {
             />
           </div>
           <div>
-            <label>Apellido</label>
+            <label>Apellido(s)</label>
             <input
               type="text"
               pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ ]+"

@@ -112,20 +112,21 @@ const EmployeeFormEdit = () => {
       {showFormats && (
         <div className="formatos">
           <p>
-            Tanto el nombre como el apellido solo aceptan letras del alfabeto
-            español
+            Tanto en el nombre como en el apellido solo se aceptan letras del
+            alfabeto español.
           </p>
           <p>
             La contraseña asiganada debe tener mayúsculas, minúsculas, números y
-            carácteres especiales{" "}
+            carácteres especiales.
           </p>
           <p>
-            El formato del número de teléfono deben 10 dígitos separados en dos
-            grupos de 3 números y uno de 4 números, separados por un espacio.
-            Como se muestra: <strong>320 330 4550</strong>
+            El formato de número telefónico debe tener 10 dígitos separados en
+            dos grupos de 3 números y uno de 4 números separados por un espacio.
+            Ejemplo: <strong>320 330 4550</strong>.
           </p>
           <p>
-            El formato de la cédula deben ser 10 dígitos sin espacio entre ellos
+            El formato de cédula debe contener 10 dígitos sin espacio entre
+            ellos.
           </p>
         </div>
       )}
@@ -137,7 +138,7 @@ const EmployeeFormEdit = () => {
       <form className="form-div" onSubmit={handleSubmit}>
         <div className="form-fields">
           <div>
-            <label>Nombre</label>
+            <label>Nombre(s)</label>
             <input
               type="text"
               pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ ]+"
@@ -146,7 +147,7 @@ const EmployeeFormEdit = () => {
             />
           </div>
           <div>
-            <label>Apellido</label>
+            <label>Apellido(s)</label>
             <input
               type="text"
               pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ ]+"

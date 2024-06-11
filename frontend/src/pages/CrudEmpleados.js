@@ -16,7 +16,7 @@ const CrudEmpleados = () => {
     <div className="crudEmpleados-main">
       <div className="empleado-options">
         <div className="description">
-          <h2>Modulo de gestión de empleados</h2>
+          <h2>Módulo de gestión de empleados</h2>
           <p>
             Podrá ver la lista de los empleados. También añadir nuevos empleados
             o editar la información ya existente sobre ellos.
@@ -34,7 +34,9 @@ const CrudEmpleados = () => {
           </div>
         </div>
       </div>
-      <div className={show || showEdit || showMore ? "div-list-dark" : "div-list"}>
+      <div
+        className={show || showEdit || showMore ? "div-list-dark" : "div-list"}
+      >
         {show && (
           <div className="div-background">
             <EmployeeFormAdd />
@@ -50,7 +52,11 @@ const CrudEmpleados = () => {
             <EmployeeFormMore />
           </div>
         )}
-        <div className={show || showEdit ||showMore ? "actual-list-none" : "actual-list"}>
+        <div
+          className={
+            show || showEdit || showMore ? "actual-list-none" : "actual-list"
+          }
+        >
           <EmployeeList />
         </div>
       </div>

@@ -1,4 +1,6 @@
 //************************** IMPORTED
+import { useSnackbar } from "notistack";
+
 //REACT HOOKS/IMPORTS
 import { useState } from "react";
 //CUSTOM HOOKS
@@ -11,6 +13,8 @@ const apiURL = process.env.REACT_APP_DEVURL;
 //**************************************************************
 
 export const usePatchEmployee = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const { selectedEmployee } = useSelectContext();
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
@@ -55,10 +59,12 @@ export const usePatchEmployee = () => {
     if (!fetchUpdate.ok) {
       setIsLoading(false);
       setError(update.error);
+      enqueueSnackbar("Error al editar empleado", { variant: "error" });
     }
     if (fetchUpdate.ok) {
       setIsLoading(false);
       setError(null);
+      enqueueSnackbar("Empleado editado correctamente", { variant: "success" });
       dispatchUpdate({ type: "PATCH_EMPLEADO", payload: update });
       dispatch({ type: "SHOW_EDIT_DIALOG", payload: !showEdit });
     }

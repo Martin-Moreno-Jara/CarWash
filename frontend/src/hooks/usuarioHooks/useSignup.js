@@ -1,4 +1,6 @@
 //************************** IMPORTED
+import { useSnackbar } from "notistack";
+
 //REACT HOOKS/IMPORTS
 import { useState } from "react";
 //CUSTOM HOOKS
@@ -10,6 +12,8 @@ const apiURL = process.env.REACT_APP_DEVURL;
 //**************************************************************
 
 export const useSignup = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { usuario: loggedUser } = useAuthContext();
@@ -50,10 +54,12 @@ export const useSignup = () => {
     if (!response.ok) {
       setError(json.error);
       setIsLoading(false);
+      enqueueSnackbar("Error al crear empleado", { variant: "error" });
     }
     if (response.ok) {
       setIsLoading(false);
       setError(null);
+      enqueueSnackbar("Empleado creado correctamente", { variant: "success" });
       dispatch({ type: "ADD_EMPLEADO", payload: json });
       dispatchCloseWindow({ type: "SHOW_CREATE_DIALOG", payload: !show });
     }

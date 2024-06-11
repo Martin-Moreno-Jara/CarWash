@@ -1,4 +1,6 @@
 //************************** IMPORTED
+import { useSnackbar } from "notistack";
+
 //CUSTOM HOOKS
 import { useEmployeeContext } from "../../hooks/empleadoHooks/useEmployeeContext";
 import { useEmployeeCrudContext } from "../../hooks/empleadoHooks/useEmployeeCrudContext";
@@ -11,6 +13,7 @@ const apiURL = process.env.REACT_APP_DEVURL;
 //**************************************************************
 
 const EmployeeInfo = ({ id }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const { dispatch } = useEmployeeContext();
   const { showEdit, dispatch: dispatchEdit } = useEmployeeCrudContext();
   const { showMore, dispatch: dispatchMore } = useEmployeeCrudContext();
@@ -25,17 +28,17 @@ const EmployeeInfo = ({ id }) => {
     const json = await response.json();
 
     dispatch({ type: "DELETE_EMPLEADO", payload: json });
+    enqueueSnackbar("Empleado eliminado correctamente", { variant: "success" });
   };
   return (
     <span data-cell="acciones" className="row-actions">
       <div className="action-div showmore">
-        <span 
+        <span
           className="material-symbols-outlined"
           onClick={() => {
             dispatchMore({ type: "SHOW_MORE_DIALOG", payload: !showMore });
             dispatchIsSelected({ type: "SELECT_EMPLOYEE", payload: id });
-          }}
-          >
+          }}>
           more_horiz
         </span>
       </div>

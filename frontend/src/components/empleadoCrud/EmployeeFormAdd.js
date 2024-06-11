@@ -1,6 +1,6 @@
 //************************** IMPORTED
 //REACT HOOKS/IMPORTS
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MoonLoader from "react-spinners/MoonLoader";
 import { useSnackbar } from "notistack";
 
@@ -12,6 +12,8 @@ import "../../stylesheets/EmployeeForm.css";
 //**************************************************************
 
 const EmployeeFormAdd = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const { show, dispatch } = useEmployeeCrudContext();
   const { signupEmployee, error, isLoading } = useSignup();
   const [showFormats, setShowFormats] = useState(false);
@@ -63,6 +65,7 @@ const EmployeeFormAdd = () => {
       contrasena,
       passConfirm
     );
+    console.log(error);
   };
   return (
     <div className="main-container">
@@ -70,8 +73,7 @@ const EmployeeFormAdd = () => {
         className="closebtn"
         onClick={() => {
           dispatch({ type: "SHOW_CREATE_DIALOG", payload: !show });
-        }}
-      >
+        }}>
         <span className="material-symbols-outlined">close</span>
       </div>
       <h2>Ingrese la información del nuevo empleado</h2>
@@ -79,8 +81,7 @@ const EmployeeFormAdd = () => {
         className="show-formats"
         onClick={() => {
           setShowFormats(!showFormats);
-        }}
-      >
+        }}>
         {showFormats ? "ocultar formatos" : "Mostrar formatos aceptados"}{" "}
         <span className="material-symbols-outlined">
           {showFormats ? "keyboard_arrow_up" : "keyboard_arrow_down"}
@@ -159,8 +160,7 @@ const EmployeeFormAdd = () => {
                 className="material-symbols-outlined see"
                 onClick={() => {
                   setShowPassword(!showPassword);
-                }}
-              >
+                }}>
                 {showPassword ? "visibility" : "visibility_off"}
               </span>
             </div>
@@ -178,8 +178,7 @@ const EmployeeFormAdd = () => {
                 className="material-symbols-outlined see"
                 onClick={() => {
                   setShowPassConfirm(!showPassConfirm);
-                }}
-              >
+                }}>
                 {showPassConfirm ? "visibility" : "visibility_off"}
               </span>
             </div>

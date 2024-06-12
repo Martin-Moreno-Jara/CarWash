@@ -233,7 +233,7 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
         ? `<section id="reports-section">
     <h3 class="titles-text">Reporte de empleados</h3>
     ${
-      numEmpleados
+      displayNumServicios || displayRecaudo || displayCalificacion
         ? `<p style="padding:5px 15px;">Número de empleados: ${numEmpleados}`
         : ""
     }</p>
@@ -241,7 +241,11 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
       <table class="content-table">
   <thead>
     <tr>
-      <th>Empleado</th>
+    ${
+      displayNumServicios || displayRecaudo || displayCalificacion
+        ? `<th>Empleado</th>`
+        : ""
+    }
 
       ${displayNumServicios ? `<th>n. servicios</th>` : ""}
       ${displayRecaudo ? `<th>Dinero recaudado</th>` : ""}
@@ -254,7 +258,12 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
       .map(
         (data) =>
           `<tr>
-            <td>${data.empleadoName}</td>
+          ${
+            displayNumServicios || displayRecaudo || displayCalificacion
+              ? `<td>${data.empleadoName}</td>`
+              : ""
+          }
+            
         ${displayNumServicios ? `<td>${data.numServiciosEmpleado}</td>` : ""}
         ${
           displayRecaudo

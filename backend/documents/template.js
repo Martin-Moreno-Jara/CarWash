@@ -10,12 +10,14 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
   const {
     numEmpleados = undefined,
     eachEmployee = undefined,
+    empleadosDespedidos = undefined,
     numServiciosEmpleado = undefined,
     recaudoEmpleado = undefined,
     calificacion = undefined,
     displayCalificacion = undefined,
     displayRecaudo = undefined,
     displayNumServicios = undefined,
+    displayDespedidos = undefined,
   } = employeeData || {};
 
   return `
@@ -233,7 +235,7 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
         ? `<section id="reports-section">
     <h3 class="titles-text">Reporte de empleados</h3>
     ${
-      numEmpleados
+      displayNumServicios || displayRecaudo || displayCalificacion
         ? `<p style="padding:5px 15px;">Número de empleados: ${numEmpleados}`
         : ""
     }</p>
@@ -241,7 +243,11 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
       <table class="content-table">
   <thead>
     <tr>
-      <th>Empleado</th>
+    ${
+      displayNumServicios || displayRecaudo || displayCalificacion
+        ? `<th>Empleado</th>`
+        : ""
+    }
 
       ${displayNumServicios ? `<th>n. servicios</th>` : ""}
       ${displayRecaudo ? `<th>Dinero recaudado</th>` : ""}
@@ -254,7 +260,12 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
       .map(
         (data) =>
           `<tr>
-            <td>${data.empleadoName}</td>
+          ${
+            displayNumServicios || displayRecaudo || displayCalificacion
+              ? `<td>${data.empleadoName}</td>`
+              : ""
+          }
+            
         ${displayNumServicios ? `<td>${data.numServiciosEmpleado}</td>` : ""}
         ${
           displayRecaudo
@@ -271,6 +282,57 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
   </tbody>
 </table>
     </div>
+  ${
+    displayDespedidos
+      ? `
+  <h4 class="titles-text">Empleados despedidos</h4>
+  <
+  <div style="position: relative; left: 20%">
+      <table class="content-table">
+  <thead>
+    <tr>
+    ${
+      displayNumServicios || displayRecaudo || displayCalificacion
+        ? `<th>Empleado</th>`
+        : ""
+    }
+
+      ${displayNumServicios ? `<th>n. servicios</th>` : ""}
+      ${displayRecaudo ? `<th>Dinero recaudado</th>` : ""}
+      ${displayCalificacion ? `<th>Calificacion</th>` : ""}
+
+    </tr>
+  </thead>
+  <tbody>
+    ${empleadosDespedidos
+      .map(
+        (data) =>
+          `<tr>
+          ${
+            displayNumServicios || displayRecaudo || displayCalificacion
+              ? `<td>${data.empleadoName}</td>`
+              : ""
+          }
+            
+        ${displayNumServicios ? `<td>${data.numServiciosEmpleado}</td>` : ""}
+        ${
+          displayRecaudo
+            ? ` <td>$ ${new Intl.NumberFormat().format(
+                data.recaudoEmpleado
+              )}</td>`
+            : ""
+        }
+        ${displayCalificacion ? ` <td>${data.calificacion}</td>` : ""}
+      </tr>`
+      )
+      .join("")}
+  
+  </tbody>
+</table>
+    </div>
+  `
+      : ""
+  }
   </section>`
         : ""
     }

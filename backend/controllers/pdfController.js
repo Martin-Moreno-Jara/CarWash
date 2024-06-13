@@ -75,7 +75,6 @@ const searchServices = async (initDate, endDate, servicios) => {
       );
     }
     if (servicios.ranking) {
-      console.log("ranking");
       const promedioArray = [];
       serviciosNames.forEach((ser) => {
         const filter = search.filter(
@@ -89,7 +88,6 @@ const searchServices = async (initDate, endDate, servicios) => {
         }, 0);
         const divisor = filter.length === 0 ? 1 : filter.length;
         const promedio = parseFloat(sumaCalificacion / divisor).toFixed(1);
-        // console.log(ser.servicio, sumaCalificacion, promedio);
         promedioArray.push({
           servicio: ser.servicio,
           times: filter.length,
@@ -109,19 +107,72 @@ const searchServices = async (initDate, endDate, servicios) => {
 const searchEmployees = async (initDate, endDate, empleados) => {
   let employeesReturn = {};
   employeesReturn.eachEmployee = [];
+  employeesReturn.empleadosDespedidos = [];
+  const despedidos = [];
   const InitISO = new Date(initDate).toISOString();
 
   const endISO = new Date(endDate).toISOString();
 
   const employees = await empleadoModel.find().sort({ _id: -1 });
+  const allServices = await servicioModel.find({
+    createdAt: {
+      $gte: InitISO,
+      $lt: endISO,
+    },
+  });
+  allServices.length === 0
+    ? (employeesReturn.displayDespedidos = false)
+    : (employeesReturn.displayDespedidos = true);
+  allServices.forEach((service) => {
+    let coincidencia = 0;
+    employees.forEach((empleado) => {
+      if (
+        empleado._id.equals(
+          new mongoose.Types.ObjectId(service.encargado[0].encargadoId)
+        )
+      ) {
+        coincidencia += 1;
+      }
+    });
+    if (coincidencia === 0) {
+      despedidos.push(service);
+    }
+  });
 
-  /* 
-  employeesReturn.totalEmpleados = employees.length;
+  despedidos.forEach((serviceDespedido) => {
+    const despedidoData = {};
+    const usuarioDespedido = serviceDespedido.encargado[0].encargadoUsuario;
+    const despedidosFiltered = despedidos.filter(
+      (d) => d.encargado[0].encargadoUsuario === usuarioDespedido
+    );
+    despedidoData.empleadoName = `${serviceDespedido.encargado[0].encargadoNombre} (${usuarioDespedido})`;
 
-  if (empleados.numEmpleados) {
-    employeesReturn.numEmpleados = employeesReturn.totalEmpleados;
-  }
-*/
+    if (empleados.recaudoEmpleado) {
+      const pricesa = despedidosFiltered.map(
+        (priceInstance) => priceInstance.precio
+      );
+      const prices = pricesa.reduce((acc, price) => acc + price, 0);
+      despedidoData.recaudoEmpleado = prices;
+    }
+    if (empleados.numServiciosEmpleado) {
+      const numS = despedidosFiltered.length;
+      despedidoData.numServiciosEmpleado = numS;
+    }
+    if (empleados.calificacion) {
+      const sumaCalificacion = despedidosFiltered.reduce((acc, nota) => {
+        if (!nota.calificacion) {
+          nota.calificacion = 0;
+        }
+        return acc + nota.calificacion;
+      }, 0);
+      const divisor =
+        despedidosFiltered.length === 0 ? 1 : despedidosFiltered.length;
+      const promedio = parseFloat(sumaCalificacion / divisor).toFixed(1);
+      despedidoData.calificacion = promedio;
+    }
+    employeesReturn.empleadosDespedidos.push(despedidoData);
+  });
+
   if (empleados.numEmpleados) {
     employeesReturn.numEmpleados = employees.length;
   }
@@ -137,11 +188,6 @@ const searchEmployees = async (initDate, endDate, empleados) => {
       },
       "encargado.encargadoId": new mongoose.Types.ObjectId(employees[i]._id), // Filter by employee
     });
-
-    const serviciosNames = await tarfiasModel
-      .find()
-      .select({ _id: 0, servicio: 1 })
-      .sort({ servicio: 1 });
 
     //SECCION RECAUDO
     if (empleados.recaudoEmpleado) {
@@ -189,6 +235,7 @@ const createPDF = async (req, res) => {
   }
 
   try {
+    console.log(employeeData);
     pdf
       .create(pdfTemplate(initDate, endDate, serviceData, employeeData), {
         type: "pdf",

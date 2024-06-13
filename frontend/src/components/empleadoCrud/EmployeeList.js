@@ -100,8 +100,7 @@ const EmployeeList = () => {
     <div
       className={
         show || showEdit ? "empleadoLista-main-noblur" : "empleadoLista-main"
-      }
-    >
+      }>
       <input
         className="search-input"
         type="text"
@@ -115,8 +114,7 @@ const EmployeeList = () => {
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  onClick={header.column.getToggleSortingHandler()}
-                >
+                  onClick={header.column.getToggleSortingHandler()}>
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext()
@@ -149,24 +147,22 @@ const EmployeeList = () => {
           <MoonLoader color="#1c143d" loading={isLoading} size={100} />
         </div>
       )}
-      {/* <button onClick={() => table.setPageIndex(0)}>Primera</button>
+      <button onClick={() => table.setPageIndex(0)}>Primera</button>
       <button
         onClick={() => {
           table.previousPage();
-        }}
-      >
+        }}>
         Anterior
       </button>
       <button
         onClick={() => {
           table.nextPage();
-        }}
-      >
+        }}>
         Siguiente
       </button>
       <button onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
         Última
-      </button> */}
+      </button>
     </div>
   );
 };

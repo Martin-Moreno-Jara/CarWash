@@ -147,22 +147,32 @@ const EmployeeList = () => {
           <MoonLoader color="#1c143d" loading={isLoading} size={100} />
         </div>
       )}
-      <button onClick={() => table.setPageIndex(0)}>Primera</button>
-      <button
-        onClick={() => {
-          table.previousPage();
-        }}>
-        Anterior
-      </button>
-      <button
-        onClick={() => {
-          table.nextPage();
-        }}>
-        Siguiente
-      </button>
-      <button onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
-        Última
-      </button>
+      <div className="pagination-div">
+        <button
+          className="pagination-btn"
+          onClick={() => table.setPageIndex(0)}>
+          Primera
+        </button>
+        <button
+          className="pagination-btn"
+          onClick={() => {
+            table.previousPage();
+          }}>
+          Anterior
+        </button>
+        <button
+          className="pagination-btn"
+          onClick={() => {
+            table.nextPage();
+          }}>
+          Siguiente
+        </button>
+        <button
+          className="pagination-btn"
+          onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
+          Última
+        </button>
+      </div>
     </div>
   );
 };

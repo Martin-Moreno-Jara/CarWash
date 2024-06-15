@@ -120,9 +120,7 @@ const searchEmployees = async (initDate, endDate, empleados) => {
       $lt: endISO,
     },
   });
-  allServices.length === 0
-    ? (employeesReturn.displayDespedidos = false)
-    : (employeesReturn.displayDespedidos = true);
+
   allServices.forEach((service) => {
     let coincidencia = 0;
     employees.forEach((empleado) => {
@@ -138,6 +136,10 @@ const searchEmployees = async (initDate, endDate, empleados) => {
       despedidos.push(service);
     }
   });
+  employeesReturn.displayDespedidos = false;
+  if (despedidos.length > 0) {
+    employeesReturn.displayDespedidos = true;
+  }
 
   despedidos.forEach((serviceDespedido) => {
     const despedidoData = {};

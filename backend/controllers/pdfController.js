@@ -113,7 +113,14 @@ const searchEmployees = async (initDate, endDate, empleados) => {
 
   const endISO = new Date(endDate).toISOString();
 
-  const employees = await empleadoModel.find().sort({ _id: -1 });
+  const employees = await empleadoModel
+    .find({
+      createdAt: {
+        $lt: endISO,
+      },
+    })
+    .sort({ _id: -1 });
+  console.log(employees);
   const allServices = await servicioModel.find({
     createdAt: {
       $gte: InitISO,

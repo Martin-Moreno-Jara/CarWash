@@ -244,6 +244,9 @@ const createPDF = async (req, res) => {
   }
 
   try {
+    if (checkDocument()) {
+      fs.unlinkSync(path.join(__dirname, "report.pdf"));
+    }
     console.log(employeeData);
     pdf
       .create(pdfTemplate(initDate, endDate, serviceData, employeeData), {

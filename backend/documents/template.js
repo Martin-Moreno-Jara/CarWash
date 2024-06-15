@@ -19,6 +19,7 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
     displayNumServicios = undefined,
     displayDespedidos = undefined,
   } = employeeData || {};
+  console.log(displayDespedidos);
 
   return `
   <!DOCTYPE html>
@@ -119,7 +120,7 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
       </div>
     </section>
     ${
-      serviceData
+      numServicios || recaudo || servicesPerCar || ranking
         ? `
     <section id="services-section">
       <h3 class="titles-text">Reporte de servicios</h3>
@@ -231,7 +232,7 @@ module.exports = (initDate, endDate, serviceData, employeeData) => {
         : ""
     }
     ${
-      employeeData
+      displayNumServicios || displayRecaudo || displayCalificacion
         ? `<section id="reports-section">
     <h3 class="titles-text">Reporte de empleados</h3>
     ${

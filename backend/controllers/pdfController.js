@@ -113,16 +113,21 @@ const searchEmployees = async (initDate, endDate, empleados) => {
 
   const endISO = new Date(endDate).toISOString();
 
-  const employees = await empleadoModel.find().sort({ _id: -1 });
+  const employees = await empleadoModel
+    .find({
+      createdAt: {
+        $lt: endISO,
+      },
+    })
+    .sort({ _id: -1 });
+  console.log(employees);
   const allServices = await servicioModel.find({
     createdAt: {
       $gte: InitISO,
       $lt: endISO,
     },
   });
-  allServices.length === 0
-    ? (employeesReturn.displayDespedidos = false)
-    : (employeesReturn.displayDespedidos = true);
+
   allServices.forEach((service) => {
     let coincidencia = 0;
     employees.forEach((empleado) => {
@@ -138,6 +143,10 @@ const searchEmployees = async (initDate, endDate, empleados) => {
       despedidos.push(service);
     }
   });
+  employeesReturn.displayDespedidos = false;
+  if (despedidos.length > 0) {
+    employeesReturn.displayDespedidos = true;
+  }
 
   despedidos.forEach((serviceDespedido) => {
     const despedidoData = {};
@@ -235,6 +244,9 @@ const createPDF = async (req, res) => {
   }
 
   try {
+    if (checkDocument()) {
+      fs.unlinkSync(path.join(__dirname, "report.pdf"));
+    }
     console.log(employeeData);
     pdf
       .create(pdfTemplate(initDate, endDate, serviceData, employeeData), {

@@ -104,11 +104,14 @@ const ReporteGenerate = () => {
         const sendResponse = await sendData.json();
         if (sendData.ok) {
           console.log("send data is ok");
+          setIsReport(true);
+        }
+        if (!sendData.ok) {
+          setIsReport(false);
         }
 
         setIsOpen2(false);
-        console.log(isOpen2);
-        setIsReport(!isReport);
+
         console.log(sendResponse);
       } else {
         setIsOpen(true);
